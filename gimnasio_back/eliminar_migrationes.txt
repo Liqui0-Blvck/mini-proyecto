@@ -1,0 +1,6 @@
+# Eliminar todas las migraciones de Django
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+
+# Eliminar todas las pycache
+find . -type d -name "__pycache__" -exec rm -r {} +

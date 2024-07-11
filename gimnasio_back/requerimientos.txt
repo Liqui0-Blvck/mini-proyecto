@@ -1,0 +1,37 @@
+# Django Framework
+django==4.2.3
+
+# Django REST Framework
+djangorestframework
+
+# Autenticación con JWT
+djangorestframework-simplejwt
+
+# Documentación de la API
+drf-yasg
+
+# Middleware para CORS (si es necesario para el desarrollo)
+django-cors-headers
+
+# Paquete para realizar pruebas
+pytest
+pytest-django
+
+# Paquete para manejar la carga de archivos en AWS S3
+boto3
+
+# Paquete para manejar los archivos estáticos
+django-storages
+
+# Para PostgreSQL
+psycopg2-binary
+
+# Simple History
+django-simple-history
+
+# Djoser
+djoser
+
+
+#Nested
+drf-nested-routers

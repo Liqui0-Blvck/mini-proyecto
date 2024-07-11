@@ -1,0 +1,33 @@
+
+services:
+  django:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app   # Monta el directorio actual (donde está tu código) en /app dentro del contenedor
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+    command: >
+      sh -c "python manage.py makemigrations && 
+             python manage.py migrate && 
+             python manage.py runserver 0.0.0.0:8000"
+    networks:
+      - backend
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: gimnasio
+      POSTGRES_USER: admin_usuario
+      POSTGRES_PASSWORD: Hola.203040
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
