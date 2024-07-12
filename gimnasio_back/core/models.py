@@ -42,6 +42,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    
+    first_name = models.CharField(max_length=30, blank=True)
+    second_name = models.CharField(max_length=30, blank=True)
+    father_last_name = models.CharField(max_length=30, blank=True)
+    mother_last_name = models.CharField(max_length=30, blank=True)
 
     objects = CustomUserManager()
 

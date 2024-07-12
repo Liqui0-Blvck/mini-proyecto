@@ -15,6 +15,18 @@ class Miembro(BaseHistoricalModel):
 
   def __str__(self):
       return self.perfil.usuario.username
+  
+  
+class AsistenciaMiembro(BaseHistoricalModel):
+    miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE)
+    hora_entrada = models.TimeField()  # Hora de entrada
+    hora_salida = models.TimeField(blank=True, null=True)  # Hora de salida (opcional)
+    notas = models.TextField(blank=True)  # Notas adicionales
+    sucursal = models.ForeignKey('gimnasios.Sucursal', on_delete=models.CASCADE)  # Obligatorio
+
+    def __str__(self):
+        return f'Asistencia de {self.miembro.perfil.usuario.username} en {self.sucursal} el {self.fecha}'
+
 
 class SeguimientoPeso(BaseHistoricalModel):
   miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE, related_name='seguimientos')

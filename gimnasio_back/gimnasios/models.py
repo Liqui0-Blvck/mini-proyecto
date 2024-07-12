@@ -27,7 +27,9 @@ class Sucursal(BaseModel):
   def __str__(self):
       return f'Sucursal de {self.gimnasio.nombre}'
     
-    
+  
+
+
 
 class Staff(BaseHistoricalModel):
   perfil = models.OneToOneField('cuentas.Perfil', on_delete=models.CASCADE)

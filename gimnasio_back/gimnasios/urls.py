@@ -10,10 +10,6 @@ router.register(r'gimnasios', GimnasioViewSet)
 sucursal_router = NestedDefaultRouter(router, r'gimnasios', lookup='gimnasio')
 sucursal_router.register(r'sucursales', SucursalViewSet, basename='gimnasio-sucursales')
 
-# Router anidado para miembros
-miembro_router = NestedDefaultRouter(sucursal_router, r'sucursales', lookup='sucursal')
-miembro_router.register(r'miembros', MiembrosViewSet, basename='sucursal-miembros')
-
 # Router anidado para staff
 staff_router = NestedDefaultRouter(sucursal_router, r'sucursales', lookup='sucursal')
 staff_router.register(r'staff', StaffViewSet, basename='sucursal-staff')
