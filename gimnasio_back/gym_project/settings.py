@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,24 +47,48 @@ INSTALLED_APPS = [
     'core',
     'cuentas',
     'subscripciones',
+    'miembros',
+    'gimnasios',
+    'rutinas',
 ]
 
 DJOSER = {
-    'LOGIN_FIELD': 'email',  # Usa el email en lugar del username para la autenticación
-    'USER_CREATE_PASSWORD_RETYPE': True,  # Requerir confirmación de contraseña al crear usuario
-    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,  # Requerir confirmación de email al cambiar el username
-    # Otras configuraciones de Djoser
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'auth/users/activate/{uid}/{token}/',  # Asegúrate de que esto sea correcto
+    'SERIALIZERS': {
+        'user_create': 'core.serializers.CustomUserCreateSerializer',
+        'user': 'core.serializers.CustomUserSerializer',
+        'current_user': 'core.serializers.CustomUserSerializer',
+    },
 }
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',  # Backend de autenticación estándar de Django
-)
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+FILES_URL = '/files/'
+FILES_ROOT = os.path.join(BASE_DIR, 'files')
+
+
+
+
+# Rutas para archivos generales
 # settings.py
 
 AUTH_USER_MODEL = 'core.CustomUser'  # Reemplaza 'tu_app' con el nombre de tu aplicación
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Otras configuraciones de correo electrónico (opcional, para la consola no se necesitan credenciales reales)
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025  # Puerto de correo para la consola
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+
+
+ROOT_URLCONF = 'gym_project.urls'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -76,16 +101,27 @@ MIDDLEWARE = [
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
-ROOT_URLCONF = 'gym_project.urls'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Backend de autenticación estándar de Django
+)
+
+
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ),
+    ],
+ 
+    
 }
+
+
 
 
 SIMPLE_JWT = {
@@ -118,14 +154,15 @@ WSGI_APPLICATION = 'gym_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Motor de base de datos para PostgreSQL
-        'NAME': 'gimnasio',  # Nombre de tu base de datos
-        'USER': 'admin_usuario',  # Usuario de tu base de datos
-        'PASSWORD': 'Hola.203040',  # Contraseña de tu base de datos
-        'HOST': '172.21.37.228',  # Host donde se encuentra tu base de datos (puede ser localhost o una dirección IP)
-        'PORT': '5432',  # Puerto de tu base de datos (por defecto, PostgreSQL usa el puerto 5432)
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'gimnasio',
+        'USER': 'admin_usuario',
+        'PASSWORD': 'Hola.203040',
+        'HOST': 'db',  # Cambiar a 'db'
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation

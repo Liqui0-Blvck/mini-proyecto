@@ -16,10 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),  # Rutas de autenticación de Djoser
     path('auth/', include('djoser.urls.jwt')),  # Rutas de tokens JWT de Djoser
-    path('api/', include('cuentas.urls'))
+    path('api/', include('cuentas.urls')),
+    path('api/', include('subscripciones.urls')),
+    path('api/', include('gimnasios.urls')),
+    path('api/', include('rutinas.urls')),
+    path('api/', include('miembros.urls'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.FILES_URL, document_root=settings.FILES_ROOT)

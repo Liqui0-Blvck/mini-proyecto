@@ -35,3 +35,6 @@ djoser
 
 #Nested
 drf-nested-routers
+
+#Imagenes
+Pillow

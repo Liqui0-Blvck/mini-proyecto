@@ -2,25 +2,27 @@
 
 from django.db import models
 from django.conf import settings
-from subscripciones.options import ESTADOS_PAGO
+from subscripciones.options import *
+from core.models import *
 
-
-class TransaccionPago(models.Model):
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+class TransaccionPago(BaseHistoricalModel):
+    miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE, related_name='transacciones')
     cantidad = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_transaccion = models.DateTimeField(auto_now_add=True)
     estado = models.CharField(max_length=20, choices=ESTADOS_PAGO)
 
     def __str__(self):
-        return f'Transacción de {self.usuario.username} - {self.cantidad}'
+        return f'Transacción de {self.miembro.perfil.usuario.username} - {self.cantidad}'
 
     class Meta:
         ordering = ['-fecha_transaccion']
 
-class SuscripcionUsuario(models.Model):
-    usuario = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='suscripcion')
-    tipo_membresia = models.CharField(max_length=50, blank=True)
-    estado_pago = models.CharField(max_length=20, choices=ESTADOS_PAGO, default='pendiente')
+
+class SuscripcionUsuario(BaseHistoricalModel):
+    miembro = models.OneToOneField('miembros.Miembro', on_delete=models.CASCADE, related_name='suscripcion')
+    tipo_membresia = models.CharField(max_length=50, choices=TIPOS_MEMBRESIA, blank=True)
+    fecha_inicio = models.DateTimeField(null=True, blank=True)
+    fecha_expiracion = models.DateTimeField(null=True, blank=True)
     transacciones = models.ManyToManyField(TransaccionPago, related_name='suscripciones', blank=True)
 
     def __str__(self):

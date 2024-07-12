@@ -4,11 +4,13 @@ from . import views
 
 # Definir el router principal
 router = routers.DefaultRouter()
+router.register(r'perfil', views.PerfilViewSet)
 
 # Definir el router anidado para perfil y sus relaciones
 perfil_router = routers.NestedDefaultRouter(router, r'perfil', lookup='perfil')
 perfil_router.register(r'configuracion', views.ConfiguracionUsuarioViewSet, basename='perfil-configuracion')
 perfil_router.register(r'actividad', views.ActividadViewSet, basename='perfil-actividad')
+perfil_router.register(r'intereses', views.InteresesUsuarioViewSet, basename='perfil-intereses')
 
 # Definir el router anidado para actividad y sus relaciones
 actividad_router = routers.NestedDefaultRouter(perfil_router, r'actividad', lookup='actividad')

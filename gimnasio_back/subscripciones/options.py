@@ -3,3 +3,10 @@ ESTADOS_PAGO = [
   ('pendiente', 'Pendiente'),
   ('fallido', 'Fallido')
 ]
+
+
+TIPOS_MEMBRESIA = [
+    ('basica', 'Básica'),
+    ('estandar', 'Estándar'),
+    ('premium', 'Premium'),
+]

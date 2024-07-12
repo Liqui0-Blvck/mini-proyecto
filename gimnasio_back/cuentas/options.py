@@ -14,3 +14,59 @@ GENDERS = [
     ('two-spirit', 'Two-Spirit'),
     ('otro/no especificado', 'Otro/No especificado')
 ]
+
+COLOR_CHOICES = [
+    ('inherit', 'Inherit'),
+    ('current', 'Current'),
+    ('transparent', 'Transparent'),
+    ('black', 'Black'),
+    ('white', 'White'),
+    ('zinc', 'Zinc'),
+    ('red', 'Red'),
+    ('darkred', 'Dark Red'),
+    ('tomato', 'Tomato'),
+    ('salmon', 'Salmon'),
+    ('orange', 'Orange'),
+    ('gold', 'Gold'),
+    ('yellow', 'Yellow'),
+    ('lime', 'Lime'),
+    ('green', 'Green'),
+    ('darkgreen', 'Dark Green'),
+    ('turquoise', 'Turquoise'),
+    ('cyan', 'Cyan'),
+    ('skyblue', 'Sky Blue'),
+    ('blue', 'Blue'),
+    ('navy', 'Navy'),
+    ('indigo', 'Indigo'),
+    ('purple', 'Purple'),
+    ('magenta', 'Magenta'),
+    ('pink', 'Pink'),
+    ('crimson', 'Crimson'),
+]
+
+FONT_CHOICES = [
+    ('Arial, sans-serif', 'Arial'),
+    ('Helvetica, sans-serif', 'Helvetica'),
+    ('Verdana, sans-serif', 'Verdana'),
+    ('Tahoma, sans-serif', 'Tahoma'),
+    ('Georgia, serif', 'Georgia'),
+    ('Times New Roman, serif', 'Times New Roman'),
+    ('Courier New, monospace', 'Courier New'),
+    ('Lucida Console, monospace', 'Lucida Console'),
+    ('Roboto, sans-serif', 'Roboto'),
+    ('Open Sans, sans-serif', 'Open Sans'),
+    ('Lato, sans-serif', 'Lato'),
+    ('Montserrat, sans-serif', 'Montserrat'),
+    ('Poppins, sans-serif', 'Poppins'),
+    ('Raleway, sans-serif', 'Raleway'),
+    ('Oswald, sans-serif', 'Oswald'),
+    ('Roboto Slab, serif', 'Roboto Slab'),
+    ('Merriweather, serif', 'Merriweather'),
+    ('Playfair Display, serif', 'Playfair Display'),
+]
+
+
+DARK_MODE = [
+    ('dark', 'Dark'),
+    ('light', 'Light'),
+]
