@@ -17,11 +17,12 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 
 	useDocumentTitle({ title, name });
 
-	const { usernameStorage } = useAuth();
-	if (isProtectedRoute && !usernameStorage) {
+	const { tokens } = useAuth();
+	if (isProtectedRoute && !tokens) {
 		// user is not authenticated
 		return <Navigate to={authPages.loginPage.to} />;
 	}
+
 	return (
 		<main
 			data-component-name='PageWrapper'

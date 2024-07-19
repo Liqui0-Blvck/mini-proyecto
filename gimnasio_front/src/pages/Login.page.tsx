@@ -1,37 +1,42 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PageWrapper from '../components/layouts/PageWrapper/PageWrapper';
 import Button from '../components/ui/Button';
-import { useAuth } from '../context/authContext';
 import Input from '../components/form/Input';
-import usersDb from '../mocks/db/users.db';
 import LogoTemplate from '../templates/layouts/Logo/Logo.template';
 import FieldWrap from '../components/form/FieldWrap';
 import Icon from '../components/icon/Icon';
 import Validation from '../components/form/Validation';
+import { useAppDispatch } from '../store/hook';
+import { onLogin } from '../store/slices/auth/authSlices';
+import useCookiesStorage from '../hooks/useCookieStorage';
+
 
 type TValues = {
-	username: string;
+	email: string;
 	password: string;
 };
 
 const LoginPage = () => {
-	const { onLogin } = useAuth();
+	const dispatch = useAppDispatch()
+	const navigate = useNavigate()
+	const [tokens, setTokens] = useCookiesStorage('user', null);
 
 	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
 
+
 	const formik = useFormik({
 		initialValues: {
-			username: usersDb[5].username,
-			password: usersDb[5].password,
+			email: '',
+			password: '',
 		},
 		validate: (values: TValues) => {
 			const errors: Partial<TValues> = {};
 
-			if (!values.username) {
-				errors.username = 'Required';
+			if (!values.email) {
+				errors.email = 'Required';
 			}
 
 			if (!values.password) {
@@ -41,17 +46,11 @@ const LoginPage = () => {
 			return errors;
 		},
 		onSubmit: (values: TValues, { setFieldError }) => {
-			onLogin(values.username, values.password)
-				.then(() => {})
-				.catch((e: Error) => {
-					if (e.cause === 'username') {
-						setFieldError('username', e.message);
-						setFieldError('password', e.message);
-					}
-					if (e.cause === 'password') setFieldError('password', e.message);
-				});
+				dispatch(onLogin({ data: { ...values }, navigate, setTokens: setTokens }))
 		},
 	});
+
+
 
 	return (
 		<PageWrapper isProtectedRoute={false} className='bg-white dark:bg-inherit' name='Sign In'>
@@ -99,18 +98,18 @@ const LoginPage = () => {
 							})}>
 							<Validation
 								isValid={formik.isValid}
-								isTouched={formik.touched.username}
-								invalidFeedback={formik.errors.username}
+								isTouched={formik.touched.email}
+								invalidFeedback={formik.errors.email}
 								validFeedback='Good'>
 								<FieldWrap
 									firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
 									<Input
 										dimension='lg'
-										id='username'
-										autoComplete='username'
-										name='username'
-										placeholder='Email or username'
-										value={formik.values.username}
+										id='email'
+										autoComplete='email'
+										name='email'
+										placeholder='Email'
+										value={formik.values.email}
 										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>

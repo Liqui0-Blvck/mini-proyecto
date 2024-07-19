@@ -9,6 +9,9 @@ import FooterRouter from '../components/router/FooterRouter';
 import useFontSize from '../hooks/useFontSize';
 import getOS from '../utils/getOS.util';
 
+
+
+
 const App = () => {
 	getOS();
 

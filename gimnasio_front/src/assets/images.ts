@@ -74,5 +74,4 @@ export { default as User8Thumb } from './avatar/user8-thumb.png';
 export { default as User9 } from './avatar/user9.png';
 export { default as User9Thumb } from './avatar/user9-thumb.png';
 
-export { default as DeliveryMan1 } from './humans/delivery_man_1.png';
-export { default as DeliveryMan5WithDog } from './humans/delivery_man_5_with_dog.png';
+

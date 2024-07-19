@@ -1,7 +1,6 @@
 import React from 'react';
 import PageWrapper from '../components/layouts/PageWrapper/PageWrapper';
 import Container from '../components/layouts/Container/Container';
-import { DeliveryMan1 } from '../assets/images';
 
 const UnderConstructionPage = () => {
 	return (
@@ -22,7 +21,7 @@ const UnderConstructionPage = () => {
 					</div>
 					<div className='col-span-3' />
 					<div className='col-span-6 flex justify-center'>
-						<img src={DeliveryMan1 as string} alt='' className='max-h-[32rem]' />
+						{/* <img src={DeliveryMan1 as string} alt='' className='max-h-[32rem]' /> */}
 					</div>
 				</div>
 			</Container>

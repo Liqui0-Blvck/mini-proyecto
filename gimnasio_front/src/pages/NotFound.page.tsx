@@ -1,6 +1,5 @@
 import React from 'react';
 import PageWrapper from '../components/layouts/PageWrapper/PageWrapper';
-import { DeliveryMan5WithDog } from '../assets/images';
 import Container from '../components/layouts/Container/Container';
 
 const NotFoundPage = () => {
@@ -18,7 +17,7 @@ const NotFoundPage = () => {
 					</div>
 					<div className='col-span-3' />
 					<div className='col-span-6 flex justify-center'>
-						<img src={DeliveryMan5WithDog as string} alt='' className='max-h-[32rem]' />
+						{/* <img src={DeliveryMan5WithDog as string} alt='' className='max-h-[32rem]' /> */}
 					</div>
 				</div>
 			</Container>
