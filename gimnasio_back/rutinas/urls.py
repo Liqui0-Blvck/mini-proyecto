@@ -8,6 +8,10 @@ router.register(r'ejercicios', EjercicioViewSet)
 router.register(r'rutinas', RutinaViewSet)
 router.register(r'sesiones', SesionEntrenamientoViewSet)
 
+
+rutinas_router = NestedDefaultRouter(router, r'rutinas', lookup='rutina')
+rutinas_router.register(r'ejercicio_rutina', EjercicioEnRutinaViewSet, basename='rutina-ejercicios')
+
 # Router anidado para ejercicios realizados
 ejercicio_realizado_router = NestedDefaultRouter(router, r'sesiones', lookup='sesion')
 ejercicio_realizado_router.register(r'ejercicios_realizados', EjercicioRealizadoViewSet, basename='sesion-ejercicios_realizados')
@@ -18,6 +22,7 @@ descanso_router.register(r'descansos', DescansoViewSet, basename='ejercicio_real
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(rutinas_router.urls)),
     path('', include(ejercicio_realizado_router.urls)),
     path('', include(descanso_router.urls)),
 ]

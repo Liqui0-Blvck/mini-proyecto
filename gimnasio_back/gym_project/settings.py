@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-5&dx9g(+(e%!ba9&w#yfv#2--%&br5^2=6b^@k96fa)i0_b&&n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    
+    "corsheaders",
     'simple_history',
     'djoser',
     
@@ -71,6 +71,26 @@ FILES_URL = '/files/'
 FILES_ROOT = os.path.join(BASE_DIR, 'files')
 
 
+WSGI_APPLICATION = 'gym_project.wsgi.application'
+ASGI_APPLICATION = 'gym_project.asgi.application'
+
+
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ['es', 'en']
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['CL', 'BR', 'AR', 'PE', 'EC', 'CO', 'RU', 'IT', 'ES', 'BY', 'PY']
+CITIES_LIGHT_INCLUDE_CITY_TYPES = ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PPLC', 'PPLF', 'PPLG', 'PPLL', 'PPLR', 'PPLS', 'STLMT',]
+
+
+SIMPLE_HISTORY_HISTORY_CHANGE_REASON_USE_TEXT_FIELD=True
+SIMPLE_HISTORY_REVERT_DISABLED=True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
 
 
 # Rutas para archivos generales
@@ -99,6 +119,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
     'simple_history.middleware.HistoryRequestMiddleware',
+    
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 
@@ -125,7 +148,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }

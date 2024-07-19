@@ -35,9 +35,23 @@ class Rutina(BaseModel):
     objetivos = models.TextField(blank=True)  # Objetivos específicos de la rutina
     dificultad = models.CharField(max_length=20, choices=DIFICULTADES, default='principiante')
     comentarios = models.TextField(blank=True)  # Notas adicionales sobre la rutina
+    ejercicios = models.ManyToManyField(Ejercicio, through='EjercicioRutina')
 
     def __str__(self):
         return self.nombre
+
+class EjercicioRutina(BaseModel):
+    rutina = models.ForeignKey(Rutina, on_delete=models.CASCADE)
+    ejercicio = models.ForeignKey(Ejercicio, on_delete=models.CASCADE)
+    repeticiones = models.IntegerField(blank=True, null=True)
+    series = models.IntegerField(blank=True, null=True)
+    peso = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    descanso = models.DurationField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.ejercicio.nombre} en {self.rutina.nombre}'
+    
+    
 
 class SesionEntrenamiento(BaseModel):
     miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE, related_name='sesiones')

@@ -38,3 +38,14 @@ drf-nested-routers
 
 #Imagenes
 Pillow
+
+
+# Cities Light
+django-cities-light
+
+
+# Channels
+channels
+
+# Cors
+django-cors-headers

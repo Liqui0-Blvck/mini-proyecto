@@ -13,6 +13,10 @@ class EjercicioViewSet(viewsets.ModelViewSet):
 class RutinaViewSet(viewsets.ModelViewSet):
     queryset = Rutina.objects.all()
     serializer_class = RutinaSerializer
+    
+class EjercicioEnRutinaViewSet(viewsets.ModelViewSet):
+    queryset = EjercicioRutina.objects.all()
+    serializer_class = EjercicioEnRutinaSerializer
 
 class SesionEntrenamientoViewSet(viewsets.ModelViewSet):
     queryset = SesionEntrenamiento.objects.all()
