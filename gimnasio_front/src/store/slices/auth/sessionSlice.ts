@@ -30,7 +30,8 @@ const sessionSlice = createSlice({
         },
         tokenRefrescado(state, action: PayloadAction<string>){
             state.token = action.payload
-        }
+        },
+        
     },
 })
 

@@ -1,10 +1,13 @@
-import React, { createContext, FC, ReactNode, useContext, useMemo } from 'react';
+import React, { createContext, FC, ReactNode, useContext, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage, { ISetValue } from '../hooks/useCookieStorage';
 import { authPages } from '../config/pages.config';
 import useFakeUserAPI from '../mocks/hooks/useFakeUserAPI';
 import { TUser } from '../mocks/db/users.db';
 import useCookiesStorage from '../hooks/useCookieStorage';
+import { useAppDispatch, useAppSelector } from '../store';
+import { RootState } from '../store/rootReducer';
+import { setUser, UserState } from '../store/slices/auth/userSlice';
 
 export interface IAuthContextProps {
 	tokens:  string | ISetValue | null
@@ -16,8 +19,31 @@ interface IAuthProviderProps {
 	children: ReactNode;
 }
 export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
-	const [tokens, setTokens] = useCookiesStorage('user', null);
-	const navigate = useNavigate();
+	const [tokens, setTokens] = useCookiesStorage('user', null)
+	const [userData, setUserData ] = useCookiesStorage('userData', null)
+	const dispatch = useAppDispatch()
+	const session = useAppSelector((state: RootState) => state.auth.session)
+	const user = useAppSelector((state: RootState) => state.auth.user)
+	const navigate = useNavigate()
+
+
+	useEffect(() => {
+		if (session && user) {
+			const jsonSession = JSON.stringify(session)
+			const jsonUserData = JSON.stringify(user)
+			if (typeof setTokens === 'function') setTokens(jsonSession)
+			if (typeof setUserData === 'function') setUserData(jsonUserData) 
+		}
+	}, [session, user])
+
+	useEffect(() => {
+		if(typeof userData === 'string') {
+			const jsonUserData = JSON.parse(userData)
+			dispatch(setUser(jsonUserData))
+		}
+	}, [userData])
+
+
 
 	// call this function to sign out logged-in user
 	const onLogout = async () => {

@@ -45,8 +45,8 @@ const LoginPage = () => {
 
 			return errors;
 		},
-		onSubmit: (values: TValues, { setFieldError }) => {
-				dispatch(onLogin({ data: { ...values }, navigate, setTokens: setTokens }))
+		onSubmit: (values: TValues) => {
+				dispatch(onLogin({ data: { ...values }, navigate }))
 		},
 	});
 

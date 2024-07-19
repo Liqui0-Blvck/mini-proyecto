@@ -86,14 +86,13 @@ export const obtener_configuracion = createAsyncThunk(
 
 export const onLogin = createAsyncThunk(
   'auth/login',
-  async (payload: { data: { email: string, password: string },  navigate: any, setTokens: any}, ThunkApi) => {
-    const { data, navigate, setTokens } = payload
+  async (payload: { data: { email: string, password: string },  navigate: any}, ThunkApi) => {
+    const { data, navigate } = payload
     try {
       const res = await axios.post<AuthTokens>(`auth/jwt/create`, data)
       if (res.status === 200){
         const data: AuthTokens = res.data
         ThunkApi.dispatch(signInSuccess(res.data))
-        setTokens(JSON.stringify(res.data))
         const perfil: TPerfil | undefined = await ThunkApi.dispatch(obtener_perfil({ token: data.access! })).unwrap()
         const configuracion = await ThunkApi.dispatch(obtener_configuracion({ id: perfil?.id, token: data.access! })).unwrap()
         ThunkApi.dispatch(setUser({ perfil, configuracion }))

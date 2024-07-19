@@ -27,6 +27,8 @@ import RichText from '../components/RichText';
 import Radio, { RadioGroup } from '../components/form/Radio';
 import useDarkMode from '../hooks/useDarkMode';
 import { TDarkMode } from '../types/darkMode.type';
+import { useAppDispatch, useAppSelector } from '../store';
+import { RootState } from '../store/rootReducer';
 
 type TTab = {
 	text:
@@ -93,6 +95,13 @@ const ProfilePage = () => {
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const { userData, isLoading } = useAuth();
+
+
+	const user = useAppSelector((state: RootState) => state.auth.user)
+
+	console.log(user)
+
+
 	const [activeTab, setActiveTab] = useState<TTab>(TAB.EDIT);
 
 	const defaultProps: IButtonProps = {
@@ -113,7 +122,7 @@ const ProfilePage = () => {
 		initialValues: {
 			fileUpload: '',
 			username: userData?.username,
-			email: userData?.email,
+			email: user?.perfil?.usuario.email,
 			firstName: userData?.firstName,
 			lastName: userData?.lastName,
 			position: userData?.position,

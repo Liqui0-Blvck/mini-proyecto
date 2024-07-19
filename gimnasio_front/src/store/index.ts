@@ -4,8 +4,6 @@ import { AppDispatch } from './store';
 import { RootState } from './rootReducer';
 
 
-
-
 // Uso de dispatch con el tipo AppDispatch
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
