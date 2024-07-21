@@ -1,13 +1,12 @@
-import React, { createContext, FC, ReactNode, useContext, useEffect, useMemo } from 'react';
+import { createContext, FC, ReactNode, useContext, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useLocalStorage, { ISetValue } from '../hooks/useCookieStorage';
+import { ISetValue } from '../hooks/useCookieStorage';
 import { authPages } from '../config/pages.config';
-import useFakeUserAPI from '../mocks/hooks/useFakeUserAPI';
-import { TUser } from '../mocks/db/users.db';
 import useCookiesStorage from '../hooks/useCookieStorage';
 import { useAppDispatch, useAppSelector } from '../store';
 import { RootState } from '../store/rootReducer';
-import { setUser, UserState } from '../store/slices/auth/userSlice';
+import { setUser } from '../store/slices/auth/userSlice';
+import { persistanceTokens, SessionState, signInSuccess } from '../store/slices/auth/sessionSlice';
 
 export interface IAuthContextProps {
 	tokens:  string | ISetValue | null
@@ -26,6 +25,8 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 	const user = useAppSelector((state: RootState) => state.auth.user)
 	const navigate = useNavigate()
 
+	console.log(session)
+
 
 	useEffect(() => {
 		if (session && user) {
@@ -43,11 +44,19 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 		}
 	}, [userData])
 
+	useEffect(() => {
+		if (typeof tokens === 'string'){
+			const jsonTokens: SessionState = JSON.parse(tokens)
+			dispatch(persistanceTokens(jsonTokens))
+		} 
+	}, [user])
+
 
 
 	// call this function to sign out logged-in user
 	const onLogout = async () => {
 		if (typeof setTokens === 'function') await setTokens(null);
+		if (typeof setUserData === 'function') await setUserData(null)
 		navigate(`../${authPages.loginPage.to}`, { replace: true });
 	};
 

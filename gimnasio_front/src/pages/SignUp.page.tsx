@@ -10,17 +10,19 @@ import FieldWrap from '../components/form/FieldWrap';
 import Icon from '../components/icon/Icon';
 import Validation from '../components/form/Validation';
 import { useAppDispatch } from '../store/hook';
-import { onLogin } from '../store/slices/auth/authSlices';
+import { onLogin, onSignUp } from '../store/slices/auth/authSlices';
 import useCookiesStorage from '../hooks/useCookieStorage';
-import { authPages } from '../config/pages.config';
+import { SignUpValidation } from '../utils/validationForm.utils';
 
 
 type TValues = {
 	email: string;
+  username: string
 	password: string;
+  re_password: string;
 };
 
-const LoginPage = () => {
+const SignUpPage = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 	const [tokens, setTokens] = useCookiesStorage('user', null);
@@ -31,42 +33,32 @@ const LoginPage = () => {
 	const formik = useFormik({
 		initialValues: {
 			email: '',
+      username: '',
 			password: '',
+      re_password: '',
 		},
-		validate: (values: TValues) => {
-			const errors: Partial<TValues> = {};
-
-			if (!values.email) {
-				errors.email = 'Required';
-			}
-
-			if (!values.password) {
-				errors.password = 'Required';
-			}
-
-			return errors;
-		},
+    validationSchema: SignUpValidation,
 		onSubmit: (values: TValues) => {
-				dispatch(onLogin({ data: { ...values }, navigate }))
+				dispatch(onSignUp({ data: { ...values }, navigate }))
 		},
 	});
 
 
 
 	return (
-		<PageWrapper isProtectedRoute={false} className='bg-white dark:bg-inherit' name='Sign In'>
+		<PageWrapper isProtectedRoute={false} className=' bg-white dark:bg-inherit' name='Registro'>
 			<div className='container mx-auto flex h-full items-center justify-center'>
 				<div className='flex max-w-sm flex-col gap-8'>
 					<div>
 						<LogoTemplate className='h-12' />
 					</div>
 					<div>
-						<span className='text-4xl font-semibold'>Inicia Sesión</span>
+						<span className='text-4xl font-semibold'>Registro</span>
 					</div>
 					<div>
-						<span>Ingresa tus credenciales para iniciar sesión</span>
+						<span>Registrate con una nueva cuenta</span>
 					</div>
-					<div className='grid grid-cols-12 gap-4'>
+					{/* <div className='grid grid-cols-12 gap-4'>
 						<div className='col-span-6'>
 							<Button
 								icon='CustomGoogle'
@@ -87,11 +79,8 @@ const LoginPage = () => {
 								Apple
 							</Button>
 						</div>
-					</div>
+					</div> */}
 					<div className='border border-zinc-500/25 dark:border-zinc-500/50' />
-					<div>
-						<span>O continua con tu correo electronico</span>
-					</div>
 					<form className='flex flex-col gap-4' noValidate>
 						<div
 							className={classNames({
@@ -117,6 +106,31 @@ const LoginPage = () => {
 								</FieldWrap>
 							</Validation>
 						</div>
+
+            <div
+							className={classNames({
+								'mb-2': !formik.isValid,
+							})}>
+							<Validation
+								isValid={formik.isValid}
+								isTouched={formik.touched.username}
+								invalidFeedback={formik.errors.username}
+								validFeedback='Good'>
+								<FieldWrap
+									firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
+									<Input
+										dimension='lg'
+										id='username'
+										name='username'
+										placeholder='Nombre usuario'
+										value={formik.values.username}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+									/>
+								</FieldWrap>
+							</Validation>
+						</div>
+
 						<div
 							className={classNames({
 								'mb-2': !formik.isValid,
@@ -140,11 +154,44 @@ const LoginPage = () => {
 									<Input
 										dimension='lg'
 										type={passwordShowStatus ? 'text' : 'password'}
-										autoComplete='current-password'
 										id='password'
 										name='password'
 										placeholder='Password'
 										value={formik.values.password}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+									/>
+								</FieldWrap>
+							</Validation>
+						</div>
+
+            <div
+							className={classNames({
+								'mb-2': !formik.isValid,
+							})}>
+							<Validation
+								isValid={formik.isValid}
+								isTouched={formik.touched.re_password}
+								invalidFeedback={formik.errors.re_password}
+								validFeedback='Good'>
+								<FieldWrap
+									firstSuffix={<Icon icon='HeroKey' className='mx-2' />}
+									lastSuffix={
+										<Icon
+											className='mx-2 cursor-pointer'
+											icon={passwordShowStatus ? 'HeroEyeSlash' : 'HeroEye'}
+											onClick={() => {
+												setPasswordShowStatus(!passwordShowStatus);
+											}}
+										/>
+									}>
+									<Input
+										dimension='lg'
+										type={passwordShowStatus ? 'text' : 'password'}
+										id='re_password'
+										name='re_password'
+										placeholder='Confirmar Password'
+										value={formik.values.re_password}
 										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
 									/>
@@ -157,17 +204,17 @@ const LoginPage = () => {
 								variant='solid'
 								className='w-full font-semibold'
 								onClick={() => formik.handleSubmit()}>
-								Ingresar
+								Registrate
 							</Button>
 						</div>
 					</form>
 					<div>
 						<span className='flex gap-2 text-sm'>
 							<span className='text-zinc-400 dark:text-zinc-600'>
-								¿Tienes una cuenta?
+								Don’t have an account?
 							</span>
-							<Link to={`${authPages.signUp.to}`} className='hover:text-inherit'>
-								Registrate
+							<Link to='/' className='hover:text-inherit'>
+								Sign up
 							</Link>
 						</span>
 					</div>
@@ -177,4 +224,4 @@ const LoginPage = () => {
 	);
 };
 
-export default LoginPage;
+export default SignUpPage;

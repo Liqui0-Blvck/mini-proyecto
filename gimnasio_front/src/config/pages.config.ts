@@ -484,6 +484,12 @@ export const authPages = {
 		text: 'Login',
 		icon: 'HeroArrowRightOnRectangle',
 	},
+	signUp: {
+		id: 'signUpPage',
+		to: '/sign-up',
+		text: 'Registro',
+		icon: 'HeroArrowRightOnRectangle',
+	},
 	profilePage: {
 		id: 'profilePage',
 		to: '/profile',

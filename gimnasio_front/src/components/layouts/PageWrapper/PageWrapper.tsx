@@ -1,9 +1,12 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useEffect } from 'react';
 import classNames from 'classnames';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/authContext';
-import { authPages } from '../../../config/pages.config';
+import { appPages, authPages } from '../../../config/pages.config';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
+import { useAppSelector } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
+import { extractRoutes } from '../../../utils/getRoutesPath.util';
 
 interface IPageWrapperProps {
 	children: ReactNode;
@@ -12,19 +15,39 @@ interface IPageWrapperProps {
 	title?: string;
 	name?: string;
 }
+
 const PageWrapper: FC<IPageWrapperProps> = (props) => {
-	const { children, className, isProtectedRoute, title, name, ...rest } = props;
+	const { children, className, isProtectedRoute = true, title, name, ...rest } = props;
 
 	useDocumentTitle({ title, name });
+	const navigate = useNavigate()
 
-	const { tokens } = useAuth();
+	const { pathname } = useLocation();
+	const session = useAppSelector((state: RootState) => state.auth.session);
 
+	const appPagesRoutes = extractRoutes(appPages);
+	const authPagesRoutes = extractRoutes(authPages);
 
-	console.log(tokens)
-	if (isProtectedRoute && !tokens) {
-		// user is not authenticated
-		return <Navigate to={authPages.loginPage.to} />;
-	}
+	const isAuthorizedPage = appPagesRoutes.includes(pathname);
+	const isAuthorizedAuthPage = authPagesRoutes.includes(pathname);
+
+	useEffect(() => {
+		if (!session.signedIn && isProtectedRoute) {
+			// Redirigir al login si no está autenticado y la ruta es protegida
+			navigate(authPages.loginPage.to, { replace: true });
+		} else if (session.signedIn && !isAuthorizedPage && !isAuthorizedAuthPage) {
+			// Mostrar página de "No Encontrada" si está autenticado pero la ruta no es válida
+			navigate('/404', { replace: true });
+		}
+	}, [session, isProtectedRoute, pathname, isAuthorizedPage, isAuthorizedAuthPage, navigate]);
+
+	useEffect(() => {
+		if (session.signedIn && pathname === authPages.loginPage.to) {
+			// Redirigir al dashboard o página inicial si el usuario autenticado intenta acceder a la página de login
+			navigate('/home', { replace: true });
+		}
+	}, [session.signedIn, pathname, navigate]);
+
 
 	return (
 		<main
@@ -35,6 +58,7 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 		</main>
 	);
 };
+
 PageWrapper.defaultProps = {
 	className: undefined,
 	isProtectedRoute: true,
