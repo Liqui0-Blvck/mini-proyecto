@@ -3,6 +3,18 @@ import { RouteProps } from 'react-router-dom';
 import { appPages, authPages, componentsPages, examplePages } from '../config/pages.config';
 import NotFoundPage from '../pages/NotFound.page';
 import LoginPage from '../pages/Login.page';
+import SignUpPage from '../pages/SignUp.page';
+
+
+//Autenticacion principal
+
+
+
+
+
+
+
+
 
 /**
  * UI
@@ -382,6 +394,9 @@ const contentRoutes: RouteProps[] = [
 	 */
 
 	{ path: authPages.loginPage.to, element: <LoginPage /> },
+	{ path: authPages.signUp.to, element: <SignUpPage /> },
+	
+
 	{ path: authPages.profilePage.to, element: <ProfilePage /> },
 
 	{ path: '*', element: <NotFoundPage /> },

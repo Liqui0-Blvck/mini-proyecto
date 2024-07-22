@@ -31,9 +31,14 @@ const sessionSlice = createSlice({
         tokenRefrescado(state, action: PayloadAction<string>){
             state.token = action.payload
         },
+        persistanceTokens(state, action: PayloadAction<SessionState>){
+            state.signedIn = action.payload.signedIn
+            state.token = action.payload.token
+            state.refresh = action.payload.refresh
+        }
         
     },
 })
 
-export const { signInSuccess, signOutSuccess, tokenRefrescado } = sessionSlice.actions
+export const { signInSuccess, signOutSuccess, tokenRefrescado, persistanceTokens} = sessionSlice.actions
 export default sessionSlice.reducer

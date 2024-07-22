@@ -6,8 +6,7 @@ import axios, { delay } from '../../../config/axios.config'
 import { AuthTokens, TConfiguracion, TPerfil } from "../../../types/core/core.types";
 import { toast } from "react-toastify";
 import { setUser } from "./userSlice";
-import { Dispatch, SetStateAction } from "react";
-import { ISetValue } from "../../../hooks/useCookieStorage";
+
 
 
 export const refrescarToken = createAsyncThunk(
@@ -51,12 +50,29 @@ export const verificarToken = createAsyncThunk(
   }
 );
 
-export const obtener_perfil = createAsyncThunk(
-  'auth/obtener_perfil',
+export const obtener_me = createAsyncThunk(
+  'auth/obtener_me',
   async (payload: { token: string }, ThunkApi) => {
     const { token } = payload
     try {
-      const res = await fetchWithToken('api/perfil/', token)
+      const res = await fetchWithToken(`auth/users/me/`, token)
+      if (res.status === 200){
+        const data = res.data
+        return data
+      }
+    } catch (error: any) {
+      return ThunkApi.rejectWithValue('No se pudo realizar la petición')
+    }
+  }
+)
+
+
+export const obtener_perfil = createAsyncThunk(
+  'auth/obtener_perfil',
+  async (payload: { token: string, id: number }, ThunkApi) => {
+    const { token, id } = payload
+    try {
+      const res = await fetchWithToken(`api/perfil/${id}`, token)
       if (res.status === 200){
         const data: TPerfil = res.data
         return data
@@ -93,7 +109,8 @@ export const onLogin = createAsyncThunk(
       if (res.status === 200){
         const data: AuthTokens = res.data
         ThunkApi.dispatch(signInSuccess(res.data))
-        const perfil: TPerfil | undefined = await ThunkApi.dispatch(obtener_perfil({ token: data.access! })).unwrap()
+        const me = await ThunkApi.dispatch(obtener_me({ token: data.access! })).unwrap()
+        const perfil: TPerfil | undefined = await ThunkApi.dispatch(obtener_perfil({ id: me.id, token: data.access! })).unwrap()
         const configuracion = await ThunkApi.dispatch(obtener_configuracion({ id: perfil?.id, token: data.access! })).unwrap()
         ThunkApi.dispatch(setUser({ perfil, configuracion }))
         toast.success('Inicio sesión correcto', {
@@ -109,4 +126,38 @@ export const onLogin = createAsyncThunk(
       }
     }
   }
-);
+)
+
+
+export const onSignUp = createAsyncThunk(
+  'auth/sign-up',
+  async (payload: { data: { email: string, password: string, re_password: string },  navigate: any}) => {
+    const { data, navigate } = payload
+
+    try {
+      //@ts-ignore
+      const res = await fetch(`${import.meta.env.VITE_URL_DEV}/auth/users/`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+
+      if (res.ok){
+        toast.success('Se registrado exitosamente', {
+          autoClose: 300,
+          onClose: () => {
+            navigate('/login', { replace: true })
+          }
+        });
+      }
+
+    } catch (error: any) {
+      if (error.response && error.response.status) {
+        toast.error('No se ha encontrado una cuenta con estas credenciales');
+      }
+    }
+  }
+)
+
