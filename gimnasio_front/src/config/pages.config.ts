@@ -491,9 +491,9 @@ export const authPages = {
 		icon: 'HeroArrowRightOnRectangle',
 	},
 	profilePage: {
-		id: 'profilePage',
-		to: '/profile',
-		text: 'Profile',
+		id: 'perfilPage',
+		to: '/perfil',
+		text: 'Perfil',
 		icon: 'HeroUser',
 	},
 };

@@ -24,8 +24,11 @@ const userSlice = createSlice({
             state.configuracion = action.payload?.configuracion
             state.authority = action.payload?.authority
         },
+        setDataPerfil(state, action: PayloadAction<TPerfil>) {
+            state.perfil = action.payload
+        }
     },
 })
 
-export const { setUser } = userSlice.actions
+export const { setUser, setDataPerfil } = userSlice.actions
 export default userSlice.reducer

@@ -25,9 +25,6 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 	const user = useAppSelector((state: RootState) => state.auth.user)
 	const navigate = useNavigate()
 
-	console.log(session)
-
-
 	useEffect(() => {
 		if (session && user) {
 			const jsonSession = JSON.stringify(session)
@@ -51,12 +48,10 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 		} 
 	}, [user])
 
-
-
 	// call this function to sign out logged-in user
 	const onLogout = async () => {
-		if (typeof setTokens === 'function') await setTokens(null);
-		if (typeof setUserData === 'function') await setUserData(null)
+		if (typeof setTokens === 'function') await setTokens(JSON.stringify(session));
+		if (typeof setUserData === 'function') await setUserData(JSON.stringify(user))
 		navigate(`../${authPages.loginPage.to}`, { replace: true });
 	};
 

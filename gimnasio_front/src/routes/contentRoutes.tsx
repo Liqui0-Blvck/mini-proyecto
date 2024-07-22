@@ -2,8 +2,8 @@ import React, { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { appPages, authPages, componentsPages, examplePages } from '../config/pages.config';
 import NotFoundPage from '../pages/NotFound.page';
-import LoginPage from '../pages/Login.page';
-import SignUpPage from '../pages/SignUp.page';
+import LoginPage from '../pages/Auth/Login.page';
+import SignUpPage from '../pages/Auth/SignUp.page';
 
 
 //Autenticacion principal
@@ -146,7 +146,7 @@ const ProjectDashboardPage = lazy(
 const ProjectBoardPage = lazy(() => import('../pages/project/ProjectBoardPage/ProjectBoard.page'));
 
 const ExamplesPage = lazy(() => import('../pages/ExamplePage/Examples.page'));
-const ProfilePage = lazy(() => import('../pages/Profile.page'));
+const ProfilePage = lazy(() => import('../pages/Auth/Profile.page'));
 
 /**
  * AI

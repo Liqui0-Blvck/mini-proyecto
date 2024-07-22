@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FetchAction, PostActions } from "../../../types/peticiones/peticiones.types";
-import { fetchWithToken, fetchWithTokenPost } from "../../../api/peticionesBase";
+import { fetchWithToken, fetchWithTokenPatch, fetchWithTokenPost } from "../../../api/peticionesBase";
 import { SessionState, signInSuccess, tokenRefrescado } from "./sessionSlice";
 import axios, { delay } from '../../../config/axios.config'
 import { AuthTokens, TConfiguracion, TPerfil } from "../../../types/core/core.types";
 import { toast } from "react-toastify";
-import { setUser } from "./userSlice";
+import { setDataPerfil, setUser } from "./userSlice";
 
 
 
@@ -161,3 +161,31 @@ export const onSignUp = createAsyncThunk(
   }
 )
 
+
+
+
+// Actualizacion de datos 
+
+export const actualizar_perfil = createAsyncThunk(
+  'auth/sign-up',
+  async (payload: PostActions, ThunkApi) => {
+    const { id, data, token } = payload
+
+    try {
+      const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
+      if (!token_verificado) throw new Error('No esta verificado el token')
+      const res = await fetchWithTokenPatch(`api/actualizar_perfil/${id}/`, data, token_verificado)
+      if (res.status){
+        toast.success('Perfil Actualizado exitosamente', {
+          autoClose: 500,
+        })
+        return ThunkApi.dispatch(setDataPerfil(res.data))
+      }
+    } catch (error: any) {
+      toast.error('No se pudo actualizar', {
+        autoClose: 500
+      })
+      return ThunkApi.rejectWithValue('No se pudo actualizar')
+    }
+
+  })
