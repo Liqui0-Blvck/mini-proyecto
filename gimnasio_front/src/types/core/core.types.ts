@@ -8,6 +8,10 @@ export type TPerfil = {
   usuario: {
     id: number
     email: string
+    first_name: string
+    second_name: string
+    father_last_name: string
+    mother_last_name: string
     is_staff: boolean,
     is_active: boolean,
     date_joined: string,

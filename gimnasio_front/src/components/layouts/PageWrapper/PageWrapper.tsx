@@ -38,15 +38,10 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 		} else if (session.signedIn && !isAuthorizedPage && !isAuthorizedAuthPage) {
 			// Mostrar página de "No Encontrada" si está autenticado pero la ruta no es válida
 			navigate('/404', { replace: true });
+		} else {
+			navigate(authPages.loginPage.to, { replace: true })
 		}
 	}, [session, isProtectedRoute, pathname, isAuthorizedPage, isAuthorizedAuthPage, navigate]);
-
-	useEffect(() => {
-		if (session.signedIn && pathname === authPages.loginPage.to) {
-			// Redirigir al dashboard o página inicial si el usuario autenticado intenta acceder a la página de login
-			navigate('/home', { replace: true });
-		}
-	}, [session.signedIn, pathname, navigate]);
 
 
 	return (

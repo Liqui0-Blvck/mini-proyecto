@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 import { Link, useNavigate } from 'react-router-dom';
-import PageWrapper from '../components/layouts/PageWrapper/PageWrapper';
-import Button from '../components/ui/Button';
-import Input from '../components/form/Input';
-import LogoTemplate from '../templates/layouts/Logo/Logo.template';
-import FieldWrap from '../components/form/FieldWrap';
-import Icon from '../components/icon/Icon';
-import Validation from '../components/form/Validation';
-import { useAppDispatch } from '../store/hook';
-import { onLogin } from '../store/slices/auth/authSlices';
-import useCookiesStorage from '../hooks/useCookieStorage';
-import { authPages } from '../config/pages.config';
+import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
+import Button from '../../components/ui/Button';
+import Input from '../../components/form/Input';
+import LogoTemplate from '../../templates/layouts/Logo/Logo.template';
+import FieldWrap from '../../components/form/FieldWrap';
+import Icon from '../../components/icon/Icon';
+import Validation from '../../components/form/Validation';
+import { useAppDispatch } from '../../store/hook';
+import { onLogin } from '../../store/slices/auth/authSlices';
+import useCookiesStorage from '../../hooks/useCookieStorage';
+import { authPages } from '../../config/pages.config';
 
 
 type TValues = {
