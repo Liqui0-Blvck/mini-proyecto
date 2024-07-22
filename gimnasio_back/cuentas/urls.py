@@ -4,7 +4,7 @@ from . import views
 
 # Definir el router principal
 router = routers.DefaultRouter()
-router.register(r'perfil', views.PerfilViewSet)
+router.register(r'perfil', views.PerfilViewSet, basename='perfil')
 
 # Definir el router anidado para perfil y sus relaciones
 perfil_router = routers.NestedDefaultRouter(router, r'perfil', lookup='perfil')

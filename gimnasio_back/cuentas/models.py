@@ -19,7 +19,7 @@ class Perfil(models.Model):
     enlace_redes_sociales = models.URLField(blank=True)
 
     def __str__(self):
-        return self.usuario.username
+        return self.usuario.first_name
     
 class ConfiguracionUsuario(models.Model):
     usuario = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='configuracion')
@@ -31,7 +31,7 @@ class ConfiguracionUsuario(models.Model):
     fuente_aplicacion = models.CharField(max_length=50, choices=FONT_CHOICES, default='Arial, sans-serif')
 
     def __str__(self):
-        return self.usuario.username
+        return self.usuario.first_name
     
 
 class Actividad(BaseModel):

@@ -12,5 +12,5 @@ class CustomUserSerializer(UserSerializer):
 
     class Meta(UserSerializer.Meta):
         model = CustomUser
-        fields = ('id', 'email', 'is_staff', 'is_active', 'date_joined', 'groups', 'user_permissions',)  # Campos que quieres serializar
+        fields = ('id', 'email', 'first_name', 'second_name', 'father_last_name', 'mother_last_name', 'is_staff', 'is_active', 'date_joined', 'groups', 'user_permissions',)  # Campos que quieres serializar
 
