@@ -46,8 +46,10 @@ class PerfilViewSet(viewsets.ModelViewSet):
 
     
 class ConfiguracionUsuarioViewSet(viewsets.ModelViewSet):
-    queryset = ConfiguracionUsuario.objects.all()
+    queryset = ConfiguracionUsuario.objects.first()
     serializer_class = ConfiguracionUsuarioSerializer
+    
+    
     
 class ActividadViewSet(viewsets.ModelViewSet):
     queryset = Actividad.objects.all()
