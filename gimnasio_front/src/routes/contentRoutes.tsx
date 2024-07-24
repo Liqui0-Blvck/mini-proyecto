@@ -146,7 +146,7 @@ const ProjectDashboardPage = lazy(
 const ProjectBoardPage = lazy(() => import('../pages/project/ProjectBoardPage/ProjectBoard.page'));
 
 const ExamplesPage = lazy(() => import('../pages/ExamplePage/Examples.page'));
-const ProfilePage = lazy(() => import('../pages/Auth/Profile.page'));
+const ProfilePage = lazy(() => import('../pages/Perfil/Profile.page'));
 
 /**
  * AI

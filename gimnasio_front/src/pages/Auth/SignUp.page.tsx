@@ -211,10 +211,10 @@ const SignUpPage = () => {
 					<div>
 						<span className='flex gap-2 text-sm'>
 							<span className='text-zinc-400 dark:text-zinc-600'>
-								Don’t have an account?
+								¿Tienes una cuenta?
 							</span>
 							<Link to='/' className='hover:text-inherit'>
-								Sign up
+								Inicia sesión
 							</Link>
 						</span>
 					</div>

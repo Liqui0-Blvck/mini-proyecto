@@ -75,10 +75,9 @@ interface IAsideProps extends HTMLAttributes<HTMLElement> {
 const Aside: FC<IAsideProps> = (props) => {
 	const { children, className, ...rest } = props;
 
-	const { asideStatus } = useAsideStatus();
-	const user = useAppSelector((state: RootState) => state.auth.user)
+	const { asideStatus } = useAsideStatus()
+	const { configuracion } = useAppSelector((state: RootState) => state.auth.user)
 
-	console.log(user)
 
 	return (
 		<aside
@@ -90,7 +89,7 @@ const Aside: FC<IAsideProps> = (props) => {
 				'border-zinc-300/25 bg-white',
 				'py-6',
 				'ltr:border-r rtl:border-l',
-				`dark:border-zinc-800/50 dark:bg-${'emerald'}-900 dark:text-white`,
+				`dark:border-zinc-800/50 dark:bg-${configuracion?.color_aplicacion}-900 dark:text-white`,
 				themeConfig.transition,
 				className,
 				// Mobile Design

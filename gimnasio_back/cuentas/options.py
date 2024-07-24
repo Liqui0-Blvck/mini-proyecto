@@ -12,7 +12,7 @@ GENDERS = [
     ('genderqueer', 'Genderqueer'),
     ('travesti', 'Travesti'),
     ('two-spirit', 'Two-Spirit'),
-    ('otro/no especificado', 'Otro/No especificado')
+    ('otro', 'Otro/No especificado')
 ]
 
 COLOR_CHOICES = [

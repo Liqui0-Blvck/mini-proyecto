@@ -33,12 +33,10 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 
 	useEffect(() => {
 		if (!session.signedIn && isProtectedRoute) {
-			// Redirigir al login si no está autenticado y la ruta es protegida
 			navigate(authPages.loginPage.to, { replace: true });
 		} else if (session.signedIn && !isAuthorizedPage && !isAuthorizedAuthPage) {
-			// Mostrar página de "No Encontrada" si está autenticado pero la ruta no es válida
 			navigate('/404', { replace: true });
-		} else {
+		} else if (!session.signedIn && !isAuthorizedAuthPage) {
 			navigate(authPages.loginPage.to, { replace: true })
 		}
 	}, [session, isProtectedRoute, pathname, isAuthorizedPage, isAuthorizedAuthPage, navigate]);

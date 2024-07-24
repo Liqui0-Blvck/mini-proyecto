@@ -167,14 +167,14 @@ export const onSignUp = createAsyncThunk(
 // Actualizacion de datos 
 
 export const actualizar_perfil = createAsyncThunk(
-  'auth/sign-up',
+  'auth/actualizar_perfil',
   async (payload: PostActions, ThunkApi) => {
     const { id, data, token } = payload
 
     try {
       const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
       if (!token_verificado) throw new Error('No esta verificado el token')
-      const res = await fetchWithTokenPatch(`api/actualizar_perfil/${id}/`, data, token_verificado)
+      const res = await fetchWithTokenPatch(`api/perfil/actualizar_perfil/?usuario=${id}`, data, token_verificado)
       if (res.status){
         toast.success('Perfil Actualizado exitosamente', {
           autoClose: 500,

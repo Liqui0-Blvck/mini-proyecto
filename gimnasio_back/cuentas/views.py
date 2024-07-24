@@ -1,5 +1,5 @@
 
-from rest_framework import  viewsets
+from rest_framework import  viewsets, generics
 from cuentas.serializers import ActividadSerializer, ConfiguracionUsuarioSerializer, InteresesUsuarioSerializer, PerfilSerializer, RegistroActividadSerializer
 from .models import *
 from core.serializers import *
@@ -10,7 +10,6 @@ from rest_framework.decorators import action
 
     
 class PerfilViewSet(viewsets.ModelViewSet):
-    lookup_field = 'usuario__pk'
     queryset = Perfil.objects.all()
     serializer_class = PerfilSerializer
     
@@ -41,13 +40,13 @@ class PerfilViewSet(viewsets.ModelViewSet):
         return Response({
             "perfil": perfil_serializer.data
         })
-
-        # Si necesitas actualizar campos específicos del perfil
-
     
-class ConfiguracionUsuarioViewSet(viewsets.ModelViewSet):
-    queryset = ConfiguracionUsuario.objects.first()
-    serializer_class = ConfiguracionUsuarioSerializer
+    @action(detail=True, methods=['GET'], url_path='configuracion')
+    def configuracion(self, request, pk=None):
+        perfil = Perfil.objects.get(pk = pk)
+        configuracion = ConfiguracionUsuario.objects.filter(usuario = perfil.usuario).first()
+        serializer_conf = ConfiguracionUsuarioSerializer(configuracion)
+        return Response(serializer_conf.data)
     
     
     
