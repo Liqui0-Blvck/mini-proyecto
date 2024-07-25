@@ -38,8 +38,8 @@ type TThemeConfigs = {
 };
 
 const themeConfig: TThemeConfigs = {
-	projectTitle: 'Fyr',
-	projectName: 'React TypeScript Tailwind Admin & AI Chat Template',
+	projectTitle: 'GYM',
+	projectName: 'Gimnasio App',
 	language: 'en',
 	theme: DARK_MODE.SYSTEM,
 	themeColor: 'blue',

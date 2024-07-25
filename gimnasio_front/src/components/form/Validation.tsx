@@ -2,9 +2,9 @@ import React, { cloneElement, FC, ReactElement } from 'react';
 
 export interface IValidationBaseProps {
 	isValidMessage?: boolean;
-	isValid: boolean;
-	isTouched: boolean | undefined;
-	invalidFeedback: string | undefined;
+	isValid?: boolean;
+	isTouched?: boolean | undefined;
+	invalidFeedback?: string | undefined;
 	validFeedback?: string;
 }
 
@@ -13,14 +13,17 @@ interface IValidationProps extends IValidationBaseProps {
 }
 const Validation: FC<IValidationProps> = (props) => {
 	const { children, isValidMessage, isValid, isTouched, invalidFeedback, validFeedback } = props;
+
+	const touched = Boolean(isTouched); // Asegúrate de que sea un booleano
+
 	return (
 		<>
 			{cloneElement(children, {
 				isValid,
-				isTouched,
+				isTouched: touched,
 				invalidFeedback,
 			})}
-			{isValidMessage && !isValid && isTouched && (
+			{isValidMessage && !isValid && touched && (
 				<>
 					{invalidFeedback && (
 						<div
@@ -51,6 +54,7 @@ const Validation: FC<IValidationProps> = (props) => {
 		</>
 	);
 };
+
 Validation.defaultProps = {
 	isValidMessage: true,
 	validFeedback: undefined,

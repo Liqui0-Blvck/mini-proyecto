@@ -20,13 +20,14 @@ const navItemClasses = {
 		'rounded-xl',
 		'border',
 		'text-zinc-500',
+		'dark:text-zinc-300',
 		'hover:text-zinc-950 dark:hover:text-zinc-100',
 		'grow',
 		themeConfig.transition,
 	),
 	inactive: 'border-transparent',
-	active: 'border-zinc-300 text-zinc-950 dark:border-zinc-800 dark:text-zinc-100',
-	here: 'text-zinc-950 dark:text-zinc-100 border-transparent',
+	active: 'border-zinc-300 text-zinc-950 dark:border-zinc-800 dark:text-white',
+	here: 'text-zinc-950 dark:text-white border-transparent',
 };
 
 const navItemChildCheck = (
@@ -153,7 +154,7 @@ export const NavButton: FC<INavButtonProps> = (props) => {
 				size='text-2xl'
 				className={classNames(
 					{
-						'text-zinc-500 hover:text-zinc-950 dark:hover:text-zinc-100': !iconColor,
+						'text-zinc-500 hover:text-zinc-950 dark:hover:text-white': !iconColor,
 					},
 					themeConfig.transition,
 					iconClassName,

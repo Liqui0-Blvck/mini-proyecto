@@ -5,7 +5,7 @@ import { authPages } from '../config/pages.config';
 import useCookiesStorage from '../hooks/useCookieStorage';
 import { useAppDispatch, useAppSelector } from '../store';
 import { RootState } from '../store/rootReducer';
-import { setUser } from '../store/slices/auth/userSlice';
+import { setColorApp, setUser, UserState } from '../store/slices/auth/userSlice';
 import { persistanceTokens, SessionState, signInSuccess } from '../store/slices/auth/sessionSlice';
 
 export interface IAuthContextProps {
@@ -30,16 +30,18 @@ export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
 			const jsonSession = JSON.stringify(session)
 			const jsonUserData = JSON.stringify(user)
 			if (typeof setTokens === 'function') setTokens(jsonSession)
-			if (typeof setUserData === 'function') setUserData(jsonUserData) 
+			if (typeof setUserData === 'function') setUserData(jsonUserData)
 		}
 	}, [session, user])
 
 	useEffect(() => {
 		if(typeof userData === 'string') {
-			const jsonUserData = JSON.parse(userData)
+			const jsonUserData: UserState = JSON.parse(userData)
 			dispatch(setUser(jsonUserData))
 		}
 	}, [userData])
+
+
 
 	useEffect(() => {
 		if (typeof tokens === 'string'){

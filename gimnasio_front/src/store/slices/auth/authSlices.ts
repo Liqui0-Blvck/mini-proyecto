@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FetchAction, PostActions } from "../../../types/peticiones/peticiones.types";
-import { fetchWithToken, fetchWithTokenPatch, fetchWithTokenPost } from "../../../api/peticionesBase";
+import { fetchWithToken, fetchWithTokenPatch, fetchWithTokenPatchFormData, fetchWithTokenPost } from "../../../api/peticionesBase";
 import { SessionState, signInSuccess, tokenRefrescado } from "./sessionSlice";
 import axios, { delay } from '../../../config/axios.config'
 import { AuthTokens, TConfiguracion, TPerfil } from "../../../types/core/core.types";
 import { toast } from "react-toastify";
-import { setDataPerfil, setUser } from "./userSlice";
+import { setColorApp, setConfiguracion, setDataPerfil, setUser } from "./userSlice";
 
 
 
@@ -113,6 +113,7 @@ export const onLogin = createAsyncThunk(
         const perfil: TPerfil | undefined = await ThunkApi.dispatch(obtener_perfil({ id: me.id, token: data.access! })).unwrap()
         const configuracion = await ThunkApi.dispatch(obtener_configuracion({ id: perfil?.id, token: data.access! })).unwrap()
         ThunkApi.dispatch(setUser({ perfil, configuracion }))
+        ThunkApi.dispatch(setColorApp(configuracion?.color_aplicacion!))
         toast.success('Inicio sesión correcto', {
           autoClose: 300,
           onClose: () => {
@@ -189,3 +190,50 @@ export const actualizar_perfil = createAsyncThunk(
     }
 
   })
+
+export const actualizar_imagen = createAsyncThunk(
+  'auth/actualizar_imagen',
+  async (payload: PostActions, ThunkApi) => {
+    const { id, data, token } = payload
+
+    try {
+      const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
+      if (!token_verificado) throw new Error('No esta verificado el token')
+      const res = await fetchWithTokenPatchFormData(`api/perfil/${id}/`, data, token_verificado)
+      if (res.status){
+        return ThunkApi.dispatch(setDataPerfil(res.data))
+      }
+    } catch (error: any) {
+      toast.error('No se pudo actualizar', {
+        autoClose: 500
+      })
+      return ThunkApi.rejectWithValue('No se pudo actualizar')
+    }
+
+  })
+
+export const actualizar_configuracion = createAsyncThunk(
+  'auth/actualizar_configuracion',
+  async (payload: PostActions, ThunkApi) => {
+    const { id, data, token } = payload
+
+    try {
+      const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
+      if (!token_verificado) throw new Error('No esta verificado el token')
+      const res = await fetchWithTokenPatch(`api/perfil/${id}/actualizar_configuracion/`, data, token_verificado)
+      if (res.status){
+        toast.success('Configuración Actualizado exitosamente', {
+          autoClose: 600,
+        })
+        ThunkApi.dispatch(setConfiguracion(res.data))
+        ThunkApi.dispatch(setColorApp(res.data.color_aplicacion))
+      }
+    } catch (error: any) {
+      toast.error('No se pudo actualizar', {
+        autoClose: 500
+      })
+      return ThunkApi.rejectWithValue('No se pudo actualizar')
+    }
+
+  })
+  

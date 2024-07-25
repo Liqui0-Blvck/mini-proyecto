@@ -1,4 +1,4 @@
-export type TSaveBtnStatusValue = 'Publish' | 'Save' | 'Saving' | 'Saved';
+export type TSaveBtnStatusValue =  'Guardar' | 'Guardando' | 'Guardado';
 export type TSaveBtnStatus = {
-	[key in 'PUBLISH' | 'SAVE' | 'SAVING' | 'SAVED']: TSaveBtnStatusValue;
+	[key in 'GUARDAR' | 'GUARDANDO' | 'GUARDADO']: TSaveBtnStatusValue;
 };

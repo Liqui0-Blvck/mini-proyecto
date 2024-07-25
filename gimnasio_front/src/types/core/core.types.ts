@@ -24,13 +24,14 @@ export type TPerfil = {
   numero_telefono: string
   imagen_perfil: string
   enlace_redes_sociales: string
+  fecha_modificacion: string
 }
 
 
 export type TConfiguracion = {
   idioma_preferido: string
-  configuraciones_notificaciones: string
-  configuraciones_privacidad: string
+  configuraciones_notificaciones: boolean
+  configuraciones_privacidad: boolean
   estilo_aplicacion: string
   color_aplicacion: string
   fuente_aplicacion: string

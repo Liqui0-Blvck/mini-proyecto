@@ -77,6 +77,18 @@ const Aside: FC<IAsideProps> = (props) => {
 
 	const { asideStatus } = useAsideStatus()
 	const { configuracion } = useAppSelector((state: RootState) => state.auth.user)
+	const { colorApp } = useAppSelector((state: RootState) => state.auth.user)
+	
+
+	const colorMap: Record<string, string> = {
+		cyan: 'dark:bg-cyan-900',
+		red: 'dark:bg-red-900',
+		violet: 'dark:bg-violet-900',
+		amber: 'dark:bg-amber-900',
+		emerald: 'dark:bg-emerald-900',
+		default: 'dark:bg-zinc-900'
+	};
+	const bgClass = colorMap[colorApp!] || colorMap[configuracion?.color_aplicacion!];
 
 
 	return (
@@ -89,7 +101,7 @@ const Aside: FC<IAsideProps> = (props) => {
 				'border-zinc-300/25 bg-white',
 				'py-6',
 				'ltr:border-r rtl:border-l',
-				`dark:border-zinc-800/50 dark:bg-${configuracion?.color_aplicacion}-900 dark:text-white`,
+				`dark:border-zinc-800/50 ${bgClass} dark:text-white`,
 				themeConfig.transition,
 				className,
 				// Mobile Design
