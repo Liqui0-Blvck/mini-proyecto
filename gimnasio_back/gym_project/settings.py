@@ -57,6 +57,8 @@ INSTALLED_APPS = [
 
 DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'auth/users/activate/{uid}/{token}/',  # Asegúrate de que esto sea correcto
     'SERIALIZERS': {
         'user_create': 'core.serializers.CustomUserCreateSerializer',
         'user': 'core.serializers.CustomUserSerializer',
