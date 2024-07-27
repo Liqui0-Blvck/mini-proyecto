@@ -211,6 +211,7 @@ export const DropdownMenu: FC<IDropdownMenuProps> = (props) => {
 							classNames(
 								'py-2',
 								'z-[9999]',
+								
 								'border-zinc-300/25 bg-white shadow-lg dark:border-zinc-800/50 dark:bg-zinc-900',
 								[`${borderWidth as TBorderWidth}`, `${rounded as TRounded}`],
 							),
@@ -258,7 +259,7 @@ export const DropdownItem = forwardRef<HTMLLIElement, IDropdownItemProps>((props
 		'border-zinc-300/25 dark:border-zinc-800/50',
 		{
 			[`text-${color as TColors}-${colorIntensity as TColorIntensity}`]: isActive,
-			'text-zinc-500 hover:text-zinc-950 dark:hover:text-zinc-100': !isActive,
+			'text-zinc-500  hover:text-zinc-950 dark:hover:text-zinc-100': !isActive,
 		},
 		themeConfig.transition,
 	);

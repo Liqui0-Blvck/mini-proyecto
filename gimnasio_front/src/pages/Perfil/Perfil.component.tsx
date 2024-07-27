@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import Avatar from '../../components/Avatar';
 import Label from '../../components/form/Label';
 import Input from '../../components/form/Input';
@@ -6,68 +6,100 @@ import FieldWrap from '../../components/form/FieldWrap';
 import Icon from '../../components/icon/Icon';
 import Radio, { RadioGroup } from '../../components/form/Radio';
 import RichText from '../../components/RichText';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { RootState } from '../../store/rootReducer';
 import { useFormik } from 'formik';
 import Card, { CardBody, CardFooter, CardFooterChild, CardHeader, CardTitle } from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import useSaveBtn from '../../hooks/useSaveBtn';
+import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
+import { actualizar_imagen, actualizar_perfil } from '../../store/slices/auth/authSlices';
+import { PerfilSchema } from '../../utils/validationForm.utils';
+import { capitalizeFirstLetter } from '../../utils/getCapitalize';
+import Validation from '../../components/form/Validation';
+import { format } from '@formkit/tempo'
 
+
+interface initialValues {
+  imagen_perfil: string | File 
+  first_name: string
+  second_name: string
+  father_last_name: string
+  mother_last_name: string
+  fecha_nacimiento: string
+  direccion: string
+  genero: string
+  numero_telefono: string
+}
 
 const Perfil = () => {
+	const { i18n } = useTranslation();
+
 	const { perfil } = useAppSelector((state: RootState) => state.auth.user)
 	const token = useAppSelector((state: RootState) => state.auth.session)
+  const dispatch = useAppDispatch()
 	const [isSaving, setIsSaving] = useState<boolean>(false);
 
 
 
   const formik = useFormik({
     initialValues: {
-      image_perfil: '',
-      first_name_: '',
-      second_name: '',
-      father_last_name: '',
-      mother_last_name: '',
-      fecha_nacimiento: '',
-      direccion: '',
-      genero: '',
-      bio: '',
-      numero_telefono: '',
-      position: '',
-			role: '',
+      imagen_perfil: perfil?.imagen_perfil! || '',
+      first_name:  perfil?.usuario.first_name!,
+      second_name:  perfil?.usuario.second_name!,
+      father_last_name:  perfil?.usuario.father_last_name!,
+      mother_last_name:  perfil?.usuario.mother_last_name!,
+      fecha_nacimiento:  perfil?.fecha_nacimiento!,
+      direccion:  perfil?.direccion!,
+      genero:  capitalizeFirstLetter(perfil?.genero!),
+      numero_telefono:  perfil?.numero_telefono!,
     },
-    onSubmit: (values: any) => {
-      const formData = new FormData();
-			
-      formData.append('perfil_data[fecha_nacimiento]', values.fecha_nacimiento);
-      formData.append('perfil_data[genero]', String(values.gender).toLowerCase());
-      formData.append('perfil_data[direccion]', values.direccion);
-      formData.append('perfil_data[numero_telefono]', values.numero_telefono);
-    
-      // Añadir imagen si existe y es un archivo
-      if (values.fileUpload instanceof File) {
-        formData.append('perfil_data[imagen_perfil]', values.fileUpload);
-      }
-    
-      formData.append('usuario_data[first_name]', values.firstName);
-      formData.append('usuario_data[second_name]', values.secondName);
-      formData.append('usuario_data[father_last_name]', values.lastName);
-      formData.append('usuario_data[mother_last_name]', values.secondLastName);
-    
-      //@ts-ignore
+    validationSchema: PerfilSchema,
+    onSubmit: (values: initialValues) => {
+      setIsSaving(true)
+
       dispatch(actualizar_perfil({
         id: perfil?.usuario.id,
-        data: formData,
+        data: {
+          perfil_data: {
+            fecha_nacimiento: values.fecha_nacimiento,
+            genero: String(values.genero).toLowerCase(),
+            direccion: values.direccion,
+            numero_telefono: values.numero_telefono
+          },
+          usuario_data: {
+            first_name: values.first_name,
+            second_name: values.second_name,
+            father_last_name: values.father_last_name,
+            mother_last_name: values.mother_last_name
+          }
+        },
         token
       }));
+
+      if (values.imagen_perfil instanceof File){
+        dispatch(actualizar_imagen({
+          id: perfil?.id,
+          data: { imagen_perfil: values.imagen_perfil},
+          token
+        }))
+      }
+
+      setTimeout(() => {
+        setIsSaving(false)
+      }, 1200)
+      
     }
   })
+
 
   const { saveBtnText, saveBtnColor, saveBtnDisable } = useSaveBtn({
 		isNewItem: false,
 		isSaving,
 		isDirty: formik.dirty,
-	});
+	})
+
  
   return (
   <>
@@ -79,8 +111,13 @@ const Perfil = () => {
         <div className='flex w-full gap-4'>
           <div className='flex-shrink-0'>
             <Avatar
-              src={perfil?.imagen_perfil}
-              className='!w-24'
+              src={
+                formik.values.imagen_perfil instanceof File
+                  ? URL.createObjectURL(formik.values.imagen_perfil)
+                    //@ts-ignore
+                  : `${import.meta.env.VITE_URL_DEV}${formik.values.imagen_perfil}`
+              }
+              className='!w-32'
               // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
               name={`${perfil?.usuario.first_name} ${perfil?.usuario.father_last_name}`}
             />
@@ -89,17 +126,22 @@ const Perfil = () => {
             <div>
               <div className='w-full'>
                 <Label
-                  htmlFor='fileUpload'
+                  htmlFor='image_perfil'
                   className=''
                   description='At least 800x800 px recommended. JPG or PNG and GIF is allowed'>
-                  Upload new image
+                  Sube una imagen
                 </Label>
                 <Input
-                  id='fileUpload'
-                  name='fileUpload'
+                  id='image_perfil'
+                  name='image_perfil'
                   type='file'
-                  onChange={formik.handleChange}
-                  value={formik.values.fileUpload}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    const file = event.currentTarget.files?.[0];
+                        if (file) {
+                          formik.setFieldValue('imagen_perfil', file);
+                        }
+                  
+                  }}
                 />
               </div>
             </div>
@@ -108,6 +150,7 @@ const Perfil = () => {
         <div className='grid grid-cols-12 gap-4'>
           <div className='col-span-12 lg:col-span-6'>
             <Label htmlFor='email'>Email</Label>
+            
             <FieldWrap
               firstSuffix={
                 <Icon
@@ -124,64 +167,82 @@ const Perfil = () => {
             </FieldWrap>
           </div>
           <div className='col-span-12 lg:col-span-6'>
-            <Label htmlFor='firstName'>Nombre</Label>
+            <Label htmlFor='first_name'>Nombre</Label>
+            <Validation
+              isValid={formik.isValid}
+              isTouched={formik.touched.first_name}
+              invalidFeedback={formik.errors.first_name}
+              >
+              <FieldWrap>
+                <Input
+                  id='first_name'
+                  name='first_name'
+                  onChange={formik.handleChange}
+                  value={formik.values.first_name}
+                  autoComplete='given-name'
+                  autoCapitalize='words'
+                />
+              </FieldWrap>
+            </Validation>
+            
+
+          </div>
+
+          <div className='col-span-12 lg:col-span-6'>
+            <Label htmlFor='second_name'>Segundo Nombre</Label>
             <Input
-              id='firstName'
-              name='firstName'
+              id='second_name'
+              name='second_name'
               onChange={formik.handleChange}
-              value={formik.values.firstName}
+              value={formik.values.second_name}
               autoComplete='given-name'
               autoCapitalize='words'
             />
           </div>
 
           <div className='col-span-12 lg:col-span-6'>
-            <Label htmlFor='secondName'>Segundo Nombre</Label>
-            <Input
-              id='secondName'
-              name='secondName'
-              onChange={formik.handleChange}
-              value={formik.values.secondName}
-              autoComplete='given-name'
-              autoCapitalize='words'
-            />
+            <Label htmlFor='father_last_name'>Apellido Paterno</Label>
+            <Validation
+              isValid={formik.isValid}
+              isTouched={formik.touched.father_last_name}
+              invalidFeedback={formik.errors.father_last_name}
+              >
+              <FieldWrap>
+                <Input
+                  id='father_last_name'
+                  name='father_last_name'
+                  onChange={formik.handleChange}
+                  value={formik.values.father_last_name}
+                  autoComplete='family-name'
+                  autoCapitalize='words'
+                />
+              </FieldWrap>
+            </Validation>
           </div>
 
           <div className='col-span-12 lg:col-span-6'>
-            <Label htmlFor='lastName'>Apellido Paterno</Label>
-            <Input
-              id='lastName'
-              name='lastName'
-              onChange={formik.handleChange}
-              value={formik.values.lastName}
-              autoComplete='family-name'
-              autoCapitalize='words'
-            />
-          </div>
-
-          <div className='col-span-12 lg:col-span-6'>
-            <Label htmlFor='secondLastName'>Apellido Materno</Label>
+            <Label htmlFor='mother_last_name'>Apellido Materno</Label>
             <Input
               type='text'
-              id='secondLastName'
-              name='secondLastName'
+              id='mother_last_name'
+              name='mother_last_name'
               onChange={formik.handleChange}
-              value={formik.values.secondLastName}
+              value={formik.values.mother_last_name}
             />
           </div>
 
           <div className='col-span-12 lg:col-span-6'>
-            <Label htmlFor='gender'>Gender</Label>
+            <Label htmlFor='genero'>Género</Label>
             <RadioGroup isInline>
               {['Masculino', 'Femenino', 'Otro'].map((i) => (
                 <Radio
                   key={i}
                   label={i}
-                  name='gender'
+                  name='genero'
                   value={i}
-                  selectedValue={formik.values.gender}
+                  selectedValue={formik.values.genero}
                   onChange={(e: any) => {
-                    formik.setFieldValue('gender', e.target.value)
+                    formik.setFieldValue('genero', e.target.value)
                   }}
                 />
               ))}
@@ -267,7 +328,7 @@ const Perfil = () => {
               </Select>
             </FieldWrap>
           </div> */}
-          <div className='col-span-12'>
+          {/* <div className='col-span-12'>
             <Label htmlFor='position'>Position</Label>
 
             <FieldWrap
@@ -284,20 +345,7 @@ const Perfil = () => {
                 value={formik.values.position}
               />
             </FieldWrap>
-          </div>
-          <div className='col-span-12'>
-            <Label htmlFor='bio'>Bio</Label>
-            <RichText
-              id='bio'
-              value={formik.values.bio}
-              handleChange={(event) => {
-                formik
-                  .setFieldValue('bio', event)
-                  .then(() => {})
-                  .catch(() => {});
-              }}
-            />
-          </div>
+          </div> */}
         </div>
       </CardBody>
       <CardFooter>
@@ -305,7 +353,7 @@ const Perfil = () => {
         <div className='flex items-center gap-2'>
           <Icon icon='HeroDocumentCheck' size='text-2xl' />
           <span className='text-zinc-500'>Last saved:</span>
-          <b>{dayjs().locale(i18n.language).format('LLL')}</b>
+          <b>{format(perfil?.fecha_modificacion!, { date: 'full', time: 'full' }, 'es' )}</b>
         </div>
       </CardFooterChild>
       <CardFooterChild>

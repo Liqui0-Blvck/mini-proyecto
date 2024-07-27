@@ -13,7 +13,7 @@ interface IUserProps extends HTMLAttributes<HTMLDivElement> {
 	name: string;
 	namePrefix?: ReactNode;
 	nameSuffix?: ReactNode;
-	position: string;
+	position?: string;
 	suffix?: ReactNode;
 	isLoading?: boolean;
 }

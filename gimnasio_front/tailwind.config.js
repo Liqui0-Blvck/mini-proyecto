@@ -9,6 +9,23 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+				arial: ['Arial, sans-serif'],
+        helvetica: ['Helvetica, sans-serif'],
+        verdana: ['Verdana, sans-serif'],
+        tahoma: ['Tahoma, sans-serif'],
+        georgia: ['Georgia, serif'],
+        times: ['"Times New Roman", serif'],
+        courier: ['"Courier New", monospace'],
+        lucida: ['"Lucida Console", monospace'],
+        roboto: ['Roboto, sans-serif'],
+        openSans: ['"Open Sans", sans-serif'],
+        lato: ['Lato, sans-serif'],
+        montserrat: ['Montserrat, sans-serif'],
+        raleway: ['Raleway, sans-serif'],
+        oswald: ['Oswald, sans-serif'],
+        robotoSlab: ['"Roboto Slab", serif'],
+        merriweather: ['Merriweather, serif'],
+        playfair: ['"Playfair Display", serif'],
 			},
 			backgroundImage: {
 				chevronDown: '/src/assets/required/chevron-down.svg',

@@ -1,5 +1,5 @@
 
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import Label from '../../components/form/Label';
 import FieldWrap from '../../components/form/FieldWrap';
 import Icon from '../../components/icon/Icon';
@@ -10,24 +10,31 @@ import Button from '../../components/ui/Button';
 import useSaveBtn from '../../hooks/useSaveBtn';
 import Radio, { RadioGroup } from '../../components/form/Radio';
 import { useFormik } from 'formik';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { RootState } from '../../store/rootReducer';
+import { TDarkMode } from '../../types/darkMode.type';
+import useDarkMode from '../../hooks/useDarkMode';
+import { setColorApp } from '../../store/slices/auth/userSlice';
 
-const Personalizacion = () => {
+interface PersonalizacionProps {
+  formik: any
+}
 
-  const formik = useFormik({
-    enableReinitialize: true,
-    initialValues: {
-      theme: configuracion ? configuracion.estilo_aplicacion : 'dark',
-			color: configuracion ? configuracion.color_aplicacion : 'zinc',
-    },
-    onSubmit: () => {
+const Personalizacion: FC<PersonalizacionProps> = ({ formik }) => {
+  const dispatch = useAppDispatch()
 
-    }
-  })
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedColor = e.target.value
+    formik.setFieldValue('color', selectedColor);
+    console.log(selectedColor)
+    dispatch(setColorApp(selectedColor));
+  }
+
 
   return (
   <Card>
     <CardBody>
-      <div className='border border-black p-2'>
+      <div>
         <div className='text-4xl font-semibold'>Apariencia</div>
         <div className='grid grid-cols-12 gap-4'>
           <div className='col-span-12'>
@@ -45,10 +52,11 @@ const Personalizacion = () => {
                     <div className='h-1 w-1 rounded-full bg-emerald-500' />
                   </div>
                   <div className='flex aspect-video w-56 bg-zinc-950'>
-                    <div className='h-full w-1/4 border-e border-zinc-800/50 bg-zinc-900/75' />
+                    <div className='h-full w-1/4 border-e border-zinc-800/50 bg-zinc-900' />
                     <div className='h-full w-3/4'>
-                      <div className='h-4 w-full border-b border-zinc-800/50 bg-zinc-900/75' />
+                      <div className='h-4 w-full border-b border-zinc-800/50 bg-zinc-900' />
                       <div />
+                      
                     </div>
                   </div>
                 </div>
@@ -78,7 +86,7 @@ const Personalizacion = () => {
         </div>
       </div>
 
-      <div className='border border-black p-2 mt-5'>
+      <div className='mt-10'>
         <div className='text-4xl font-semibold'>Colores</div>
         <div className='grid grid-cols-12 gap-4'>
           <div className='col-span-12'>
@@ -88,7 +96,7 @@ const Personalizacion = () => {
                 name='color'
                 value='cyan'
                 selectedValue={formik.values.color}
-                onChange={formik.handleChange}>
+                onChange={handleColorChange}>
                 <div className='relative'>
                   <div className='flex h-2 w-full items-center gap-1 bg-zinc-500 p-1'>
                     <div className='h-1 w-1 rounded-full bg-red-500' />
@@ -96,10 +104,13 @@ const Personalizacion = () => {
                     <div className='h-1 w-1 rounded-full bg-emerald-500' />
                   </div>
                   <div className='flex aspect-video w-56 bg-zinc-950'>
-                    <div className='h-full w-1/4 border-e border-zinc-800/50 bg-cyan-900/75' />
-                    <div className='h-full w-3/4'>
-                      <div className='h-4 w-full border-b border-zinc-800/50 bg-cyan-900/75' />
+                    <div className='h-full w-1/4 border-e border-zinc-800/50 bg-cyan-900' />
+                    <div className='h-full w-3/4 relative'>
+                      <div className='h-4 w-full border-b border-zinc-800/50 bg-cyan-900' />
                       <div />
+                      <div className='absolute w-15 bottom-3 right-7 bg-cyan-900 px-2 rounded-md'>
+                        <span className='text-xl text-white'>Cian</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -109,7 +120,7 @@ const Personalizacion = () => {
                 name='color'
                 value='red'
                 selectedValue={formik.values.color}
-                onChange={formik.handleChange}>
+                onChange={handleColorChange}>
                 <div className='relative'>
                   <div className='flex h-2 w-full items-center gap-1 bg-zinc-500 p-1'>
                     <div className='h-1 w-1 rounded-full bg-red-500' />
@@ -117,10 +128,13 @@ const Personalizacion = () => {
                     <div className='h-1 w-1 rounded-full bg-emerald-500' />
                   </div>
                   <div className='flex aspect-video w-56 bg-zinc-950'>
-                    <div className='h-full w-1/4 border-e border-zinc-800/50 bg-red-800/75' />
-                    <div className='h-full w-3/4'>
-                      <div className='h-4 w-full border-b border-zinc-800/50 bg-red-800/75' />
+                    <div className='h-full w-1/4 border-e border-zinc-800/50 bg-red-800' />
+                    <div className='h-full w-3/4 relative'>
+                      <div className='h-4 w-full border-b border-zinc-800/50 bg-red-800' />
                       <div />
+                      <div className='absolute w-15 bottom-3 right-7 bg-red-900 px-2 rounded-md'>
+                        <span className='text-xl text-white'>Rojo</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -130,7 +144,7 @@ const Personalizacion = () => {
                 name='color'
                 value='violet'
                 selectedValue={formik.values.color}
-                onChange={formik.handleChange}>
+                onChange={handleColorChange}>
                 <div className='relative'>
                   <div className='flex h-2 w-full items-center gap-1 bg-zinc-500 p-1'>
                     <div className='h-1 w-1 rounded-full bg-red-500' />
@@ -139,9 +153,12 @@ const Personalizacion = () => {
                   </div>
                   <div className='flex aspect-video w-56 bg-zinc-800'>
                     <div className='h-full w-1/4 border-e border-zinc-800/50 bg-violet-800/60' />
-                    <div className='h-full w-3/4'>
+                    <div className='h-full w-3/4 relative'>
                       <div className='h-4 w-full border-b border-zinc-800/50 bg-violet-800/60' />
                       <div />
+                      <div className='absolute w-15 bottom-3 right-7 bg-violet-900 px-2 rounded-md'>
+                        <span className='text-xl text-white'>Violeta</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -151,7 +168,7 @@ const Personalizacion = () => {
                 name='color'
                 value='amber'
                 selectedValue={formik.values.color}
-                onChange={formik.handleChange}>
+                onChange={handleColorChange}>
                 <div className='relative'>
                   <div className='flex h-2 w-full items-center gap-1 bg-zinc-500 p-1'>
                     <div className='h-1 w-1 rounded-full bg-red-500' />
@@ -159,10 +176,13 @@ const Personalizacion = () => {
                     <div className='h-1 w-1 rounded-full bg-emerald-500' />
                   </div>
                   <div className='flex aspect-video w-56 bg-zinc-950'>
-                    <div className='h-full w-1/4 border-e border-zinc-800/50 bg-amber-900/75' />
-                    <div className='h-full w-3/4'>
-                      <div className='h-4 w-full border-b border-zinc-800/50 bg-amber-900/75' />
+                    <div className='h-full w-1/4 border-e border-zinc-800/50 bg-amber-900' />
+                    <div className='h-full w-3/4 relative'>
+                      <div className='h-4 w-full border-b border-zinc-800/50 bg-amber-900' />
                       <div />
+                      <div className='absolute w-15 bottom-3 right-7 bg-amber-900 px-2 rounded-md'>
+                        <span className='text-xl text-white'>Ambar</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -172,7 +192,7 @@ const Personalizacion = () => {
                 name='color'
                 value='emerald'
                 selectedValue={formik.values.color}
-                onChange={formik.handleChange}>
+                onChange={handleColorChange}>
                 <div className='relative'>
                   <div className='flex h-2 w-full items-center gap-1 bg-zinc-500 p-1'>
                     <div className='h-1 w-1 rounded-full bg-red-500' />
@@ -180,10 +200,13 @@ const Personalizacion = () => {
                     <div className='h-1 w-1 rounded-full bg-emerald-500' />
                   </div>
                   <div className='flex aspect-video w-56 bg-zinc-950'>
-                    <div className='h-full w-1/4 border-e border-zinc-500/50 bg-emerald-900/75' />
-                    <div className='h-full w-3/4'>
-                      <div className='h-4 w-full border-b border-zinc-500/50 bg-emerald-900/75' />
+                    <div className='h-full w-1/4 border-e border-zinc-500/50 bg-emerald-900' />
+                    <div className='h-full w-3/4 relative'>
+                      <div className='h-4 w-full border-b border-zinc-500/50 bg-emerald-900' />
                       <div />
+                      <div className='absolute w-15 bottom-3 right-7 bg-emerald-900 px-2 rounded-md'>
+                        <span className='text-xl text-white'>Esmeralda</span>
+                      </div>
                     </div>
                   </div>
                 </div>
