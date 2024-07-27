@@ -49,3 +49,5 @@ channels
 
 # Cors
 django-cors-headers
+
+python-dotenv
