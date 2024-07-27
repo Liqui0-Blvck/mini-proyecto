@@ -15,7 +15,7 @@ class Perfil(models.Model):
     genero = models.CharField(max_length=30, choices=GENDERS, null=True, blank=True)
     direccion = models.TextField(blank=True)
     numero_telefono = models.CharField(max_length=20, blank=True)
-    imagen_perfil = models.ImageField(upload_to=ruta_imagen, blank=True, null=True, validators=[validar_imagen])
+    imagen_perfil = models.ImageField(upload_to=ruta_imagen, blank=True, null=True)
     enlace_redes_sociales = models.URLField(blank=True)
 
     def __str__(self):

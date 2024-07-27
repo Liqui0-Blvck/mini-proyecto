@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+from dotenv import load_dotenv # type: ignore
 import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,6 +66,8 @@ DJOSER = {
     },
 }
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -178,11 +183,22 @@ WSGI_APPLICATION = 'gym_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gimnasio',
-        'USER': 'admin_usuario',
-        'PASSWORD': 'Hola.203040',
-        'HOST': 'db',  # Cambiar a 'db'
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': '5432',
+    },
+    'produccion': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'defaultdb',
+    'USER': 'doadmin',
+    'PASSWORD': 'AVNS_PMuQ-NlM48--7-8jLlS',
+    'HOST': 'db-postgresql-sfo3-25499-do-user-17348779-0.j.db.ondigitalocean.com',  # Cambiar a 'db'
+    'PORT': '25060',
+    'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 

@@ -42,6 +42,9 @@ COLOR_CHOICES = [
     ('magenta', 'Magenta'),
     ('pink', 'Pink'),
     ('crimson', 'Crimson'),
+    ('amber', 'Ambar'),
+    ('emerald', 'Esmeralda'),
+    ('violet', 'Violeta'),
 ]
 
 FONT_CHOICES = [
