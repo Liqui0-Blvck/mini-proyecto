@@ -191,10 +191,10 @@ DATABASES = {
     },
     'produccion': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'defaultdb',
-    'USER': 'doadmin',
-    'PASSWORD': 'AVNS_PMuQ-NlM48--7-8jLlS',
-    'HOST': 'db-postgresql-sfo3-25499-do-user-17348779-0.j.db.ondigitalocean.com',  # Cambiar a 'db'
+    'NAME':  os.getenv('POSTGRES_DB_PRODUCCION'),
+    'USER':  os.getenv('POSTGRES_USER_PRODUCCION'),
+    'PASSWORD':  os.getenv('POSTGRES_PASSWORD_PRODUCCION'),
+    'HOST':  os.getenv('POSTGRES_HOST_PRODUCCION'),  # Cambiar a 'db'
     'PORT': '25060',
     'OPTIONS': {
             'sslmode': 'require',
