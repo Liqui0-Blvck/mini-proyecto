@@ -274,6 +274,8 @@ dist
 *.pyc
 .svn/
 
+.env
+
 # IDE files which should
 # be ignored
 
