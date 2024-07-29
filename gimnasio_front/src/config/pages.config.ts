@@ -20,235 +20,254 @@ export const examplePages = {
 };
 
 export const appPages = {
-	aiAppPages: {
-		id: 'aiApp',
-		to: '/ai',
-		text: 'AI',
-		icon: 'HeroRocketLaunch',
+	miembros: {
+		id: 'miembrosApp',
+		to: '/miembros',
+		text: 'Miembros',
+		icon: 'HeroUser',
 		subPages: {
-			aiDashboardPage: {
-				id: 'aiDashboardPage',
-				to: '/ai/dashboard',
-				text: 'AI Dashboard',
-				icon: 'HeroRocketLaunch',
+			miembros_lista: {
+				id: 'miembro_lista',
+				to: '/miembros',
 			},
-			chatPages: {
-				id: 'customerPage',
-				to: '/ai/chat',
-				text: 'Chat Pages',
-				icon: 'HeroChatBubbleLeft',
-				subPages: {
-					photoPage: {
-						id: 'photoPage',
-						to: '/ai/chat/photo',
-						text: 'Photo Editing',
-						icon: 'HeroPhoto',
-					},
-					videoPage: {
-						id: 'videoPage',
-						to: '/ai/chat/video',
-						text: 'Video Generation',
-						icon: 'HeroFilm',
-					},
-					audioPage: {
-						id: 'audioPage',
-						to: '/ai/chat/audio',
-						text: 'Audio Generation',
-						icon: 'HeroMusicalNote',
-					},
-					codePage: {
-						id: 'audioPage',
-						to: '/ai/chat/code',
-						text: 'Code Generation',
-						icon: 'HeroCommandLine',
-					},
-				},
+			detalle_miembro: {
+				id: 'detalle_miembro',
+				to: '/miembro/:id',
 			},
-		},
-	},
-	salesAppPages: {
-		id: 'salesApp',
-		to: '/sales',
-		text: 'Sales',
-		icon: 'HeroBanknotes',
-		subPages: {
-			salesDashboardPage: {
-				id: 'salesDashboardPage',
-				to: '/',
-				text: 'Sales Dashboard',
-				icon: 'HeroRectangleGroup',
-			},
-			productPage: {
-				id: 'productPage',
-				to: '/sales/product',
-				text: 'Products',
-				icon: 'HeroRectangleStack',
-				subPages: {
-					listPage: {
-						id: 'productsListPage',
-						to: '/sales/product/list',
-						text: 'Products List',
-						icon: 'HeroQueueList',
-					},
-					editPage: {
-						id: 'productPage',
-						to: `/sales/product/${productsDb[0].id}`,
-						text: `Product #${productsDb[0].id}`,
-						icon: 'HeroTicket',
-					},
-					editPageLink: {
-						id: 'editPageLink',
-						to: '/sales/product',
-					},
-				},
-			},
-			categoryPage: {
-				id: 'categoryPage',
-				to: '/sales/category',
-				text: 'Category',
-				icon: 'HeroSquare2Stack',
-				subPages: {
-					listPage: {
-						id: 'categoryListPage',
-						to: '/sales/category/list',
-						text: 'Category List',
-						icon: 'HeroQueueList',
-					},
-					editPage: {
-						id: 'productPage',
-						to: `/sales/category/${categoriesDb[0].id}`,
-						text: `Category #${categoriesDb[0].id}`,
-						icon: 'HeroStop',
-					},
-					editPageLink: {
-						id: 'editPageLink',
-						to: '/sales/category',
-					},
-				},
-			},
-		},
-	},
-	crmAppPages: {
-		id: 'crmApp',
-		to: '/crm',
-		text: 'CRM',
-		icon: 'HeroUserGroup',
-		subPages: {
-			crmDashboardPage: {
-				id: 'crmDashboardPage',
-				to: '/crm/dashboard',
-				text: 'CRM Dashboard',
-				icon: 'HeroUserCircle',
-			},
-			customerPage: {
-				id: 'customerPage',
-				to: '/crm/customer',
-				text: 'Customers',
-				icon: 'HeroUserGroup',
-				subPages: {
-					listPage: {
-						id: 'crmListPage',
-						to: '/crm/customer/list',
-						text: 'Customers List',
-						icon: 'HeroQueueList',
-					},
-					editPage: {
-						id: 'customerPage',
-						to: `/crm/customer/${usersDb[0].id}`,
-						text: `Customer @${usersDb[0].id}`,
-						icon: 'HeroUser',
-					},
-					editPageLink: {
-						id: 'editPageLink',
-						to: '/crm/customer',
-					},
-				},
-			},
-			rolePage: {
-				id: 'rolePage',
-				to: '/crm/role',
-				text: 'Roles',
-				icon: 'HeroShieldCheck',
-				subPages: {
-					listPage: {
-						id: 'crmListPage',
-						to: '/crm/role/list',
-						text: 'Role List',
-						icon: 'HeroQueueList',
-					},
-					editPage: {
-						id: 'customerPage',
-						to: `/crm/role/${rolesDb[0].id}`,
-						text: `Role @${rolesDb[0].id}`,
-						icon: 'HeroShieldExclamation',
-					},
-					editPageLink: {
-						id: 'editPageLink',
-						to: '/crm/role',
-					},
-				},
-			},
-		},
-	},
-	projectAppPages: {
-		id: 'projectApp',
-		to: '/project',
-		text: 'Project',
-		icon: 'HeroClipboardDocumentCheck',
-		subPages: {
-			projectDashboardPage: {
-				id: 'projectDashboardPage',
-				to: '/project/dashboard',
-				text: 'Projects Dashboard',
-				icon: 'HeroClipboardDocumentCheck',
-			},
-			projectBoardPage: {
-				id: 'projectBoardPage',
-				to: `/project/board/${projectsDb[0].id}`,
-				text: `Board ${projectsDb[0].name}`,
-				icon: 'HeroQrCode',
-			},
-			projectBoardPageLink: {
-				id: 'projectBoardPageLink',
-				to: '/project/board',
-			},
-		},
-	},
-	educationAppPages: {
-		id: 'educationApp',
-		to: '/education',
-		text: 'Education',
-		icon: 'HeroBookOpen',
-		subPages: {},
-	},
-	reservationAppPages: {
-		id: 'reservationApp',
-		to: '/reservation',
-		text: 'Reservation',
-		icon: 'HeroCalendarDays',
-		subPages: {},
-	},
-	mailAppPages: {
-		id: 'mailApp',
-		to: '/mail',
-		text: 'Mail',
-		icon: 'HeroEnvelope',
-		subPages: {
-			inboxPages: {
-				id: 'inboxPages',
-				to: '/mail/inbox',
-				text: 'Inbox',
-				icon: 'HeroEnvelope',
-			},
-		},
-	},
-	chatAppPages: {
-		id: 'chatApp',
-		to: '/chat',
-		text: 'Chat',
-		icon: 'HeroChatBubbleLeftRight',
-	},
-};
+		}
+	}
+}
+
+
+// 	aiAppPages: {
+// 		id: 'aiApp',
+// 		to: '/ai',
+// 		text: 'AI',
+// 		icon: 'HeroRocketLaunch',
+// 		subPages: {
+// 			aiDashboardPage: {
+// 				id: 'aiDashboardPage',
+// 				to: '/ai/dashboard',
+// 				text: 'AI Dashboard',
+// 				icon: 'HeroRocketLaunch',
+// 			},
+// 			chatPages: {
+// 				id: 'customerPage',
+// 				to: '/ai/chat',
+// 				text: 'Chat Pages',
+// 				icon: 'HeroChatBubbleLeft',
+// 				subPages: {
+// 					photoPage: {
+// 						id: 'photoPage',
+// 						to: '/ai/chat/photo',
+// 						text: 'Photo Editing',
+// 						icon: 'HeroPhoto',
+// 					},
+// 					videoPage: {
+// 						id: 'videoPage',
+// 						to: '/ai/chat/video',
+// 						text: 'Video Generation',
+// 						icon: 'HeroFilm',
+// 					},
+// 					audioPage: {
+// 						id: 'audioPage',
+// 						to: '/ai/chat/audio',
+// 						text: 'Audio Generation',
+// 						icon: 'HeroMusicalNote',
+// 					},
+// 					codePage: {
+// 						id: 'audioPage',
+// 						to: '/ai/chat/code',
+// 						text: 'Code Generation',
+// 						icon: 'HeroCommandLine',
+// 					},
+// 				},
+// 			},
+// 		},
+// 	},
+// 	salesAppPages: {
+// 		id: 'salesApp',
+// 		to: '/sales',
+// 		text: 'Sales',
+// 		icon: 'HeroBanknotes',
+// 		subPages: {
+// 			salesDashboardPage: {
+// 				id: 'salesDashboardPage',
+// 				to: '/',
+// 				text: 'Sales Dashboard',
+// 				icon: 'HeroRectangleGroup',
+// 			},
+// 			productPage: {
+// 				id: 'productPage',
+// 				to: '/sales/product',
+// 				text: 'Products',
+// 				icon: 'HeroRectangleStack',
+// 				subPages: {
+// 					listPage: {
+// 						id: 'productsListPage',
+// 						to: '/sales/product/list',
+// 						text: 'Products List',
+// 						icon: 'HeroQueueList',
+// 					},
+// 					editPage: {
+// 						id: 'productPage',
+// 						to: `/sales/product/${productsDb[0].id}`,
+// 						text: `Product #${productsDb[0].id}`,
+// 						icon: 'HeroTicket',
+// 					},
+// 					editPageLink: {
+// 						id: 'editPageLink',
+// 						to: '/sales/product',
+// 					},
+// 				},
+// 			},
+// 			categoryPage: {
+// 				id: 'categoryPage',
+// 				to: '/sales/category',
+// 				text: 'Category',
+// 				icon: 'HeroSquare2Stack',
+// 				subPages: {
+// 					listPage: {
+// 						id: 'categoryListPage',
+// 						to: '/sales/category/list',
+// 						text: 'Category List',
+// 						icon: 'HeroQueueList',
+// 					},
+// 					editPage: {
+// 						id: 'productPage',
+// 						to: `/sales/category/${categoriesDb[0].id}`,
+// 						text: `Category #${categoriesDb[0].id}`,
+// 						icon: 'HeroStop',
+// 					},
+// 					editPageLink: {
+// 						id: 'editPageLink',
+// 						to: '/sales/category',
+// 					},
+// 				},
+// 			},
+// 		},
+// 	},
+// 	crmAppPages: {
+// 		id: 'crmApp',
+// 		to: '/crm',
+// 		text: 'CRM',
+// 		icon: 'HeroUserGroup',
+// 		subPages: {
+// 			crmDashboardPage: {
+// 				id: 'crmDashboardPage',
+// 				to: '/crm/dashboard',
+// 				text: 'CRM Dashboard',
+// 				icon: 'HeroUserCircle',
+// 			},
+// 			customerPage: {
+// 				id: 'customerPage',
+// 				to: '/crm/customer',
+// 				text: 'Customers',
+// 				icon: 'HeroUserGroup',
+// 				subPages: {
+// 					listPage: {
+// 						id: 'crmListPage',
+// 						to: '/crm/customer/list',
+// 						text: 'Customers List',
+// 						icon: 'HeroQueueList',
+// 					},
+// 					editPage: {
+// 						id: 'customerPage',
+// 						to: `/crm/customer/${usersDb[0].id}`,
+// 						text: `Customer @${usersDb[0].id}`,
+// 						icon: 'HeroUser',
+// 					},
+// 					editPageLink: {
+// 						id: 'editPageLink',
+// 						to: '/crm/customer',
+// 					},
+// 				},
+// 			},
+// 			rolePage: {
+// 				id: 'rolePage',
+// 				to: '/crm/role',
+// 				text: 'Roles',
+// 				icon: 'HeroShieldCheck',
+// 				subPages: {
+// 					listPage: {
+// 						id: 'crmListPage',
+// 						to: '/crm/role/list',
+// 						text: 'Role List',
+// 						icon: 'HeroQueueList',
+// 					},
+// 					editPage: {
+// 						id: 'customerPage',
+// 						to: `/crm/role/${rolesDb[0].id}`,
+// 						text: `Role @${rolesDb[0].id}`,
+// 						icon: 'HeroShieldExclamation',
+// 					},
+// 					editPageLink: {
+// 						id: 'editPageLink',
+// 						to: '/crm/role',
+// 					},
+// 				},
+// 			},
+// 		},
+// 	},
+// 	projectAppPages: {
+// 		id: 'projectApp',
+// 		to: '/project',
+// 		text: 'Project',
+// 		icon: 'HeroClipboardDocumentCheck',
+// 		subPages: {
+// 			projectDashboardPage: {
+// 				id: 'projectDashboardPage',
+// 				to: '/project/dashboard',
+// 				text: 'Projects Dashboard',
+// 				icon: 'HeroClipboardDocumentCheck',
+// 			},
+// 			projectBoardPage: {
+// 				id: 'projectBoardPage',
+// 				to: `/project/board/${projectsDb[0].id}`,
+// 				text: `Board ${projectsDb[0].name}`,
+// 				icon: 'HeroQrCode',
+// 			},
+// 			projectBoardPageLink: {
+// 				id: 'projectBoardPageLink',
+// 				to: '/project/board',
+// 			},
+// 		},
+// 	},
+// 	educationAppPages: {
+// 		id: 'educationApp',
+// 		to: '/education',
+// 		text: 'Education',
+// 		icon: 'HeroBookOpen',
+// 		subPages: {},
+// 	},
+// 	reservationAppPages: {
+// 		id: 'reservationApp',
+// 		to: '/reservation',
+// 		text: 'Reservation',
+// 		icon: 'HeroCalendarDays',
+// 		subPages: {},
+// 	},
+// 	mailAppPages: {
+// 		id: 'mailApp',
+// 		to: '/mail',
+// 		text: 'Mail',
+// 		icon: 'HeroEnvelope',
+// 		subPages: {
+// 			inboxPages: {
+// 				id: 'inboxPages',
+// 				to: '/mail/inbox',
+// 				text: 'Inbox',
+// 				icon: 'HeroEnvelope',
+// 			},
+// 		},
+// 	},
+// 	chatAppPages: {
+// 		id: 'chatApp',
+// 		to: '/chat',
+// 		text: 'Chat',
+// 		icon: 'HeroChatBubbleLeftRight',
+// 	},
+// };
 
 export const componentsPages = {
 	uiPages: {

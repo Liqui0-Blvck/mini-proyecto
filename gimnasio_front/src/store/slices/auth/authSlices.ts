@@ -237,3 +237,34 @@ export const actualizar_configuracion = createAsyncThunk(
 
   })
   
+
+  export const actualizar_contraseña = createAsyncThunk(
+    'auth/actualizar_contraseña',
+    async (payload: PostActions, ThunkApi) => {
+      const { data, token, params } = payload
+      //@ts-ignore
+      const { setPasswordShowStatus, setPasswordNewShowStatus, setPasswordNewConfShowStatus} = params
+  
+      try {
+        const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
+        if (!token_verificado) throw new Error('No esta verificado el token')
+        const res = await fetchWithTokenPost(`auth/users/set_password/`, data, token_verificado)
+        if (res.status){
+          toast.success('Contraseña actualizada exitosamente', {
+            autoClose: 600,
+          })
+          setPasswordShowStatus(false)
+          setPasswordNewShowStatus(false)
+          setPasswordNewConfShowStatus(false)
+
+        }
+      } catch (error: any) {
+        toast.error('No se pudo actualizar', {
+          autoClose: 500
+        })
+        return ThunkApi.rejectWithValue('No se pudo actualizar')
+      }
+  
+    })
+    
+  

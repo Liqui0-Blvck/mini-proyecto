@@ -20,10 +20,6 @@ const headerRoutes: RouteProps[] = [
 		element: <ComponentAndTemplateHeaderTemplate />,
 	},
 	{
-		path: appPages.projectAppPages.subPages.projectDashboardPage.to,
-		element: null,
-	},
-	{
 		path: '',
 		element: null,
 	},

@@ -352,7 +352,7 @@ const Perfil = () => {
       <CardFooterChild>
         <div className='flex items-center gap-2'>
           <Icon icon='HeroDocumentCheck' size='text-2xl' />
-          <span className='text-zinc-500'>Last saved:</span>
+          <span className='text-zinc-500'>Ultimo Guardado:</span>
           <b>{format(perfil?.fecha_modificacion!, { date: 'full', time: 'full' }, 'es' )}</b>
         </div>
       </CardFooterChild>
