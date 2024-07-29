@@ -48,3 +48,5 @@ Pillow==10.0.0  # Añadir Pillow aquí
 django-cors-headers==4.4.0
 channels
 django-cities-light
+python-dotenv
+

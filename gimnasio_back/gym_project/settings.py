@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +46,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'simple_history',
     'djoser',
+    'storages',
     
     'core',
     'cuentas',
@@ -63,6 +67,27 @@ DJOSER = {
     },
 }
 
+AWS_ACCESS_KEY_ID = os.getenv('DO_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('DO_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'gimnasio-space'
+AWS_S3_ENDPOINT_URL = 'https://gimnasio-space.sfo3.digitaloceanspaces.com'  # Cambia 'nyc3' a tu región
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'Files'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Opcional: configura la URL de los archivos estáticos
+STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/'
+
+# Opcional: configura la URL de los archivos media
+MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/media/'
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -178,11 +203,22 @@ WSGI_APPLICATION = 'gym_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gimnasio',
-        'USER': 'admin_usuario',
-        'PASSWORD': 'Hola.203040',
-        'HOST': 'db',  # Cambiar a 'db'
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': '5432',
+    },
+    'produccion': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME':  os.getenv('POSTGRES_DB_PRODUCCION'),
+    'USER':  os.getenv('POSTGRES_USER_PRODUCCION'),
+    'PASSWORD':  os.getenv('POSTGRES_PASSWORD_PRODUCCION'),
+    'HOST':  os.getenv('POSTGRES_HOST_PRODUCCION'),  # Cambiar a 'db'
+    'PORT': '25060',
+    'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 

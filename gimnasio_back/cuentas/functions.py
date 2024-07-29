@@ -6,4 +6,4 @@ def validar_imagen(file):
 
 
 def ruta_imagen(instance, filename):
-  return 'imagen/{0}/{1}'.format(instance.usuario.username, filename)
+  return 'imagen/{0}/{1}'.format(instance.usuario.first_name, filename)

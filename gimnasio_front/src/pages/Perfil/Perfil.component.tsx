@@ -13,7 +13,6 @@ import Card, { CardBody, CardFooter, CardFooterChild, CardHeader, CardTitle } fr
 import Button from '../../components/ui/Button';
 import useSaveBtn from '../../hooks/useSaveBtn';
 import { useTranslation } from 'react-i18next';
-import dayjs from 'dayjs';
 import { actualizar_imagen, actualizar_perfil } from '../../store/slices/auth/authSlices';
 import { PerfilSchema } from '../../utils/validationForm.utils';
 import { capitalizeFirstLetter } from '../../utils/getCapitalize';
@@ -34,7 +33,6 @@ interface initialValues {
 }
 
 const Perfil = () => {
-	const { i18n } = useTranslation();
 
 	const { perfil } = useAppSelector((state: RootState) => state.auth.user)
 	const token = useAppSelector((state: RootState) => state.auth.session)
@@ -52,6 +50,7 @@ const Perfil = () => {
       mother_last_name:  perfil?.usuario.mother_last_name!,
       fecha_nacimiento:  perfil?.fecha_nacimiento!,
       direccion:  perfil?.direccion!,
+      //@ts-ignore
       genero:  capitalizeFirstLetter(perfil?.genero!),
       numero_telefono:  perfil?.numero_telefono!,
     },
@@ -93,6 +92,8 @@ const Perfil = () => {
     }
   })
 
+  console.log(formik.values.imagen_perfil)
+
 
   const { saveBtnText, saveBtnColor, saveBtnDisable } = useSaveBtn({
 		isNewItem: false,
@@ -115,7 +116,7 @@ const Perfil = () => {
                 formik.values.imagen_perfil instanceof File
                   ? URL.createObjectURL(formik.values.imagen_perfil)
                     //@ts-ignore
-                  : `${import.meta.env.VITE_URL_DEV}${formik.values.imagen_perfil}`
+                  : `${!formik.values.imagen_perfil.includes(import.meta.env.VITE_URL_DEV) ? `${import.meta.env.VITE_URL_DEV}${formik.values.imagen_perfil}` : formik.values.imagen_perfil}`
               }
               className='!w-32'
               // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
