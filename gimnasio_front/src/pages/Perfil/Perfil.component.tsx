@@ -12,7 +12,6 @@ import { useFormik } from 'formik';
 import Card, { CardBody, CardFooter, CardFooterChild, CardHeader, CardTitle } from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import useSaveBtn from '../../hooks/useSaveBtn';
-import { useTranslation } from 'react-i18next';
 import { actualizar_imagen, actualizar_perfil } from '../../store/slices/auth/authSlices';
 import { PerfilSchema } from '../../utils/validationForm.utils';
 import { capitalizeFirstLetter } from '../../utils/getCapitalize';

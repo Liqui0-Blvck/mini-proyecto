@@ -73,6 +73,7 @@ AWS_STORAGE_BUCKET_NAME = 'gimnasio-space'
 AWS_S3_ENDPOINT_URL = 'https://gimnasio-space.sfo3.digitaloceanspaces.com'  # Cambia 'nyc3' a tu región
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
+    'ACL': 'public-read',
 }
 AWS_LOCATION = 'Files'
 
