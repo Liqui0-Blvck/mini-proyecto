@@ -81,9 +81,6 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 
   }, [session.signedIn, isProtectedRoute, isAuthorizedPage, isAuthorizedAuthPage, navigate]);
 
-  if (loading) {
-    return <div>Loading...</div>; // Mostrar un indicador de carga mientras se verifica la sesión
-  }
 
   return (
     <main

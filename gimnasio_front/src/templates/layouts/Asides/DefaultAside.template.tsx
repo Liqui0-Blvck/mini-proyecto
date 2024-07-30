@@ -26,8 +26,14 @@ const DefaultAsideTemplate = () => {
 			</AsideHead>
 			<AsideBody>
 				<Nav>
-					<NavItem {...appPages.salesAppPages.subPages.salesDashboardPage} />
-					<NavItem {...appPages.aiAppPages.subPages.aiDashboardPage}>
+					<NavCollapse
+						text={appPages.miembros.text}
+						to={appPages.miembros.to}
+						icon={appPages.miembros.icon}>
+						<NavItem {...appPages.miembros} />
+					</NavCollapse>
+					
+					{/* <NavItem {...appPages.aiAppPages.subPages.aiDashboardPage}>
 						<Badge
 							variant='outline'
 							color='amber'
@@ -311,9 +317,9 @@ const DefaultAsideTemplate = () => {
 								640
 							</Badge>
 						</NavItem>
-					</NavCollapse>
+					</NavCollapse> */}
 
-					<NavSeparator />
+					{/* <NavSeparator />
 					<NavTitle>Members</NavTitle>
 					<NavUser
 						text={`${usersDb[0].firstName} ${usersDb[0].lastName}`}
@@ -357,39 +363,10 @@ const DefaultAsideTemplate = () => {
 							iconColor='emerald'
 							onClick={() => {}}
 						/>
-					</NavUser>
+					</NavUser> */}
 				</Nav>
 			</AsideBody>
 			<AsideFooter>
-				<Nav>
-					<NavSeparator />
-					<NavCollapse text='Nav Collapse' to='/' icon='HeroQueueList'>
-						<NavItem text='Nav item' icon='HeroPencil' />
-						<NavItem text='With badge'>
-							<Badge variant='solid' className='leading-none'>
-								3
-							</Badge>
-						</NavItem>
-						<NavItem text='With button'>
-							<NavButton icon='HeroRocketLaunch' title='New' />
-						</NavItem>
-						<NavItem text='With badge & button'>
-							<Badge variant='solid' className='leading-none'>
-								3
-							</Badge>
-							<NavButton icon='HeroRocketLaunch' title='New' />
-						</NavItem>
-						<NavTitle>Navigation Title</NavTitle>
-						<NavCollapse text='Nav Level 2' to='/' icon='HeroQueueList'>
-							<NavItem text='Nav Item' />
-							<NavCollapse text='Nav Level 3' to='/' icon='HeroQueueList'>
-								<NavItem text='Nav Item' />
-							</NavCollapse>
-							<NavItem text='Nav Item' />
-						</NavCollapse>
-					</NavCollapse>
-				</Nav>
-
 				<UserTemplate />
 				<DarkModeSwitcherPart />
 			</AsideFooter>

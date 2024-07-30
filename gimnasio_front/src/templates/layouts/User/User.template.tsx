@@ -16,11 +16,11 @@ const UserTemplate = () => {
 		<User
 			name={`${perfil?.usuario.first_name} ${perfil?.usuario.second_name}`}
 			nameSuffix={perfil?.usuario.is_staff && <Icon icon='HeroCheckBadge' color='blue' />}
-			//@ts-ignore
 			src={
-				`${
-					perfil.imagen_perfil
-				}`
+				`${perfil?.imagen_perfil
+					//@ts-ignore
+					? `${!perfil?.imagen_perfil.includes(import.meta.env.VITE_URL_DEV) ? `${import.meta.env.VITE_URL_DEV}${perfil?.imagen_perfil}` : perfil?.imagen_perfil}`
+					: ''}`
 			}>
 
 			<NavSeparator />
