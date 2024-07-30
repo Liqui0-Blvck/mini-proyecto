@@ -4,16 +4,21 @@ from core.serializers import *
 
 class PerfilSerializer(serializers.ModelSerializer):
     usuario = CustomUserSerializer()
-    imagen_perfil_url = serializers.SerializerMethodField()  # Campo para la URL de la imagen
 
     class Meta:
         model = Perfil
         fields = '__all__'  # Incluye todos los campos del modelo, más la URL personalizada
 
-    def get_imagen_perfil_url(self, obj):
-        if obj.imagen_perfil:
-            return obj.imagen_perfil.url
-        return None
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        # Ajustar la URL de la imagen de perfil
+        if 'imagen_perfil' in representation and representation['imagen_perfil']:
+            # Eliminar los parámetros de firma de la URL
+            imagen_url = representation['imagen_perfil']
+            representation['imagen_perfil'] = imagen_url.split('?')[0]
+
+        return representation
 
 class ConfiguracionUsuarioSerializer(serializers.ModelSerializer):
     class Meta:
