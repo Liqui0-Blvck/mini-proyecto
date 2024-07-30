@@ -14,7 +14,7 @@ class Miembro(BaseHistoricalModel):
   objetivos_personales = models.JSONField(default=dict, blank=True)
 
   def __str__(self):
-      return self.perfil.usuario.username
+      return self.perfil.usuario.first_name
   
   
 class AsistenciaMiembro(BaseHistoricalModel):
@@ -25,26 +25,25 @@ class AsistenciaMiembro(BaseHistoricalModel):
     sucursal = models.ForeignKey('gimnasios.Sucursal', on_delete=models.CASCADE)  # Obligatorio
 
     def __str__(self):
-        return f'Asistencia de {self.miembro.perfil.usuario.username} en {self.sucursal} el {self.fecha}'
+        return f'Asistencia de {self.miembro.perfil.usuario.first_name} en {self.sucursal} el {self.fecha_creacion}'
 
 
 class SeguimientoPeso(BaseHistoricalModel):
-  miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE, related_name='seguimientos')
-  peso = models.DecimalField(max_digits=5, decimal_places=2)
-  comentarios = models.TextField(blank=True)
+    miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE, related_name='seguimientos')
+    peso = models.DecimalField(max_digits=5, decimal_places=2)
+    comentarios = models.TextField(blank=True)
 
-  def __str__(self):
-      return f'Seguimiento de {self.miembro.perfil.usuario.username} - {self.peso} kg' 
+    def __str__(self):
+      return f'Seguimiento de {self.miembro.perfil.usuario.first_name} - {self.peso} kg' 
     
 class EvaluacionesFisicas(BaseHistoricalModel):
     miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE, related_name='evaluaciones')
-    fecha = models.DateTimeField(auto_now_add=True)
     peso = models.DecimalField(max_digits=5, decimal_places=2)  # Peso en la evaluación
     altura = models.DecimalField(max_digits=5, decimal_places=2)  # Altura en la evaluación
     imc = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)  # Índice de masa corporal
 
     def __str__(self):
-        return f'Evaluación de {self.miembro.perfil.usuario.username} - {self.fecha}'
+        return f'Evaluación de {self.miembro.perfil.usuario.first_name} - {self.fecha_creacion}'
 
 class MetasPersonales(BaseHistoricalModel):
     miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE, related_name='metas')
@@ -53,6 +52,6 @@ class MetasPersonales(BaseHistoricalModel):
     progreso = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)  # Progreso de la meta (porcentaje)
 
     def __str__(self):
-        return f'Meta de {self.miembro.perfil.usuario.username}: {self.descripcion}'
+        return f'Meta de {self.miembro.perfil.usuario.first_name}: {self.descripcion}'
 
   

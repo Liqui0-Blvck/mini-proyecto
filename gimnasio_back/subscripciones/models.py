@@ -23,6 +23,7 @@ class SuscripcionUsuario(BaseHistoricalModel):
     tipo_membresia = models.CharField(max_length=50, choices=TIPOS_MEMBRESIA, blank=True)
     fecha_inicio = models.DateTimeField(null=True, blank=True)
     fecha_expiracion = models.DateTimeField(null=True, blank=True)
+    activa = models.BooleanField(default=True) 
     transacciones = models.ManyToManyField(TransaccionPago, related_name='suscripciones', blank=True)
 
     def __str__(self):

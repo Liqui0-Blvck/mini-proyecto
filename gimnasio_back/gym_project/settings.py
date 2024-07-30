@@ -26,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-5&dx9g(+(e%!ba9&w#yfv#2--%&br5^2=6b^@k96fa)i0_b&&n'
+ENVIRONMENT = os.getenv('DJANGO_ENVIRONMENT', 'development')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -67,26 +68,36 @@ DJOSER = {
     },
 }
 
-AWS_ACCESS_KEY_ID = os.getenv('DO_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('DO_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'gimnasio-space'
-AWS_S3_ENDPOINT_URL = 'https://gimnasio-space.sfo3.digitaloceanspaces.com'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-    'ACL': 'public-read',
-}
-AWS_LOCATION = 'Files'
+if ENVIRONMENT == 'development':
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+    FILES_URL = '/files/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    FILES_ROOT = os.path.join(BASE_DIR, 'files')
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DigitalOcean Spaces settings (for production)
+else:
+    AWS_ACCESS_KEY_ID = os.getenv('DO_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('DO_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = 'gimnasio-space'
+    AWS_S3_ENDPOINT_URL = 'https://gimnasio-space.sfo3.digitaloceanspaces.com'
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+        'ACL': 'public-read',
+    }
+    AWS_LOCATION = 'Files'
 
-STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/static/'
-MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/media/'
-FILES_URL = f'{AWS_S3_ENDPOINT_URL}/files/'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-FILES_ROOT = os.path.join(BASE_DIR, 'files')
+    STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/static/'
+    MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/media/'
+    FILES_URL = f'{AWS_S3_ENDPOINT_URL}/files/'
+
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    FILES_ROOT = os.path.join(BASE_DIR, 'files')
 
 
 WSGI_APPLICATION = 'gym_project.wsgi.application'
