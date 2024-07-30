@@ -115,7 +115,7 @@ const Perfil = () => {
                 formik.values.imagen_perfil instanceof File
                   ? URL.createObjectURL(formik.values.imagen_perfil)
                     //@ts-ignore
-                  : `${!formik.values.imagen_perfil.includes(import.meta.env.VITE_URL_DEV) ? `${import.meta.env.VITE_URL_DEV}${formik.values.imagen_perfil}` : formik.values.imagen_perfil}`
+                  : `${perfil?.imagen_perfil ? perfil.imagen_perfil : '/src/assets/avatar/no-image-account.avif'}`
               }
               className='!w-32'
               // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
