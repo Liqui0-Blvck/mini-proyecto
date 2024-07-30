@@ -9,6 +9,9 @@ services:
       POSTGRES_PASSWORD: Hola.203040
     networks:
       - app-network
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
 
   web:
     build: .

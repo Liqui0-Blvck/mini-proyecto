@@ -7,6 +7,8 @@ from .functions import *
 class Gimnasio(BaseModel):
   nombre = models.CharField(max_length=100)
   direccion = models.TextField()
+  ciudad = models.CharField(max_length=50, blank=True)
+  estado = models.CharField(max_length=50, blank=True)
   telefono = models.CharField(max_length=15)
   logo = models.ImageField(upload_to=ruta_logo, blank=True, null=True)
   email = models.EmailField(blank=True, null=True)
@@ -14,7 +16,7 @@ class Gimnasio(BaseModel):
 
   def __str__(self):
       return self.nombre
-      
+
       
 class Sucursal(BaseModel):
   nombre = models.CharField(max_length=100)
@@ -26,33 +28,35 @@ class Sucursal(BaseModel):
 
   def __str__(self):
       return f'Sucursal de {self.gimnasio.nombre}'
+
     
-  
-
-
 
 class Staff(BaseHistoricalModel):
   perfil = models.OneToOneField('cuentas.Perfil', on_delete=models.CASCADE)
   gimnasio = models.ForeignKey(Gimnasio, on_delete=models.CASCADE)
-  sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, related_name='staff')  # Nueva relación
+  sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, related_name='staff')
   fecha_contratacion = models.DateTimeField(auto_now_add=True)
   especialidades = models.TextField(blank=True)
   certificaciones = models.TextField(blank=True)
   evaluaciones_desempeno = models.JSONField(blank=True, null=True)
   notas_supervisores = models.TextField(blank=True)
+  cargo = models.CharField(max_length=100, blank=True)  # Añadir el campo de cargo
 
   def __str__(self):
-      return self.perfil.usuario.username
+      return self.perfil.usuario.first_name
+
 
 
 
 class HorarioTrabajo(models.Model):
   staff = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name='horarios')
+  sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, related_name='horarios')  # Añadir sucursal
   hora_inicio = models.DateTimeField()
   hora_fin = models.DateTimeField()
 
   def __str__(self):
-      return f'{self.staff.nombre} - {self.hora_inicio} - {self.hora_fin}'
+      return f'{self.staff.perfil.usuario.first_name} - {self.hora_inicio} - {self.hora_fin}'
+
     
     
     

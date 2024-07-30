@@ -25,15 +25,6 @@ class ConfiguracionUsuarioSerializer(serializers.ModelSerializer):
         model = ConfiguracionUsuario
         fields = '__all__'
         
-class ActividadSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Actividad
-        fields = '__all__'
-        
-class RegistroActividadSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RegistroActividad
-        fields = '__all__'
         
 class InteresesUsuarioSerializer(serializers.ModelSerializer):
     class Meta:

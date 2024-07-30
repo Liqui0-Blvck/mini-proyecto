@@ -4,8 +4,11 @@ FROM python:3.9
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el archivo requirements.txt y instala las dependencias
+# Copia el archivo requirements.txt y verifica su existencia
 COPY requirements.txt ./
+RUN ls -l /app/requirements.txt
+
+# Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia el resto del código fuente

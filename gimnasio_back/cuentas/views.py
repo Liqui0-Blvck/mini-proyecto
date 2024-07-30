@@ -1,6 +1,6 @@
 
 from rest_framework import  viewsets, generics
-from cuentas.serializers import ActividadSerializer, ConfiguracionUsuarioSerializer, InteresesUsuarioSerializer, PerfilSerializer, RegistroActividadSerializer
+from cuentas.serializers import ConfiguracionUsuarioSerializer, InteresesUsuarioSerializer, PerfilSerializer
 from .models import *
 from core.serializers import *
 from rest_framework.response import Response
@@ -64,17 +64,7 @@ class PerfilViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    
-    
-    
-    
-class ActividadViewSet(viewsets.ModelViewSet):
-    queryset = Actividad.objects.all()
-    serializer_class = ActividadSerializer
-    
-class RegistroActividadViewSet(viewsets.ModelViewSet):
-    queryset = RegistroActividad.objects.all()
-    serializer_class = RegistroActividadSerializer
+
     
 class InteresesUsuarioViewSet(viewsets.ModelViewSet):
     queryset = InteresesUsuario.objects.all()
