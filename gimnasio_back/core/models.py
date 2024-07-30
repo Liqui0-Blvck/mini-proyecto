@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from simple_history.models import HistoricalRecords
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -47,6 +48,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     second_name = models.CharField(max_length=30, blank=True)
     father_last_name = models.CharField(max_length=30, blank=True)
     mother_last_name = models.CharField(max_length=30, blank=True)
+    
+    email_verified = models.BooleanField(default=False)
+    verification_token = models.UUIDField(default=uuid.uuid4, editable=False)
 
     objects = CustomUserManager()
 

@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),  # Rutas de autenticación de Djoser
     path('auth/', include('djoser.urls.jwt')),  # Rutas de tokens JWT de Djoser
+    path('auth/', include('core.urls')),
     path('api/', include('cuentas.urls')),
     path('api/', include('subscripciones.urls')),
     path('api/', include('gimnasios.urls')),

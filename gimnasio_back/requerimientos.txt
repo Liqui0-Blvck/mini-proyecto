@@ -51,3 +51,6 @@ channels
 django-cors-headers
 
 python-dotenv
+
+django-anymail
+

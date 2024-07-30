@@ -57,16 +57,30 @@ INSTALLED_APPS = [
     'rutinas',
 ]
 
+
 DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': 'auth/users/activate/{uid}/{token}/',  # Asegúrate de que esto sea correcto
+    'SEND_ACTIVATION_EMAIL': False,  # Desactiva el correo de activación de Djoser ya que estamos usando uno personalizado
     'SERIALIZERS': {
         'user_create': 'core.serializers.CustomUserCreateSerializer',
         'user': 'core.serializers.CustomUserSerializer',
         'current_user': 'core.serializers.CustomUserSerializer',
     },
 }
+
+
+
+FRONTEND_URL = 'http://localhost:5173'
+
+# Configuración del backend de correo
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nicolasmacgwrk@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv('API_GOOGLE_SEND')  # Usa una contraseña de aplicación si tienes 2FA habilitado
+DEFAULT_FROM_EMAIL = 'nicolasmacgwrk@gmail.com'
+
 
 if ENVIRONMENT == 'development':
     STATIC_URL = '/static/'
@@ -128,15 +142,6 @@ CHANNEL_LAYERS = {
 AUTH_USER_MODEL = 'core.CustomUser'  # Reemplaza 'tu_app' con el nombre de tu aplicación
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-# Otras configuraciones de correo electrónico (opcional, para la consola no se necesitan credenciales reales)
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025  # Puerto de correo para la consola
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = False
-
-
 ROOT_URLCONF = 'gym_project.urls'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -172,8 +177,6 @@ REST_FRAMEWORK = {
  
     
 }
-
-
 
 
 SIMPLE_JWT = {
@@ -262,7 +265,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
