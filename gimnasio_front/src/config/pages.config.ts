@@ -509,6 +509,12 @@ export const authPages = {
 		text: 'Registro',
 		icon: 'HeroArrowRightOnRectangle',
 	},
+	confirmPage: {
+    id: 'confirmPage',
+    to: '/activate/:id/:token',
+    text: 'Confirm',
+    icon: 'HeroArrowRightOnRectangle',
+  },
 	profilePage: {
 		id: 'perfilPage',
 		to: '/perfil',

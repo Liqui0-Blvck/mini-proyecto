@@ -107,7 +107,7 @@ const Header: FC<IHeaderProps> = (props) => {
 					'p-6',
 					'backdrop-blur-md',
 					`dark:border-zinc-800/50  dark:text-white`,
-					bgClass,
+					bgClass ? bgClass : 'dark:bg-zinc-900',
 					className,
 				)}
 				{...rest}>

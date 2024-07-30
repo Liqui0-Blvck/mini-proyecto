@@ -1,3 +1,4 @@
+// PageWrapper.tsx
 import React, { FC, ReactNode, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -6,6 +7,15 @@ import { RootState } from '../../../store/rootReducer';
 import { extractRoutes } from '../../../utils/getRoutesPath.util';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
 import { appPages, authPages } from '../../../config/pages.config';
+
+// Función para verificar si la ruta coincide con algún patrón de rutas dinámicas
+const isRouteAuthorized = (pathname: any, routes: any) => {
+  return routes.some((route: any) => {
+    const routePattern = route.replace(/:[^\s/]+/g, '([^/]+)');
+    const regex = new RegExp(`^${routePattern}$`);
+    return regex.test(pathname);
+  });
+};
 
 interface IPageWrapperProps {
   children: ReactNode;
@@ -22,7 +32,7 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const session = useAppSelector((state: RootState) => state.auth.session);
-  const { configuracion } = useAppSelector((state: RootState) => state.auth.user)
+  const { configuracion } = useAppSelector((state: RootState) => state.auth.user);
 
   const fontMap: Record<string, string> = {
     'Arial, sans-serif': 'font-arial',
@@ -47,41 +57,41 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 
   const fontClass = fontMap[configuracion?.fuente_aplicacion!] || 'font-sans';
 
-
-
-
-
   const [loading, setLoading] = useState(true); // Estado de carga
 
   const appPagesRoutes = extractRoutes(appPages);
   const authPagesRoutes = extractRoutes(authPages);
 
-  const isAuthorizedPage = appPagesRoutes.includes(pathname);
-  const isAuthorizedAuthPage = authPagesRoutes.includes(pathname);
+  const isAuthorizedPage = isRouteAuthorized(pathname, appPagesRoutes);
+  const isAuthorizedAuthPage = isRouteAuthorized(pathname, authPagesRoutes);
 
   useEffect(() => {
     const checkAuthorization = () => {
+      // Verifica si la ruta actual es la ruta de confirmación
+      const isConfirmPage = pathname.startsWith('/activate/');
+  
       if (!session.signedIn) {
         // Si el usuario no está autenticado
-        if (isProtectedRoute || (!isAuthorizedAuthPage && !isAuthorizedPage)) {
-          // Si está en una ruta protegida o no está en una página autorizada para no autenticados
-          navigate(authPages.loginPage.to);
+        if ((!isAuthorizedAuthPage && !isAuthorizedPage) || isProtectedRoute) {
+          if (!isConfirmPage) {
+            // Si no es la página de confirmación
+            navigate(authPages.loginPage.to);
+          }
         }
       } else {
-				if (!isAuthorizedPage && !isAuthorizedAuthPage){
-					navigate('/404', { replace: true });
-				} else {
-					navigate(pathname, { replace: true })
-				}
-			}
+        if (!isAuthorizedPage && !isAuthorizedAuthPage) {
+          navigate('/404', { replace: true });
+        } else {
+          navigate(pathname, { replace: true });
+        }
+      }
     };
-
+  
     checkAuthorization(); // Verificar autorización
     setLoading(false); // Finalizar estado de carga
-
-  }, [session.signedIn, isProtectedRoute, isAuthorizedPage, isAuthorizedAuthPage, navigate]);
-
-
+  
+  }, [session.signedIn, isProtectedRoute, isAuthorizedPage, isAuthorizedAuthPage, pathname, navigate]);
+  
   return (
     <main
       data-component-name='PageWrapper'

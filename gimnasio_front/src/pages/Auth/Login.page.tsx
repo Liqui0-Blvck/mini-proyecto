@@ -66,7 +66,7 @@ const LoginPage = () => {
 					<div>
 						<span>Ingresa tus credenciales para iniciar sesión</span>
 					</div>
-					<div className='grid grid-cols-12 gap-4'>
+					{/* <div className='grid grid-cols-12 gap-4'>
 						<div className='col-span-6'>
 							<Button
 								icon='CustomGoogle'
@@ -87,11 +87,8 @@ const LoginPage = () => {
 								Apple
 							</Button>
 						</div>
-					</div>
+					</div> */}
 					<div className='border border-zinc-500/25 dark:border-zinc-500/50' />
-					<div>
-						<span>O continua con tu correo electronico</span>
-					</div>
 					<form className='flex flex-col gap-4' noValidate>
 						<div
 							className={classNames({

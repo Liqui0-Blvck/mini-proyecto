@@ -88,7 +88,7 @@ const Aside: FC<IAsideProps> = (props) => {
 		emerald: 'dark:bg-emerald-900',
 		default: 'dark:bg-zinc-900'
 	};
-	const bgClass = colorMap[colorApp!] || colorMap[configuracion?.color_aplicacion!];
+	const bgClass =  colorMap[configuracion?.color_aplicacion!] || colorMap[colorApp!]
 
 
 	return (
@@ -101,7 +101,7 @@ const Aside: FC<IAsideProps> = (props) => {
 				'border-zinc-300/25 bg-white',
 				'py-6',
 				'ltr:border-r rtl:border-l',
-				`dark:border-zinc-800/50 ${bgClass} dark:text-white`,
+				`dark:border-zinc-800/50 ${bgClass ? bgClass : 'dark:bg-zinc-900'} dark:text-white`,
 				themeConfig.transition,
 				className,
 				// Mobile Design
