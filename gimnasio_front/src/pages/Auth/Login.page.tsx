@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,8 +11,10 @@ import Icon from '../../components/icon/Icon';
 import Validation from '../../components/form/Validation';
 import { useAppDispatch } from '../../store/hook';
 import { onLogin } from '../../store/slices/auth/authSlices';
-import useCookiesStorage from '../../hooks/useCookieStorage';
 import { authPages } from '../../config/pages.config';
+import {useKeyPress} from 'react-use';
+import { use } from 'i18next';
+
 
 
 type TValues = {
@@ -23,9 +25,10 @@ type TValues = {
 const LoginPage = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
-	const [tokens, setTokens] = useCookiesStorage('user', null);
-
 	const [passwordShowStatus, setPasswordShowStatus] = useState<boolean>(false);
+	const isPressed = useKeyPress('Enter')
+
+
 
 
 	const formik = useFormik({
@@ -47,9 +50,15 @@ const LoginPage = () => {
 			return errors;
 		},
 		onSubmit: (values: TValues) => {
-				dispatch(onLogin({ data: { ...values }, navigate }))
+			dispatch(onLogin({ data: { ...values }, navigate }))
 		},
-	});
+	})
+
+	useEffect(() => {
+		if (isPressed[0]) {
+			formik.handleSubmit()
+		}
+	}, [isPressed])
 
 
 
