@@ -97,7 +97,7 @@ const SearchPartial = () => {
 				<Input
 					ref={inputRef}
 					name='searchField'
-					placeholder='Search or type a command'
+					placeholder='Buscar o escribir un comando'
 					className='min-w-[22rem]'
 					value={formik.values.searchField}
 					onChange={formik.handleChange}
@@ -170,7 +170,7 @@ const SearchPartial = () => {
 					<FieldWrap firstSuffix={leftContent} lastSuffix={rightContent} className='z-20'>
 						<Input
 							name='searchField'
-							placeholder='Search or type a command'
+							placeholder='Buscar o escribir un comando'
 							className='min-w-[22rem]'
 							value={formik.values.searchField}
 							onChange={formik.handleChange}

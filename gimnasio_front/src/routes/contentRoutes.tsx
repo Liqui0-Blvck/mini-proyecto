@@ -169,6 +169,8 @@ const ChatPage = lazy(() => import('../pages/ChatPage/Chat.page'));
  */
 const UnderConstructionPage = lazy(() => import('../pages/UnderConstruction.page'));
 
+const ConfirmPages = lazy(() => import('../pages/Confirm.page'));
+
 const contentRoutes: RouteProps[] = [
 	{
 		path: appPages.miembros.subPages.miembros_lista.to,
@@ -402,6 +404,8 @@ const contentRoutes: RouteProps[] = [
 
 	{ path: authPages.loginPage.to, element: <LoginPage /> },
 	{ path: authPages.signUp.to, element: <SignUpPage /> },
+
+	{ path: authPages.confirmPage.to, element: <ConfirmPages /> },
 	
 
 	{ path: authPages.profilePage.to, element: <ProfilePage /> },

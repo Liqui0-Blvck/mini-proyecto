@@ -104,7 +104,6 @@ const Password = () => {
 									name='new_password'
 									onChange={formik.handleChange}
 									value={formik.values.new_password}
-									autoComplete='new-password'
 								/>
 							</FieldWrap>
 						</div>
@@ -126,7 +125,6 @@ const Password = () => {
 									name='re_new_password'
 									onChange={formik.handleChange}
 									value={formik.values.re_new_password}
-									autoComplete='new-password'
 								/>
 							</FieldWrap>
 						</div>
