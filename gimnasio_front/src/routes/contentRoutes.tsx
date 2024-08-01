@@ -10,6 +10,9 @@ import SignUpPage from '../pages/Auth/SignUp.page';
 
 
 const ListaMiembros = lazy(() => import('../pages/Miembros/TablaMiembros'));
+const ListaEjercicios = lazy(() => import('../pages/Ejercicios/TablaEjercicios'));
+const ListaMaquinas = lazy(() => import('../pages/Maquinas/TablaMaquinas'));
+const ListaRutinas = lazy(() => import('../pages/Rutinas/TablaRutinas'));
 
 
 
@@ -175,6 +178,18 @@ const contentRoutes: RouteProps[] = [
 	{
 		path: appPages.miembros.subPages.miembros_lista.to,
 		element: <ListaMiembros />,
+	},
+	{
+		path: appPages.ejercicios.subPages.ejercicios_lista.to,
+		element: <ListaEjercicios />,
+	},
+	{
+		path: appPages.maquinas.subPages.maquinas_lista.to,
+		element: <ListaMaquinas />,
+	},
+	{
+		path: appPages.rutinas.subPages.rutinas_lista.to,
+		element: <ListaRutinas />,
 	},
 
 	/**

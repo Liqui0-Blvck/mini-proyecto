@@ -5,6 +5,7 @@ import FourSquare from 'react-loading-indicators/FourSquare';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store';
 import { confirmar_correo } from '../store/slices/auth/authSlices';
+import { toast } from 'react-toastify';
 
 const ConfirmPage = () => {
   const { id, token } = useParams<{ id: string; token: string }>();
@@ -19,7 +20,12 @@ const ConfirmPage = () => {
         .unwrap()
         .then(() => {
           setLoading(false);
-          navigate('/login');
+          toast.success('Correo Confirmado', {
+            autoClose: 500,
+          })
+          setTimeout(() => {
+            navigate('/login', { replace: true });
+          }, 4000);
         })
         .catch((err) => {
           if (err === 'Usuario ya confirmado') {
@@ -36,7 +42,7 @@ const ConfirmPage = () => {
     }, 2000); // Espera 2000 ms (2 segundos)
 
     return () => clearTimeout(timer);
-  }, [dispatch, id, token, navigate]);
+  }, [id, token]);
 
   return (
     <PageWrapper title='Confirmación' isProtectedRoute={false}>

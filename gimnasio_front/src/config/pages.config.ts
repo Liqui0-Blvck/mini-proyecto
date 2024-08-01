@@ -35,6 +35,54 @@ export const appPages = {
 				to: '/miembro/:id',
 			},
 		}
+	},
+	ejercicios: {
+		id: 'ejerciciosApp',
+		to: '/ejercicios',
+		text: 'Ejercicios',
+		icon: 'HeroUser',
+		subPages: {
+			ejercicios_lista: {
+				id: 'ejercicios_lista',
+				to: '/ejercicios',
+			},
+			detalle_ejercicio: {
+				id: 'detalle_ejercicio',
+				to: '/ejercicio/:id',
+			},
+		}
+	},
+	maquinas: {
+		id: 'maquinasApp',
+		to: '/maquinas',
+		text: 'Maquinas',
+		icon: 'HeroUser',
+		subPages: {
+			maquinas_lista: {
+				id: 'maquinas_lista',
+				to: '/maquinas',
+			},
+			detalle_maquina: {
+				id: 'detalle_maquina',
+				to: '/maquina/:id',
+			},
+		}
+	},
+	rutinas: {
+		id: 'rutinasApp',
+		to: '/rutinas',
+		text: 'Rutinas',
+		icon: 'HeroUser',
+		subPages: {
+			rutinas_lista: {
+				id: 'rutinas_lista',
+				to: '/rutinas',
+			},
+			detalle_rutina: {
+				id: 'detalle_rutina',
+				to: '/rutina/:id',
+			},
+		}
 	}
 }
 

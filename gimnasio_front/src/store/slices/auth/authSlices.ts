@@ -269,45 +269,32 @@ export const actualizar_configuracion = createAsyncThunk(
     })
 
 
-    export const confirmar_correo = createAsyncThunk(
-      'auth/confirmar_correo',
-      async (payload: { params: Record<string, any> }, ThunkApi) => {
-        const { params } = payload;
-        //@ts-ignore
-        const { navigate, id, token } = params;
-    
-        try {
-          //@ts-ignore
-          const res = await fetch(`${import.meta.env.VITE_URL_DEV}/auth/users/activation/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              uid: id,
-              token: token,
-            }),
-          });
-    
-          if (res.ok) {
-            return await res.json();
-          } else if (res.status === 403) {
-            // Error específico para usuario ya confirmado
-            toast.error('Tu cuenta ya ha sido confirmada.', {
-              autoClose: 5000, // Muestra el mensaje por 5 segundos
-            });
-            return ThunkApi.rejectWithValue('Usuario ya confirmado');
-          } else {
-            toast.error('No se pudo actualizar. Inténtalo nuevamente.', {
-              autoClose: 5000,
-            });
-            return ThunkApi.rejectWithValue('Error en la confirmación');
-          }
-        } catch (error: any) {
-          toast.error('No se pudo actualizar. Inténtalo nuevamente.', {
-            autoClose: 5000,
-          });
-          return ThunkApi.rejectWithValue('Error en la solicitud');
-        }
-      }
-    );
+export const confirmar_correo = createAsyncThunk(
+  'auth/confirmar_correo',
+  async (payload: { params: Record<string, any> }, ThunkApi) => {
+    const { params } = payload;
+    //@ts-ignore
+    const { navigate, id, token } = params;
+
+    try {
+      //@ts-ignore
+      const res = await fetch(`${import.meta.env.VITE_URL_DEV}auth/users/activation/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: id,
+          token: token,
+        }),
+      });
+
+      return res
+    } catch (error: any) {
+      toast.error('No se pudo actualizar. Inténtalo nuevamente.', {
+        autoClose: 5000,
+      });
+      return ThunkApi.rejectWithValue('Error en la solicitud');
+    }
+  }
+);

@@ -20,12 +20,9 @@ const UserTemplate = () => {
 
 			<NavSeparator />
 			<NavItem {...authPages.profilePage} />
-			<NavItem text='Logout' icon='HeroArrowRightOnRectangle' onClick={() => onLogout()} />
+			<NavItem text='Cerrar Sesión' icon='HeroArrowRightOnRectangle' onClick={() => onLogout()} />
 		</User>
 	);
 };
 
 export default UserTemplate;
-
-// `${!perfil?.imagen_perfil.includes(import.meta.env.VITE_URL_DEV) ? `${import.meta.env.VITE_URL_DEV}${perfil?.imagen_perfil}` : perfil?.imagen_perfil}`
-

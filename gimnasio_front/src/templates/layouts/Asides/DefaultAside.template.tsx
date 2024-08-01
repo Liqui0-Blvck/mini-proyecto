@@ -32,6 +32,29 @@ const DefaultAsideTemplate = () => {
 						icon={appPages.miembros.icon}>
 						<NavItem {...appPages.miembros} />
 					</NavCollapse>
+
+					<NavCollapse
+						text={appPages.ejercicios.text}
+						to={appPages.ejercicios.to}
+						icon={appPages.ejercicios.icon}>
+						<NavItem {...appPages.ejercicios} />
+					</NavCollapse>
+
+					<NavCollapse
+						text={appPages.maquinas.text}
+						to={appPages.maquinas.to}
+						icon={appPages.maquinas.icon}>
+						<NavItem {...appPages.maquinas} />
+					</NavCollapse>
+
+					<NavCollapse
+						text={appPages.rutinas.text}
+						to={appPages.rutinas.to}
+						icon={appPages.rutinas.icon}>
+						<NavItem {...appPages.rutinas} />
+					</NavCollapse>
+
+
 					
 					{/* <NavItem {...appPages.aiAppPages.subPages.aiDashboardPage}>
 						<Badge
