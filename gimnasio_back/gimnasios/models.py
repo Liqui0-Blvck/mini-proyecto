@@ -5,6 +5,7 @@ from core.models import *
 from .functions import *
 
 class Gimnasio(BaseModel):
+  dueno = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='gimnasios')
   nombre = models.CharField(max_length=100)
   direccion = models.TextField()
   ciudad = models.CharField(max_length=50, blank=True)
@@ -20,7 +21,7 @@ class Gimnasio(BaseModel):
       
 class Sucursal(BaseModel):
   nombre = models.CharField(max_length=100)
-  gimnasio = models.ForeignKey(Gimnasio, on_delete=models.CASCADE, related_name='sucursales')
+  gimnasio = models.ForeignKey('gimnasios.Gimnasio', on_delete=models.CASCADE, related_name='sucursales')
   direccion = models.TextField()
   telefono = models.CharField(max_length=15)
   horario_apertura = models.TimeField()
@@ -33,7 +34,7 @@ class Sucursal(BaseModel):
 
 class Staff(BaseHistoricalModel):
   perfil = models.OneToOneField('cuentas.Perfil', on_delete=models.CASCADE)
-  gimnasio = models.ForeignKey(Gimnasio, on_delete=models.CASCADE)
+  gimnasio = models.ForeignKey('gimnasios.Gimnasio', on_delete=models.CASCADE)
   sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, related_name='staff')
   fecha_contratacion = models.DateTimeField(auto_now_add=True)
   especialidades = models.TextField(blank=True)

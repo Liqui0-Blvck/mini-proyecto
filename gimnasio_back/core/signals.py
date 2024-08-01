@@ -2,11 +2,15 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 from cuentas.models import *
+from gimnasios.models import *
+from django.contrib.auth.signals import user_logged_in
+from django.http import HttpResponse
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def crear_perfil_usuario(sender, instance, created, **kwargs):
     if created:
-        Perfil.objects.create(usuario=instance)
+        gimnasio = Gimnasio.objects.create(dueno = instance)
+        Perfil.objects.create(usuario=instance, gimnasio = gimnasio)
         ConfiguracionUsuario.objects.create(
             usuario = instance,
             idioma_preferido = 'es',
@@ -14,5 +18,6 @@ def crear_perfil_usuario(sender, instance, created, **kwargs):
             configuraciones_privacidad = True,
             estilo_aplicacion = 'dark',
             color_aplicacion = 'zinc',
-            fuente_aplicacion = 'Roboto, sans-serif'
+            fuente_aplicacion = 'Roboto, sans-serif',
+            gimnasio = gimnasio
         )

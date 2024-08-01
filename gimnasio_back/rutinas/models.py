@@ -5,6 +5,7 @@ from .functions import *
 
 
 class Maquina(models.Model):
+    gimnasio = models.ForeignKey('gimnasios.Gimnasio', on_delete=models.CASCADE, related_name='maquinas')
     nombre = models.CharField(max_length=100)  # Nombre de la máquina
     descripcion = models.TextField(blank=True)  # Descripción de la máquina
     imagen = models.ImageField(upload_to='imagenes_maquinas/', blank=True)  # Imagen de la máquina
@@ -13,6 +14,8 @@ class Maquina(models.Model):
         return self.nombre
 
 class Ejercicio(models.Model):
+    gimnasio = models.ForeignKey('gimnasios.Gimnasio', on_delete=models.CASCADE)
+    maquina = models.ForeignKey(Maquina, on_delete=models.SET_NULL, null=True, blank=True, related_name='ejercicios')  # Relación con la máquina
     nombre = models.CharField(max_length=100)  # Nombre del ejercicio
     descripcion = models.TextField(blank=True)  # Descripción del ejercicio
     categoria = models.CharField(max_length=50, choices=CATEGORIAS_EJERCICIO)
@@ -20,13 +23,13 @@ class Ejercicio(models.Model):
     duracion_estimado = models.DurationField(blank=True, null=True)  # Duración estimada del ejercicio
     dificultad = models.CharField(max_length=20, choices=DIFICULTADES, default='principiante')
     video_instructivo = models.FileField(upload_to=ruta_video, blank=True, null=True)
-    maquina = models.ForeignKey(Maquina, on_delete=models.SET_NULL, null=True, blank=True, related_name='ejercicios')  # Relación con la máquina
 
     def __str__(self):
         return self.nombre
 
 
 class Rutina(BaseModel):
+    gimnasio = models.ForeignKey('gimnasios.Gimnasio', on_delete=models.CASCADE, related_name='rutina')
     nombre = models.CharField(max_length=100)  # Nombre de la rutina
     miembro = models.ForeignKey('miembros.Miembro', on_delete=models.CASCADE, related_name='rutinas')  # Miembro asociado
     entrenador = models.ForeignKey('gimnasios.Staff', on_delete=models.SET_NULL, null=True, blank=True, related_name='rutinas')  # Entrenador responsable
@@ -50,7 +53,6 @@ class EjercicioRutina(BaseModel):
 
     def __str__(self):
         return f'{self.ejercicio.nombre} en {self.rutina.nombre}'
-    
     
 
 class SesionEntrenamiento(BaseModel):
