@@ -101,7 +101,10 @@ const SearchPartial = () => {
 					className='min-w-[22rem]'
 					value={formik.values.searchField}
 					onChange={formik.handleChange}
-					autoComplete='off'
+					spellCheck='false'
+					autoComplete='off'  // Desactiva el autocompletado
+					list='none'  // Previene sugerencias
+					autoCorrect='off'  // Desactiva la corrección automática
 				/>
 			</FieldWrap>
 			{formik.values.searchField && (

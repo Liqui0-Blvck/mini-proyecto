@@ -18,7 +18,7 @@ export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	className?: string;
 	color?: TColors;
 	colorIntensity?: TColorIntensity;
-	icon?: TIcons;
+	icon?: TIcons | ReactNode;
 	isActive?: boolean;
 	isDisable?: boolean;
 	isLoading?: boolean;
@@ -200,10 +200,21 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 	return (
 		<button ref={ref} data-component-name='Button' type='button' className={classes} {...rest}>
 			{(!!icon || isLoading) && (
-				<Icon
-					icon={isLoading ? 'DuoLoading' : (icon as TIcons)}
-					className={classNames({ 'animate-spin': isLoading }, btnIconClasses)}
-				/>
+				<>
+				{
+					isLoading ? (
+						<Icon icon='HeroRefresh' className={classNames(btnIconClasses)} />
+					) : (
+						<>
+							{typeof icon === 'string' ? (
+								<Icon icon={icon as TIcons} className={classNames(btnIconClasses)} />
+							) : (
+								icon
+							)}
+						</>
+					)
+				}
+				</>
 			)}
 			{children}
 			{!!rightIcon && <Icon icon={rightIcon} className={classNames(btnRightIconClasses)} />}

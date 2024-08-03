@@ -2,11 +2,12 @@ import React from 'react';
 import Icon from '../../../components/icon/Icon';
 import Badge from '../../../components/ui/Badge';
 import { NavButton, NavItem, NavSeparator } from '../../../components/layouts/Navigation/Nav';
-import { appPages, authPages } from '../../../config/pages.config';
+import { appPages, authPages, userPages } from '../../../config/pages.config';
 import User from '../../../components/layouts/User/User';
 import { useAuth } from '../../../context/authContext';
 import { useAppSelector } from '../../../store';
 import { RootState } from '../../../store/rootReducer';
+import { CgGym } from "react-icons/cg";
 
 const UserTemplate = () => {
 	const { onLogout } = useAuth()
@@ -19,13 +20,14 @@ const UserTemplate = () => {
 			src={perfil?.imagen_perfil ? perfil.imagen_perfil : '/src/assets/avatar/no-image-account.avif'}>
 
 			<NavSeparator />
-			<NavItem {...authPages.profilePage} />
-			<NavItem text='Logout' icon='HeroArrowRightOnRectangle' onClick={() => onLogout()} />
+			<NavItem {...userPages.profilePage} />
+			<NavItem 
+				to={userPages.gimnasiosPage.to} 
+				text={userPages.gimnasiosPage.text} 
+				icon={<CgGym className='text-3xl dark:text-white text-zinc-500 mr-3'/>}/>
+			<NavItem text='Cerrar Sesión' icon='HeroArrowRightOnRectangle' onClick={() => onLogout()} />
 		</User>
 	);
 };
 
 export default UserTemplate;
-
-// `${!perfil?.imagen_perfil.includes(import.meta.env.VITE_URL_DEV) ? `${import.meta.env.VITE_URL_DEV}${perfil?.imagen_perfil}` : perfil?.imagen_perfil}`
-

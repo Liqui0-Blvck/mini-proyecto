@@ -29,7 +29,7 @@ const RefWrapper = forwardRef<HTMLSpanElement, IRefWrapperProps>(({ children }, 
 RefWrapper.displayName = 'RefWrapper';
 
 export interface IIconProps extends HTMLAttributes<HTMLSpanElement> {
-	icon: TIcons;
+	icon: TIcons | ReactNode;
 	className?: string;
 	color?: TColors;
 	colorIntensity?: TColorIntensity;

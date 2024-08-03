@@ -3,6 +3,7 @@ import productsDb from '../mocks/db/products.db';
 import usersDb from '../mocks/db/users.db';
 import rolesDb from '../mocks/db/roles.db';
 import projectsDb from '../mocks/db/projects.db';
+import { CgGym } from "react-icons/cg";
 
 export const examplePages = {
 	examplesPage: {
@@ -33,6 +34,70 @@ export const appPages = {
 			detalle_miembro: {
 				id: 'detalle_miembro',
 				to: '/miembro/:id',
+			},
+		}
+	},
+	ejercicios: {
+		id: 'ejerciciosApp',
+		to: '/ejercicios',
+		text: 'Ejercicios',
+		icon: 'HeroUser',
+		subPages: {
+			ejercicios_lista: {
+				id: 'ejercicios_lista',
+				to: '/ejercicios',
+			},
+			detalle_ejercicio: {
+				id: 'detalle_ejercicio',
+				to: '/ejercicio/:id',
+			},
+		}
+	},
+	maquinas: {
+		id: 'maquinasApp',
+		to: '/maquinas',
+		text: 'Maquinas',
+		icon: 'HeroUser',
+		subPages: {
+			maquinas_lista: {
+				id: 'maquinas_lista',
+				to: '/maquinas',
+			},
+			detalle_maquina: {
+				id: 'detalle_maquina',
+				to: '/maquina/:id',
+			},
+		}
+	},
+	rutinas: {
+		id: 'rutinasApp',
+		to: '/rutinas',
+		text: 'Rutinas',
+		icon: 'HeroUser',
+		subPages: {
+			rutinas_lista: {
+				id: 'rutinas_lista',
+				to: '/rutinas',
+			},
+			detalle_rutina: {
+				id: 'detalle_rutina',
+				to: '/rutina/:id',
+			},
+		}
+	},
+	suscripciones: {
+		id: 'suscripcionesApp',
+		to: '/suscripciones',
+		text: 'Suscripciones',
+		icon: 'HeroUser',
+		subPages: {
+			suscripciones_lista: {
+				id: 'suscripciones_lista',
+				to: '/suscripciones',
+			},
+			detalle_suscripcion: {
+				id: 'detalle_suscripcion',
+				to: '/suscripcion/:id',
 			},
 		}
 	}
@@ -494,7 +559,22 @@ export const componentsPages = {
 			},
 		},
 	},
-};
+}
+
+export const userPages = {
+	profilePage: {
+		id: 'perfilPage',
+		to: '/perfil',
+		text: 'Perfil',
+		icon: 'HeroUser',
+	},
+	gimnasiosPage: {
+		id: 'gimnasiosPage',
+		to: '/gimnasios',
+		text: 'Gimnasios',
+		icon: CgGym,
+	}
+}
 
 export const authPages = {
 	loginPage: {
@@ -515,12 +595,7 @@ export const authPages = {
     text: 'Confirm',
     icon: 'HeroArrowRightOnRectangle',
   },
-	profilePage: {
-		id: 'perfilPage',
-		to: '/perfil',
-		text: 'Perfil',
-		icon: 'HeroUser',
-	},
+
 };
 
 const pagesConfig = {
