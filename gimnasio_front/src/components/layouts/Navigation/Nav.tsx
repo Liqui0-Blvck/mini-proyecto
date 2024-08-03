@@ -104,7 +104,7 @@ NavItemContent.defaultProps = {
 NavItemContent.displayName = 'NavItemContent';
 
 interface INavIconProps extends Partial<IIconProps> {
-	icon?: TIcons;
+	icon?: TIcons | ReactNode;
 	className?: string;
 }
 const NavIcon: FC<INavIconProps> = (props) => {
@@ -115,7 +115,7 @@ const NavIcon: FC<INavIconProps> = (props) => {
 	return (
 		<Icon
 			data-component-name='Nav/NavIcon'
-			icon={icon as TIcons}
+			icon={icon as TIcons | ReactNode}
 			className={classNames(
 				'w-6 flex-none text-2xl',
 				{
@@ -134,7 +134,7 @@ NavIcon.displayName = 'NavIcon';
 
 interface INavButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	className?: string;
-	icon: TIcons;
+	icon: TIcons | ReactNode;
 	iconColor?: TColors;
 	iconClassName?: string;
 	title: string;
@@ -172,7 +172,7 @@ NavButton.displayName = 'NavButton';
 
 interface INavItemProps extends HTMLAttributes<HTMLLIElement> {
 	children?: ReactNode;
-	icon?: TIcons;
+	icon?: TIcons | ReactNode;
 	text: string;
 	to?: string;
 	className?: string;
@@ -188,7 +188,10 @@ export const NavItem: FC<INavItemProps> = (props) => {
 
 	const CONTENT = (
 		<>
-			<NavIcon icon={icon} />
+			{typeof icon === 'string' 
+				?	<NavIcon icon={icon} />
+				: icon
+			}
 			<NavItemContent>
 				<NavItemText>{t(text)}</NavItemText>
 				{children && !isChildrenNavButton && <div>{children as ReactNode}</div>}
@@ -286,7 +289,7 @@ NavItem.displayName = 'NavItem';
 
 interface INavCollapseProps extends HTMLAttributes<HTMLLIElement> {
 	children: ReactNode;
-	icon?: TIcons;
+	icon?: TIcons | ReactNode;
 	text: string;
 	to: string;
 	className?: string;

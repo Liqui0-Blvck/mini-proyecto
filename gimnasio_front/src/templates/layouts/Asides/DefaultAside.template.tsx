@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Aside, { AsideBody, AsideFooter, AsideHead } from '../../../components/layouts/Aside/Aside';
 import LogoAndAsideTogglePart from './_parts/LogoAndAsideToggle.part';
 import DarkModeSwitcherPart from './_parts/DarkModeSwitcher.part';
-import { appPages, componentsPages } from '../../../config/pages.config';
+import { appPages } from '../../../config/pages.config';
 import Nav, {
 	NavButton,
 	NavCollapse,
@@ -52,6 +52,13 @@ const DefaultAsideTemplate = () => {
 						to={appPages.rutinas.to}
 						icon={appPages.rutinas.icon}>
 						<NavItem {...appPages.rutinas} />
+					</NavCollapse>
+
+					<NavCollapse
+						text={appPages.suscripciones.text}
+						to={appPages.suscripciones.to}
+						icon={appPages.suscripciones.icon}>
+						<NavItem {...appPages.suscripciones} />
 					</NavCollapse>
 
 

@@ -83,6 +83,10 @@ const Password = () => {
 									name='current_password'
 									onChange={formik.handleChange}
 									value={formik.values.current_password}
+									spellCheck='false'
+									autoComplete='new-password'  // Desactiva el autocompletado
+									list='none'  // Previene sugerencias
+									autoCorrect='off'  // Desactiva la corrección automática
 								/>
 							</FieldWrap>
 						</div>
@@ -104,6 +108,10 @@ const Password = () => {
 									name='new_password'
 									onChange={formik.handleChange}
 									value={formik.values.new_password}
+									spellCheck='false'
+									autoComplete='new-password' // Desactiva el autocompletado
+									list='none'  // Previene sugerencias
+									autoCorrect='off'  // Desactiva la corrección automática
 								/>
 							</FieldWrap>
 						</div>
@@ -125,6 +133,10 @@ const Password = () => {
 									name='re_new_password'
 									onChange={formik.handleChange}
 									value={formik.values.re_new_password}
+									spellCheck='false'
+									autoComplete='new-password' // Desactiva el autocompletado
+									list='none'  // Previene sugerencias
+									autoCorrect='off'  // Desactiva la corrección automática
 								/>
 							</FieldWrap>
 						</div>

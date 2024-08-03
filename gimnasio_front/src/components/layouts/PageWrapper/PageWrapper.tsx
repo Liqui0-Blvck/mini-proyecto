@@ -6,7 +6,7 @@ import { useAppSelector } from '../../../store';
 import { RootState } from '../../../store/rootReducer';
 import { extractRoutes } from '../../../utils/getRoutesPath.util';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
-import { appPages, authPages } from '../../../config/pages.config';
+import { appPages, authPages, userPages } from '../../../config/pages.config';
 
 // Función para verificar si la ruta coincide con algún patrón de rutas dinámicas
 const isRouteAuthorized = (pathname: any, routes: any) => {
@@ -61,9 +61,11 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
 
   const appPagesRoutes = extractRoutes(appPages);
   const authPagesRoutes = extractRoutes(authPages);
+  const userPagesRoutes = extractRoutes(userPages);
 
   const isAuthorizedPage = isRouteAuthorized(pathname, appPagesRoutes);
   const isAuthorizedAuthPage = isRouteAuthorized(pathname, authPagesRoutes);
+  const isAuthorizedUserPage = isRouteAuthorized(pathname, userPagesRoutes);
 
   useEffect(() => {
     const checkAuthorization = () => {
@@ -72,14 +74,14 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
   
       if (!session.signedIn) {
         // Si el usuario no está autenticado
-        if ((!isAuthorizedAuthPage && !isAuthorizedPage) || isProtectedRoute) {
+        if ((!isAuthorizedAuthPage && !isAuthorizedPage && !isAuthorizedUserPage) || isProtectedRoute) {
           if (!isConfirmPage) {
             // Si no es la página de confirmación
             navigate(authPages.loginPage.to);
           }
         }
       } else {
-        if (!isAuthorizedPage && !isAuthorizedAuthPage) {
+        if (!isAuthorizedPage && !isAuthorizedAuthPage && !isAuthorizedUserPage) {
           navigate('/404', { replace: true });
         } else {
           navigate(pathname, { replace: true });
@@ -90,7 +92,7 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
     checkAuthorization(); // Verificar autorización
     setLoading(false); // Finalizar estado de carga
   
-  }, [session.signedIn, isProtectedRoute, isAuthorizedPage, isAuthorizedAuthPage, pathname, navigate]);
+  }, [session.signedIn, isProtectedRoute, isAuthorizedPage, isAuthorizedAuthPage, isAuthorizedUserPage, pathname, navigate]);
   
   return (
     <main

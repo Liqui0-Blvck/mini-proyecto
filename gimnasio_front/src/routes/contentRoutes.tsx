@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
-import { appPages, authPages, componentsPages, examplePages } from '../config/pages.config';
+import { appPages, authPages, componentsPages, examplePages, userPages } from '../config/pages.config';
 import NotFoundPage from '../pages/NotFound.page';
 import LoginPage from '../pages/Auth/Login.page';
 import SignUpPage from '../pages/Auth/SignUp.page';
@@ -13,6 +13,11 @@ const ListaMiembros = lazy(() => import('../pages/Miembros/TablaMiembros'));
 const ListaEjercicios = lazy(() => import('../pages/Ejercicios/TablaEjercicios'));
 const ListaMaquinas = lazy(() => import('../pages/Maquinas/TablaMaquinas'));
 const ListaRutinas = lazy(() => import('../pages/Rutinas/TablaRutinas'));
+
+
+const ProfilePage = lazy(() => import('../pages/Perfil/Profile.page'));
+const GimnasiosPage = lazy(() => import('../pages/Gimnasios/GimnasiosPage.page'));
+
 
 
 
@@ -151,7 +156,6 @@ const ProjectDashboardPage = lazy(
 const ProjectBoardPage = lazy(() => import('../pages/project/ProjectBoardPage/ProjectBoard.page'));
 
 const ExamplesPage = lazy(() => import('../pages/ExamplePage/Examples.page'));
-const ProfilePage = lazy(() => import('../pages/Perfil/Profile.page'));
 
 /**
  * AI
@@ -423,7 +427,8 @@ const contentRoutes: RouteProps[] = [
 	{ path: authPages.confirmPage.to, element: <ConfirmPages /> },
 	
 
-	{ path: authPages.profilePage.to, element: <ProfilePage /> },
+	{ path: userPages.profilePage.to, element: <ProfilePage /> },
+	{ path: userPages.gimnasiosPage.to, element: <GimnasiosPage /> },
 
 	{ path: '*', element: <NotFoundPage /> },
 ];

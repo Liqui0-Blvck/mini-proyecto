@@ -7,6 +7,13 @@ export type PostActions = {
   params?: Record<string, any>
 }
 
+export type PatchAction = {
+  id?: number
+  token: SessionState
+  data?: any
+  params?: Record<string, any>
+}
+
 export type FetchAction = {
   id?: string | number | undefined
   token: SessionState

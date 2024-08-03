@@ -10,43 +10,33 @@ import { TIcons } from '../../types/icons.type';
 import Badge from '../../components/ui/Badge';
 import { useAppSelector } from '../../store';
 import { RootState } from '../../store/rootReducer';
-import Configuracion from './Configuracion.component';
-import Perfil from './Perfil.component';
-import Password from './Password.component';
-import { LuSettings } from "react-icons/lu";
+import GimnasioComponent from './Gimnasio.component';
+import { CgGitBranch, CgGym } from 'react-icons/cg';
 
 type TTab = {
 	text:
-		| 'Perfil'
-		| 'Configuración'
-		| 'Password'
+		| 'Gimansio'
+		| 'Sucursal'
 	icon: TIcons | ReactNode;
 };
 type TTabs = {
 	[key in
-		| 'EDIT'
-		| 'CONFIGURATION'
-		| 'PASSWORD']: TTab;
+		| 'GIMNASIO'
+		| 'SUCURSALES']: TTab;
 };
 const TAB: TTabs = {
-	EDIT: {
-		text: 'Perfil',
-		icon: 'HeroPencil',
+	GIMNASIO: {
+		text: 'Gimansio',
+		icon: <CgGym className='text-3xl dark:text-white text-zinc-500 mr-3'/>,
 	},
-	CONFIGURATION: {
-		text: 'Configuración',
-		icon: <LuSettings className='text-2xl dark:text-zinc-100 text-zinc-500 mr-3'/>,
-	},
-	PASSWORD: {
-		text: 'Password',
-		icon: 'HeroKey',
+	SUCURSALES: {
+		text: 'Sucursal',
+		icon: <CgGitBranch className='text-3xl dark:text-white text-zinc-500 mr-3'/>,
 	},
 };
 
-const ProfilePage = () => {
-	const { perfil } = useAppSelector((state: RootState) => state.auth.user)
-
-	const [activeTab, setActiveTab] = useState<TTab>(TAB.EDIT);
+const GimnasiosPage = () => {
+	const [activeTab, setActiveTab] = useState<TTab>(TAB.GIMNASIO);
 
 	const defaultProps: IButtonProps = {
 		color: 'zinc',
@@ -62,13 +52,12 @@ const ProfilePage = () => {
 		<PageWrapper>
 			<Subheader>
 				<SubheaderLeft>
-					{`${perfil?.usuario.first_name} ${perfil?.usuario.father_last_name}`}{' '}
 					<Badge
 						color='blue'
 						variant='outline'
 						rounded='rounded-full'
 						className='border-transparent'>
-						Perfil
+						Gimnasio
 					</Badge>
 				</SubheaderLeft>
 			</Subheader>
@@ -96,18 +85,10 @@ const ProfilePage = () => {
 										</Button>
 									</div>
 								))}
-								<div className='border-zinc-500/25 dark:border-zinc-500/50 max-sm:border-s sm:border-t sm:pt-4'>
-									<Button icon='HeroTrash' color='red'>
-										Delete Account
-									</Button>
-								</div>
+								
 							</div>
 							<div className='col-span-12 flex flex-col gap-4 sm:col-span-8 md:col-span-10'>
-								{activeTab === TAB.EDIT && <Perfil /> }
-
-								{activeTab === TAB.CONFIGURATION && <Configuracion />}
-								
-								{activeTab === TAB.PASSWORD && <Password />}
+								{activeTab.text === 'Gimansio' && <GimnasioComponent />}
 							</div>
 						</div>
 					</CardBody>
@@ -117,4 +98,4 @@ const ProfilePage = () => {
 	);
 };
 
-export default ProfilePage;
+export default GimnasiosPage
