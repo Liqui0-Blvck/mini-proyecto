@@ -7,7 +7,7 @@ export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 
 
 const instance = axios.create({
   //@ts-ignore
-  baseURL: `${import.meta.env.VITE_URL_DEV}`,
+  baseURL: `${import.meta.env.VITE_URL_PRO}`,
   timeout: 10000, // Tiempo de espera de 10 segundos
   headers: { 'Content-Type': 'application/json' },
 });
