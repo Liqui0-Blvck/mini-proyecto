@@ -18,7 +18,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8000:8000"  # Agregar esta línea para mapear el puerto 8000 del contenedor al puerto 8000 del host
+      - "8000:8000"
     networks:
       - app-network
 
