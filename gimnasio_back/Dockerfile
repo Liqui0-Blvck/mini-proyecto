@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 8000
 
 # Ejecuta el comando para iniciar el servidor de desarrollo
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["bash", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
