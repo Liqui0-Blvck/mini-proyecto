@@ -109,7 +109,7 @@ const TablaSuscripciones = () => {
       header: 'Miembro',
     }),
     columnHelper.display({
-      cell: (info) => (
+      cell: (_info) => (
         <div className='flex items-center gap-2'>
           {/* {info.row.original.socialAuth?.google && (
             <Tooltip text='Google'>

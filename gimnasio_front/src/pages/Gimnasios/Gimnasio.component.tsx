@@ -51,7 +51,7 @@ const GimnasioComponent = () => {
       email: gimnasio?.email!,
       sitio_web: gimnasio?.sitio_web!
     },
-    onSubmit: (values: IGimnasioFormikValues) => {
+    onSubmit: (_values: IGimnasioFormikValues) => {
       
     }
   })
