@@ -70,7 +70,7 @@ DJOSER = {
 
 
 
-FRONTEND_URL = 'http://localhost:5173'
+FRONTEND_URL = os.getenv('DOMINIO_PRODUCCION')
 
 # Configuración del backend de correo
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
