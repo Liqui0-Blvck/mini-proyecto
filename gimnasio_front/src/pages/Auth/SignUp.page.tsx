@@ -89,8 +89,7 @@ const SignUpPage = () => {
 							<Validation
 								isValid={formik.isValid}
 								isTouched={formik.touched.email}
-								invalidFeedback={formik.errors.email}
-								validFeedback='Good'>
+								invalidFeedback={formik.errors.email}>
 								<FieldWrap
 									firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
 									<Input
@@ -114,8 +113,7 @@ const SignUpPage = () => {
 							<Validation
 								isValid={formik.isValid}
 								isTouched={formik.touched.username}
-								invalidFeedback={formik.errors.username}
-								validFeedback='Good'>
+								invalidFeedback={formik.errors.username}>
 								<FieldWrap
 									firstSuffix={<Icon icon='HeroEnvelope' className='mx-2' />}>
 									<Input
@@ -138,8 +136,7 @@ const SignUpPage = () => {
 							<Validation
 								isValid={formik.isValid}
 								isTouched={formik.touched.password}
-								invalidFeedback={formik.errors.password}
-								validFeedback='Good'>
+								invalidFeedback={formik.errors.password}>
 								<FieldWrap
 									firstSuffix={<Icon icon='HeroKey' className='mx-2' />}
 									lastSuffix={
@@ -172,8 +169,7 @@ const SignUpPage = () => {
 							<Validation
 								isValid={formik.isValid}
 								isTouched={formik.touched.re_password}
-								invalidFeedback={formik.errors.re_password}
-								validFeedback='Good'>
+								invalidFeedback={formik.errors.re_password}>
 								<FieldWrap
 									firstSuffix={<Icon icon='HeroKey' className='mx-2' />}
 									lastSuffix={

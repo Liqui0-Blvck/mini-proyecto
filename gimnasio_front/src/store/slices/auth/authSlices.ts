@@ -138,7 +138,7 @@ export const onSignUp = createAsyncThunk(
 
     try {
       //@ts-ignore
-      const res = await fetch(`${import.meta.env.VITE_URL_DEV}auth/register/`,{
+      const res = await fetch(`${import.meta.env.VITE_URL_PRO}auth/register/`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -278,7 +278,7 @@ export const confirmar_correo = createAsyncThunk(
 
     try {
       //@ts-ignore
-      const res = await fetch(`${import.meta.env.VITE_URL_DEV}auth/users/activation/`, {
+      const res = await fetch(`${import.meta.env.VITE_URL_PRO}auth/users/activation/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
