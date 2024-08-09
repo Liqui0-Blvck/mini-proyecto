@@ -12,6 +12,7 @@ class Gimnasio(BaseModel):
   estado = models.CharField(max_length=50, blank=True)
   telefono = models.CharField(max_length=15)
   logo = models.ImageField(upload_to=ruta_logo, blank=True, null=True)
+  activo = models.BooleanField(default=False)
   email = models.EmailField(blank=True, null=True)
   sitio_web = models.URLField(blank=True, null=True)
 

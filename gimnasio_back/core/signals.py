@@ -9,7 +9,7 @@ from django.http import HttpResponse
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def crear_perfil_usuario(sender, instance, created, **kwargs):
     if created:
-        gimnasio = Gimnasio.objects.create(dueno = instance)
+        gimnasio = Gimnasio.objects.create(dueno = instance, activo = True)
         Perfil.objects.create(usuario=instance, gimnasio = gimnasio)
         ConfiguracionUsuario.objects.create(
             usuario = instance,
