@@ -1,4 +1,5 @@
 export type TGimnasio = {
+  id: number
   dueno: number
   nombre: string
   direccion: string

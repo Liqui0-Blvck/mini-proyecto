@@ -4,10 +4,12 @@ import { TGimnasio } from '../../../types/gimnasio/TGimnasio.type'
 
 export type GimnasiosState = {
   gimnasio: TGimnasio | null
+  gimnasios: TGimnasio[] | null
 }
 
 const initialState: GimnasiosState = {
-  gimnasio: null as TGimnasio | null
+  gimnasio: null as TGimnasio | null,
+  gimnasios: [] as TGimnasio[] | []
 }
 
 const userSlice = createSlice({
@@ -16,9 +18,12 @@ const userSlice = createSlice({
     reducers: {
       setGimnasio(state, action: PayloadAction<TGimnasio>) {
         state.gimnasio = action.payload
+      },
+      setGimnasios(state, action: PayloadAction<TGimnasio[]>) {
+        state.gimnasios = action.payload
       }
     },
 })
 
-export const { setGimnasio } = userSlice.actions
+export const { setGimnasio, setGimnasios } = userSlice.actions
 export default userSlice.reducer

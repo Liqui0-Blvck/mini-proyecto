@@ -8,10 +8,14 @@ import { useAuth } from '../../../context/authContext';
 import { useAppSelector } from '../../../store';
 import { RootState } from '../../../store/rootReducer';
 import { CgGym } from "react-icons/cg";
+import useAsideStatus from '../../../hooks/useAsideStatus';
 
 const UserTemplate = () => {
 	const { onLogout } = useAuth()
+	const { asideStatus } = useAsideStatus();
 	const { perfil } = useAppSelector((state: RootState) => state.auth.user)
+
+	console.log(asideStatus)
 
 	return (
 		<User
@@ -24,7 +28,7 @@ const UserTemplate = () => {
 			<NavItem 
 				to={userPages.gimnasiosPage.to} 
 				text={userPages.gimnasiosPage.text} 
-				icon={<CgGym className='text-3xl dark:text-white text-zinc-500 mr-3'/>}/>
+				icon={<CgGym className={`${!asideStatus ? '' : 'mr-3'} text-3xl dark:text-white text-zinc-500 `}/>}/>
 			<NavItem text='Cerrar Sesión' icon='HeroArrowRightOnRectangle' onClick={() => onLogout()} />
 		</User>
 	);

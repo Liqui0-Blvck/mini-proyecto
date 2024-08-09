@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import Avatar from '../../components/Avatar';
 import Label from '../../components/form/Label';
 import Input from '../../components/form/Input';
@@ -12,9 +12,9 @@ import Button from '../../components/ui/Button';
 import useSaveBtn from '../../hooks/useSaveBtn';
 import Validation from '../../components/form/Validation';
 import { format } from '@formkit/tempo'
-import { obtener_gimnasio } from '../../store/slices/gimnasio/gimnasioPeticiones';
+import { actualizar_gimnasio, obtener_gimnasio } from '../../store/slices/gimnasio/gimnasioPeticiones';
 
-interface IGimnasioFormikValues {
+export interface IGimnasioFormikValues {
   nombre: string;
   direccion: string;
   ciudad: string;
@@ -37,7 +37,6 @@ const GimnasioComponent = () => {
     dispatch(obtener_gimnasio({ id: perfil?.usuario.id, token}))
   }, [])
 
-  console.log(gimnasio)
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -51,7 +50,21 @@ const GimnasioComponent = () => {
       email: gimnasio?.email!,
       sitio_web: gimnasio?.sitio_web!
     },
-    onSubmit: (_values: IGimnasioFormikValues) => {
+    onSubmit: (values: IGimnasioFormikValues) => {
+      setIsSaving(true)
+
+      dispatch(
+        actualizar_gimnasio({
+          id: gimnasio?.id!,
+          data: { 
+            ...values,
+            logo: values.logo instanceof File ? values.logo : undefined
+           }, 
+          token })
+        )
+      setTimeout(() => {
+        setIsSaving(false)
+      }, 1200)
       
     }
   })
@@ -120,7 +133,7 @@ const GimnasioComponent = () => {
                 id='email'
                 name='email'
                 value={formik.values.email}
-                autoComplete='email'
+                onChange={formik.handleChange}
               />
             </FieldWrap>
           </div>

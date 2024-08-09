@@ -364,7 +364,6 @@ const Modal: FC<IModalProps> = (props) => {
 							role='dialog'
 							tabIndex={-1}
 							aria-labelledby={titleId}
-							aria-hidden='true'
 							{...animationProps}
 							{...rest}>
 							<Dialog
