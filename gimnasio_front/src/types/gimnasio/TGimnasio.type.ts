@@ -11,3 +11,13 @@ export type TGimnasio = {
   sitio_web: string
   fecha_modificacion: string
 }
+
+export type TSucursal = {
+  id: number
+  nombre: string
+  gimnasio: number
+  direccion: string
+  telefono: string
+  horario_apertura: string
+  horario_cierre: string
+}

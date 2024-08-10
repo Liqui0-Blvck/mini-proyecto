@@ -20,6 +20,7 @@ import { TGimnasio } from '../../types/gimnasio/TGimnasio.type';
 import GimnasioTabsButtons, { TAB_GYM, TTabGym } from './GimnasioButtons';
 import { actualizar_gimnasio_activo, obtener_gimnasios } from '../../store/slices/gimnasio/gimnasioPeticiones';
 import TablaGimnasios from './TablaGimnasios.table';
+import Sucursal from './Sucursal/Sucursal.component';
 
 type TTab = {
 	text:
@@ -88,7 +89,7 @@ const GimnasiosPage = () => {
 
 				<SubheaderRight>
 					{
-						gimnasios?.length! > 0
+						gimnasios?.length! > 1
 							? (
 								<SelectReact
 									options={optionGimnasio}
@@ -174,7 +175,9 @@ const GimnasiosPage = () => {
 													: null
 								}
 
-								{activeTab.text === 'Sucursal' && <div>Hola</div>}
+								{activeTab.text === 'Sucursal' && (
+									<Sucursal />
+								)}
 								
 							</div>
 						</div>
