@@ -21,6 +21,7 @@ import GimnasioTabsButtons, { TAB_GYM, TTabGym } from './GimnasioButtons';
 import { actualizar_gimnasio_activo, obtener_gimnasios } from '../../store/slices/gimnasio/gimnasioPeticiones';
 import TablaGimnasios from './TablaGimnasios.table';
 import Sucursal from './Sucursal/Sucursal.component';
+import useColorApp from '../../hooks/useColorApp';
 
 type TTab = {
 	text:
@@ -53,6 +54,7 @@ const GimnasiosPage = () => {
 	const [activeTabsGym, setActiveTabsGym] = useState<TTabGym>(TAB_GYM.GIMNASIO)
 	const token = useAppSelector((state: RootState) => state.auth.session)
 	const dispatch = useAppDispatch()
+	const { colorApp } = useColorApp();
 
 	useEffect(() => {
 		dispatch(obtener_gimnasios({ token }))
@@ -69,17 +71,13 @@ const GimnasiosPage = () => {
 		colorIntensity: '500',
 	};
 
-	const optionGimnasio: TSelectOptions = gimnasios?.map((gimnasio: TGimnasio) => ({
-		value: String(gimnasio.id),
-		label: gimnasio.nombre,
-	})) || []
 
 	return (
 		<PageWrapper>
 			<Subheader>
 				<SubheaderLeft>
 					<Badge
-						color='blue'
+						color={'blue'}
 						variant='outline'
 						rounded='rounded-full'
 						className='border-transparent'>
@@ -88,31 +86,11 @@ const GimnasiosPage = () => {
 				</SubheaderLeft>
 
 				<SubheaderRight>
-					{
-						gimnasios?.length! > 1
-							? (
-								<SelectReact
-									options={optionGimnasio}
-									id='gimnasio'
-									color='blue'
-									name='gimnasio'
-									className='!w-52'
-									placeholder='Selecciona un gimnasio'
-									onChange={(value: any) => {
-										dispatch(actualizar_gimnasio_activo({ token, data: { gimnasio_id: value.value} }))
-									}}
-								/>
-								)
-							: null
-					}
-
 					<Button
 						aria-details='Agregar Gimnasio'
-						variant='outline'
-						color='blue'
-						isActive={true}
+						variant='solid'
+						color={colorApp}
 						colorIntensity='500'
-						className='hover:bg-blue-500 hover:bg-opacity-90'
 						icon='HeroPlus'
 						onClick={() => setIsModalOpen(true)}
 						>

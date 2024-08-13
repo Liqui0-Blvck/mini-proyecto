@@ -5,9 +5,9 @@
 		"itemB": "Item B"
 	},
 	"theme": {
-		"dark": "Dark",
-		"light": "Light",
-		"system": "System"
+		"dark": "Oscuro",
+		"light": "Claro",
+		"system": "Sistema"
 	},
 	"Day": "Day",
 	"Week": "Week",

@@ -5,6 +5,7 @@ import useAsideStatus from '../../../hooks/useAsideStatus';
 import useDomRect from '../../../hooks/useDomRect';
 import { useAppSelector } from '../../../store';
 import { RootState } from '../../../store/rootReducer';
+import useColorApp from '../../../hooks/useColorApp';
 
 interface IHeaderLeftProps extends HTMLAttributes<HTMLDivElement> {
 	children: ReactNode;
@@ -77,8 +78,9 @@ const Header: FC<IHeaderProps> = (props) => {
 
 	const divRef = useRef<HTMLDivElement>(null);
 	const [domRect] = useDomRect(divRef);
-	const { colorApp } = useAppSelector((state: RootState) => state.auth.user)
+	// const { colorApp } = useAppSelector((state: RootState) => state.auth.user)
 	const { configuracion } = useAppSelector((state: RootState) => state.auth.user)
+	const { colorApp } = useColorApp()
 	
 
 

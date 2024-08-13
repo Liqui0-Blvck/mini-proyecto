@@ -27,6 +27,7 @@ import { TColors } from '../types/colors.type';
 import { TColorIntensity } from '../types/colorIntensities.type';
 import themeConfig from '../config/theme.config';
 import { TRounded } from '../types/rounded.type';
+import useColorApp from '../hooks/useColorApp';
 
 const HOTKEYS = {
 	'mod+b': 'bold',
@@ -61,10 +62,11 @@ interface IRichTextProps extends HTMLAttributes<HTMLDivElement> {
 	placeholder?: string;
 }
 const RichText: FC<IRichTextProps> = (props) => {
+	const { colorApp } = useColorApp();
 	const {
 		borderWidth,
 		className,
-		color,
+		color = colorApp,
 		colorIntensity,
 		invalidFeedback,
 		isTouched,
@@ -210,7 +212,7 @@ const RichText: FC<IRichTextProps> = (props) => {
 RichText.defaultProps = {
 	borderWidth: themeConfig.borderWidth,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	invalidFeedback: undefined,
 	isTouched: false,

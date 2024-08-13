@@ -10,6 +10,7 @@ import useColorIntensity from '../../hooks/useColorIntensity';
 import { TRounded } from '../../types/rounded.type';
 import { TBorderWidth } from '../../types/borderWidth.type';
 import CloseButton from './CloseButton';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TAlertVariants = 'solid' | 'outline' | 'default';
 
@@ -27,11 +28,12 @@ interface IAlertProps extends HTMLAttributes<HTMLDivElement> {
 	variant?: TAlertVariants;
 }
 const Alert: FC<IAlertProps> = (props) => {
+	const { colorApp } = useColorApp();
 	const {
 		borderWidth,
 		children,
 		className,
-		color,
+		color = colorApp,
 		colorIntensity,
 		icon,
 		iconSize,
@@ -99,7 +101,7 @@ const Alert: FC<IAlertProps> = (props) => {
 Alert.defaultProps = {
 	borderWidth: themeConfig.borderWidth,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	icon: undefined,
 	iconSize: 'text-3xl',

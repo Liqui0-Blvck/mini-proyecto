@@ -1,19 +1,10 @@
 
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
 import Label from '../../components/form/Label';
-import FieldWrap from '../../components/form/FieldWrap';
-import Icon from '../../components/icon/Icon';
-import Input from '../../components/form/Input';
-import Card, { CardBody, CardFooter, CardFooterChild, CardHeader, CardTitle } from '../../components/ui/Card';
-import dayjs from 'dayjs';
-import Button from '../../components/ui/Button';
-import useSaveBtn from '../../hooks/useSaveBtn';
+import Card, { CardBody } from '../../components/ui/Card';
 import Radio, { RadioGroup } from '../../components/form/Radio';
-import { useFormik } from 'formik';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { RootState } from '../../store/rootReducer';
-import { TDarkMode } from '../../types/darkMode.type';
-import useDarkMode from '../../hooks/useDarkMode';
+import { useAppDispatch } from '../../store';
+import useColorApp from '../../hooks/useColorApp';
 import { setColorApp } from '../../store/slices/auth/userSlice';
 
 interface PersonalizacionProps {
@@ -22,11 +13,13 @@ interface PersonalizacionProps {
 
 const Personalizacion: FC<PersonalizacionProps> = ({ formik }) => {
   const dispatch = useAppDispatch()
+  const { colorApp, setColorAppTheme } = useColorApp()
+
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedColor = e.target.value
     formik.setFieldValue('color', selectedColor);
-    console.log(selectedColor)
+    setColorAppTheme(selectedColor)
     dispatch(setColorApp(selectedColor));
   }
 

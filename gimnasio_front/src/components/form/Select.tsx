@@ -6,6 +6,7 @@ import { TBorderWidth } from '../../types/borderWidth.type';
 import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
 import { IValidationBaseProps } from './Validation';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TSelectVariants = 'solid';
 export type TSelectDimension = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
@@ -26,11 +27,12 @@ interface ISelectProps
 	placeholder?: string;
 }
 const Select: FC<ISelectProps> = (props) => {
+	const { colorApp } = useColorApp();
 	const {
 		borderWidth,
 		className,
 		children,
-		color,
+		color = colorApp,
 		colorIntensity,
 		name,
 		rounded,
@@ -117,7 +119,7 @@ const Select: FC<ISelectProps> = (props) => {
 Select.defaultProps = {
 	borderWidth: themeConfig.borderWidth,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	rounded: themeConfig.rounded,
 	dimension: 'default',

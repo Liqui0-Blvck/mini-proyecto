@@ -22,8 +22,6 @@ const StyledButton: FC<IStyledButtonProps> = ({ text, icon, status }) => {
 		if (!asideStatus) {
 			if (darkModeStatus === DARK_MODE.DARK) {
 				setDarkModeStatus(DARK_MODE.LIGHT);
-			} else if (darkModeStatus === DARK_MODE.LIGHT) {
-				setDarkModeStatus(DARK_MODE.SYSTEM);
 			} else {
 				setDarkModeStatus(DARK_MODE.DARK);
 			}
@@ -69,11 +67,7 @@ const DarkModeSwitcherPart = () => {
 		<div className='flex w-full overflow-hidden rounded-full bg-zinc-100 p-2 text-sm dark:bg-zinc-950'>
 			<StyledButton icon='HeroMoon' status={DARK_MODE.DARK} text={t('theme.dark')} />
 			<StyledButton icon='HeroSun' status={DARK_MODE.LIGHT} text={t('theme.light')} />
-			<StyledButton
-				icon='HeroComputerDesktop'
-				status={DARK_MODE.SYSTEM}
-				text={t('theme.system')}
-			/>
+
 		</div>
 	);
 };

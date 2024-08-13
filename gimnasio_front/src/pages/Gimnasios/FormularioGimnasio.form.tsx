@@ -15,6 +15,17 @@ import { registrar_gimnasio } from '../../store/slices/gimnasio/gimnasioPeticion
 import { RootState } from '../../store/rootReducer'
 import Avatar from '../../components/Avatar'
 
+interface IFormikInitialValues {
+  nombre: string;
+  direccion: string;
+  ciudad: string;
+  estado: string;
+  telefono: string;
+  imagen: string | File;
+  email: string;
+  sitio_web: string;
+}
+
 const FormularioGimnasio = ({ setClose } : { setClose : Dispatch<SetStateAction<boolean>>}) => {
 	const [isSaving, setIsSaving] = useState<boolean>(false)
   const token = useAppSelector((state: RootState) => state.auth.session)
@@ -28,17 +39,23 @@ const FormularioGimnasio = ({ setClose } : { setClose : Dispatch<SetStateAction<
       ciudad: '',
       estado: '',
       telefono: '',
-      logo: '',
+      imagen: '',
       email: '',
       sitio_web: ''
     },
-    onSubmit: (values: IGimnasioFormikValues) => {
+    onSubmit: (values: IFormikInitialValues) => {
       setIsSaving(true)
       dispatch(
         registrar_gimnasio({
           data: {
-            ...values,
-            logo: values.logo instanceof File ? values.logo : undefined,
+            nombre: values.nombre,
+            direccion: values.direccion,
+            ciudad: values.ciudad,
+            estado: values.estado,
+            telefono: values.telefono,
+            logo: values.imagen instanceof File ? values.imagen : '',
+            email: values.email,
+            sitio_web: values.sitio_web,
             dueno: gimnasio?.dueno
           },   
           token
@@ -50,7 +67,6 @@ const FormularioGimnasio = ({ setClose } : { setClose : Dispatch<SetStateAction<
       }, 1200)
     }
   })
-
 
 
   return (
@@ -142,16 +158,17 @@ const FormularioGimnasio = ({ setClose } : { setClose : Dispatch<SetStateAction<
             </div>
 
             <div className='w-4/12'>
-              <Label htmlFor='logo'>Agrega un Logo</Label>
+              <Label htmlFor='imagen'>Agrega un Logo</Label>
               <div className='relative'>
                   <div className='md:absolute lg:absolute sm:left-4 lg:top-2'>
-                    <label htmlFor='logo' className='cursor-pointer'>
+                    <label htmlFor='imagen' className='cursor-pointer'>
                       <Avatar
                         rounded='rounded'
+                        name='imagen'
                         src={
-                          formik.values.logo instanceof File
-                            ? URL.createObjectURL(formik.values.logo)
-                            : `${gimnasio?.logo ? gimnasio.logo : '/src/assets/avatar/no-image-account.avif'}`
+                          formik.values.imagen instanceof File
+                            ? URL.createObjectURL(formik.values.imagen)
+                            : `${formik.values.imagen ? formik.values.imagen : '/src/assets/avatar/no-image-account.avif'}`
                         }
                         className='!w-48 lg:!w-28'
                       />
@@ -161,20 +178,20 @@ const FormularioGimnasio = ({ setClose } : { setClose : Dispatch<SetStateAction<
                     <div>
                       <div className='w-full'>
                         <Label
-                          htmlFor='logo'
+                          htmlFor='imagen'
                           className=''
                           description='At least 800x800 px recommended. JPG or PNG and GIF is allowed'>
                           Sube una imagen
                         </Label>
                         <Input
-                          id='logo'
-                          name='logo'
+                          id='imagen'
+                          name='imagen'
                           type='file'
                           className='hidden' // Ocultar el input
                           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             const file = event.currentTarget.files?.[0];
                             if (file) {
-                              formik.setFieldValue('logo', file);
+                              formik.setFieldValue('imagen', file);
                             }
                           }}
                         />

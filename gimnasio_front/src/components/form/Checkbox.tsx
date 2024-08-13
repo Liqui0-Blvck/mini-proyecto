@@ -15,6 +15,7 @@ import { TRounded } from '../../types/rounded.type';
 import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
 import { IValidationBaseProps } from './Validation';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TCheckboxVariants = 'default' | 'switch';
 export type TCheckboxDimension = 'sm' | 'default' | 'lg' | 'xl';
@@ -36,10 +37,12 @@ interface ICheckboxProps
 	variant?: TCheckboxVariants;
 }
 const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>((props, ref) => {
+	const { colorApp } = useColorApp()
+	
 	const {
 		checked,
 		className,
-		color,
+		color = colorApp,
 		colorIntensity,
 		id,
 		inputClassName,
@@ -180,7 +183,7 @@ const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>((props, ref) => {
 Checkbox.defaultProps = {
 	checked: false,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	id: undefined,
 	inputClassName: undefined,

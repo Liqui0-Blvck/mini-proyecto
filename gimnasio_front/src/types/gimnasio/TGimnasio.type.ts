@@ -7,6 +7,7 @@ export type TGimnasio = {
   estado: string
   telefono: string
   logo: string
+  activo: boolean
   email: string
   sitio_web: string
   fecha_modificacion: string

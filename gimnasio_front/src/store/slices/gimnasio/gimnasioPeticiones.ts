@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { FetchAction, PatchAction, PostActions } from "../../../types/peticiones/peticiones.types";
-import { fetchWithToken, fetchWithTokenPatchFormData, fetchWithTokenPost } from "../../../api/peticionesBase";
+import { fetchWithToken, fetchWithTokenDelete, fetchWithTokenPatchFormData, fetchWithTokenPost, fetchWithTokenPostFormData } from "../../../api/peticionesBase";
 import { verificarToken } from "../auth/authSlices";
-import { setGimnasio, setGimnasios } from "./gimnasioSlice";
+import { setGimnasio, setGimnasioActualizado, setGimnasios } from "./gimnasioSlice";
+import { TAB_GYM } from "../../../pages/Gimnasios/GimnasioButtons";
 
 export const obtener_gimnasio = createAsyncThunk(
   'gimnasio/obtener_gimnasio',
@@ -56,10 +57,12 @@ export const actualizar_gimnasio_activo = createAsyncThunk(
       if (!token_verificado) throw new Error('No esta verificado el token')
       const res = await fetchWithTokenPost(`api/gimnasios/activo/`, data, token_verificado)
       if (res.status){
-        toast.success(`Gimnasio ${res.data.nombre}`, {
+        toast.success(`Gimnasio Activo ${res.data.nombre}`, {
           autoClose: 700
         })
         ThunkApi.dispatch(setGimnasio(res.data))
+        return ThunkApi.dispatch(obtener_gimnasios({ token }))
+      
       }
     } catch (error: any) {
       toast.error('No se pudo obtener', {
@@ -84,6 +87,7 @@ export const actualizar_gimnasio = createAsyncThunk(
         toast.success('Gimnasio Actualizado Exitosamente', {
           autoClose: 700
         })
+        ThunkApi.dispatch(setGimnasioActualizado(res.data))
         return ThunkApi.dispatch(setGimnasio(res.data))
       }
     } catch (error: any) {
@@ -103,12 +107,13 @@ export const registrar_gimnasio = createAsyncThunk(
     try {
       const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
       if (!token_verificado) throw new Error('No esta verificado el token')
-      const res = await fetchWithTokenPost(`api/gimnasios/`, data, token_verificado)
+      const res = await fetchWithTokenPostFormData(`api/gimnasios/`, data, token_verificado)
       if (res.status){
         toast.success('Gimnasio Registrado Exitosamente', {
           autoClose: 700
         })
         return ThunkApi.dispatch(obtener_gimnasios({ token }))
+
       }
     } catch (error: any) {
       console.log(Object.entries(error.response.data))
@@ -118,6 +123,30 @@ export const registrar_gimnasio = createAsyncThunk(
         })
       }
 
+      return ThunkApi.rejectWithValue('No se pudo actualizar')
+    }
+  }
+)
+
+export const eliminar_gimnasio = createAsyncThunk(
+  'gimnasio/eliminar_gimnasio',
+  async (payload: FetchAction, ThunkApi) => {
+    const { id, token } = payload
+
+    try {
+      const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
+      if (!token_verificado) throw new Error('No esta verificado el token')
+      const res = await fetchWithTokenDelete(`api/gimnasios/${id}/`, token_verificado)
+      if (res.status){
+        toast.success('Gimnasio Eliminado Exitosamente', {
+          autoClose: 700
+        })
+        return ThunkApi.dispatch(obtener_gimnasios({ token }))
+      }
+    } catch (error: any) {
+      toast.error('No se pudo obtener', {
+        autoClose: 500
+      })
       return ThunkApi.rejectWithValue('No se pudo actualizar')
     }
   }

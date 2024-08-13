@@ -10,6 +10,7 @@ import { TColorIntensity } from '../../types/colorIntensities.type';
 import useColorIntensity from '../../hooks/useColorIntensity';
 import useRoundedSize from '../../hooks/useRoundedSize';
 import { IValidationBaseProps } from './Validation';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TSelectVariant = 'solid';
 export type TSelectDimension = 'sm' | 'default' | 'lg' | 'xl';
@@ -41,10 +42,11 @@ interface ISelectReactProps extends TReactSelect, Partial<IValidationBaseProps> 
 	disabled?: boolean;
 }
 const SelectReact: FC<ISelectReactProps> = (props) => {
+	const { colorApp } = useColorApp();
 	const {
 		borderWidth,
 		className,
-		color,
+		color = colorApp,
 		colorIntensity,
 		isValidMessage,
 		name,
@@ -180,7 +182,7 @@ const SelectReact: FC<ISelectReactProps> = (props) => {
 SelectReact.defaultProps = {
 	borderWidth: themeConfig.borderWidth,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	rounded: themeConfig.rounded,
 	dimension: 'default',

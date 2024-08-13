@@ -6,7 +6,7 @@ import axios, { delay } from '../../../config/axios.config'
 import { AuthTokens, TConfiguracion, TPerfil } from "../../../types/core/core.types";
 import { toast } from "react-toastify";
 import { setColorApp, setConfiguracion, setDataPerfil, setUser } from "./userSlice";
-import { set } from "lodash";
+
 
 
 
@@ -226,6 +226,7 @@ export const actualizar_configuracion = createAsyncThunk(
         toast.success('Configuración Actualizado exitosamente', {
           autoClose: 600,
         })
+        
         ThunkApi.dispatch(setConfiguracion(res.data))
         ThunkApi.dispatch(setColorApp(res.data.color_aplicacion))
       }

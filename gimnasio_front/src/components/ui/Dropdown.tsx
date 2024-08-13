@@ -25,6 +25,7 @@ import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
 import { TIcons } from '../../types/icons.type';
 import Icon from '../icon/Icon';
+import useColorApp from '../../hooks/useColorApp';
 
 export interface IDropdownProps extends HTMLAttributes<HTMLElement> {
 	children: ReactElement<IDropdownToggleProps>[] | ReactElement<IDropdownMenuProps>[];
@@ -249,7 +250,8 @@ interface IDropdownItemProps extends HTMLAttributes<HTMLLIElement> {
 	rightIcon?: TIcons;
 }
 export const DropdownItem = forwardRef<HTMLLIElement, IDropdownItemProps>((props, ref) => {
-	const { children, className, color, colorIntensity, isActive, icon, rightIcon, ...rest } =
+	const { colorApp } = useColorApp();
+	const { children, className, color = colorApp, colorIntensity, isActive, icon, rightIcon, ...rest } =
 		props;
 	const classes = classNames(
 		'px-4 py-2',
@@ -279,7 +281,7 @@ export const DropdownItem = forwardRef<HTMLLIElement, IDropdownItemProps>((props
 });
 DropdownItem.defaultProps = {
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	isActive: false,
 	icon: undefined,

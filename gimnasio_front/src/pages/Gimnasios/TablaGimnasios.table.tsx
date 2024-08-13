@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
 	createColumnHelper,
 	getCoreRowModel,
@@ -22,29 +22,21 @@ import TableTemplate, {
 	TableCardFooterTemplate,
 } from '../../templates/common/TableParts.template';
 import Badge from '../../components/ui/Badge';
-import Dropdown, {
-	DropdownItem,
-	DropdownMenu,
-	DropdownNavLinkItem,
-	DropdownToggle,
-} from '../../components/ui/Dropdown';
-import Subheader, {
-	SubheaderLeft,
-	SubheaderRight,
-} from '../../components/layouts/Subheader/Subheader';
-import FieldWrap from '../../components/form/FieldWrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../components/layouts/Container/Container';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
 import { TGimnasio } from '../../types/gimnasio/TGimnasio.type';
 import { RootState } from '../../store/rootReducer';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import Avatar from '../../components/Avatar';
+import { actualizar_gimnasio_activo, eliminar_gimnasio } from '../../store/slices/gimnasio/gimnasioPeticiones';
 
 const TablaGimnasios = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
 	const [globalFilter, setGlobalFilter] = useState<string>('');
-  const { gimnasios } = useAppSelector((state: RootState) => state.gimnasio.gimnasio);
+  const { gimnasios } = useAppSelector((state: RootState) => state.gimnasio.gimnasio)
+  const token = useAppSelector((state: RootState) => state.auth.session)
+  const dispatch = useAppDispatch()
 
 
   const columnHelper = createColumnHelper<TGimnasio>()
@@ -86,23 +78,24 @@ const TablaGimnasios = () => {
       header: 'Email',
     }),
     columnHelper.display({
-      cell: (_info) => (
-        <div className='flex items-center gap-2'>
-          {/* {info.row.original.socialAuth?.google && (
-            <Tooltip text='Google'>
-              <Icon size='text-xl' icon='CustomGoogle' />
-            </Tooltip>
-          )}
-          {info.row.original.socialAuth?.facebook && (
-            <Tooltip text='Facebook'>
-              <Icon size='text-xl' icon='CustomFacebook' />
-            </Tooltip>
-          )}
-          {info.row.original.socialAuth?.apple && (
-            <Tooltip text='Apple'>
-              <Icon size='text-xl' icon='CustomApple' />
-            </Tooltip>
-          )} */}
+      cell: (info) => (
+        <div className='flex items-center gap-2 justify-around flex-wrap'>
+          <Button
+            onClick={() => dispatch(actualizar_gimnasio_activo({ token, data: { gimnasio_id: info.row.original.id} })) }
+            variant='solid'
+            color={info.row.original.activo ? 'emerald' : 'blue'}
+            >
+            {info.row.original.activo ? 'Activo' : 'Activar'}
+          </Button>
+
+          <Button
+            onClick={() => dispatch(eliminar_gimnasio({ token, id: info.row.original.id })) }
+            variant='solid'
+            color='red'
+            >
+              Eliminar
+          </Button>
+  
         </div>
       ),
       header: 'Acciones',

@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import themeConfig from '../../config/theme.config';
 import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
+import useColorApp from '../../hooks/useColorApp';
 
 interface ITHeadProps extends HTMLAttributes<HTMLTableSectionElement> {
 	children: ReactNode;
@@ -134,7 +135,8 @@ interface IThResizerProps extends HTMLAttributes<HTMLDivElement> {
 	colorIntensity?: TColorIntensity;
 }
 export const ThResizer: FC<IThResizerProps> = (props) => {
-	const { isResizing, className, color, colorIntensity, ...rest } = props;
+	const { colorApp } = useColorApp();
+	const { isResizing, className, color = colorApp, colorIntensity, ...rest } = props;
 
 	return (
 		<div
@@ -156,7 +158,7 @@ export const ThResizer: FC<IThResizerProps> = (props) => {
 };
 ThResizer.defaultProps = {
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 };
 ThResizer.displayName = 'ThResizer';
