@@ -16,8 +16,12 @@ class Gimnasio(BaseModel):
   email = models.EmailField(blank=True, null=True)
   sitio_web = models.URLField(blank=True, null=True)
 
+  class Meta:
+    ordering = ['-fecha_creacion']
+
   def __str__(self):
       return self.nombre
+    
 
       
 class Sucursal(BaseModel):
@@ -25,8 +29,9 @@ class Sucursal(BaseModel):
   gimnasio = models.ForeignKey('gimnasios.Gimnasio', on_delete=models.CASCADE, related_name='sucursales')
   direccion = models.TextField()
   telefono = models.CharField(max_length=15)
-  horario_apertura = models.TimeField()
-  horario_cierre = models.TimeField()
+  activo = models.BooleanField(default=False)
+  horario_apertura = models.TimeField(null = True, blank = True)
+  horario_cierre = models.TimeField(null = True, blank = True)
 
   def __str__(self):
       return f'Sucursal de {self.gimnasio.nombre}'

@@ -21,3 +21,6 @@ def crear_perfil_usuario(sender, instance, created, **kwargs):
             fuente_aplicacion = 'Roboto, sans-serif',
             gimnasio = gimnasio
         )
+        Sucursal.objects.create(gimnasio = gimnasio, activo = True)
+        instance.dueno = True
+        instance.save()

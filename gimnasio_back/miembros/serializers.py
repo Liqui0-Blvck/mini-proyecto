@@ -1,7 +1,18 @@
 from rest_framework import serializers
 from .models import *
+from cuentas.serializers import PerfilSerializer
 
 class MiembroSerializer(serializers.ModelSerializer):
+    activo = serializers.SerializerMethodField()
+    perfil = serializers.SerializerMethodField()
+    
+    def get_activo(self, obj):
+        return obj.perfil.usuario.is_active
+    
+    def get_perfil(self, obj):
+        perfil = PerfilSerializer(obj.perfil)
+        return perfil.data
+    
     class Meta:
         model = Miembro
         fields = '__all__'
