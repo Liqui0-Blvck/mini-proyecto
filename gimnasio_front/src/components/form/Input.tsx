@@ -1,4 +1,4 @@
-import React, { forwardRef, InputHTMLAttributes, useEffect } from 'react';
+import React, { forwardRef, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { TInputTypes } from '../../types/input.type';
 import themeConfig from '../../config/theme.config';
@@ -15,7 +15,7 @@ export type TInputDimension = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement>, Partial<IValidationBaseProps> {
 	borderWidth?: TBorderWidth;
 	className?: string;
-	color?: TColors | string;
+	color?: TColors;
 	colorIntensity?: TColorIntensity;
 	name: string;
 	rounded?: TRounded;
@@ -25,9 +25,8 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement>, Partial<IVa
 	variant?: TInputVariants;
 }
 const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
-	const { colorApp } = useColorApp();
-
-
+	const {colorApp} = useColorApp()
+	
 	const {
 		borderWidth,
 		className,
@@ -42,8 +41,6 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
 		invalidFeedback,
 		...rest
 	} = props;
-
-
 
 	const inputVariants: { [key in TInputVariants]: { general: string; validation: string } } = {
 		solid: {

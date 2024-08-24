@@ -10,6 +10,13 @@ import SignUpPage from '../pages/Auth/SignUp.page';
 
 
 const ListaMiembros = lazy(() => import('../pages/Miembros/TablaMiembros'));
+const DetalleMiembro = lazy(() => import('../pages/Miembros/Detalle Miembros/DetalleMiembro'));
+
+
+
+
+
+
 const ListaEjercicios = lazy(() => import('../pages/Ejercicios/TablaEjercicios'));
 const ListaMaquinas = lazy(() => import('../pages/Maquinas/TablaMaquinas'));
 const ListaRutinas = lazy(() => import('../pages/Rutinas/TablaRutinas'));
@@ -34,6 +41,18 @@ const contentRoutes: RouteProps[] = [
 		path: appPages.miembros.subPages.miembros_lista.to,
 		element: <ListaMiembros />,
 	},
+
+	{
+		path: appPages.miembros.subPages.detalle_miembro.to,
+		element: <DetalleMiembro />
+	},
+
+
+
+
+
+
+
 	{
 		path: appPages.ejercicios.subPages.ejercicios_lista.to,
 		element: <ListaEjercicios />,

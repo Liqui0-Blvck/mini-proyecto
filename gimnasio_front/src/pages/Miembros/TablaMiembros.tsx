@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	createColumnHelper,
 	getCoreRowModel,
@@ -22,196 +22,80 @@ import TableTemplate, {
 	TableCardFooterTemplate,
 } from '../../templates/common/TableParts.template';
 import Badge from '../../components/ui/Badge';
-import Dropdown, {
-	DropdownItem,
-	DropdownMenu,
-	DropdownNavLinkItem,
-	DropdownToggle,
-} from '../../components/ui/Dropdown';
+
 import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
 } from '../../components/layouts/Subheader/Subheader';
 import FieldWrap from '../../components/form/FieldWrap';
-import { Link } from 'react-router-dom';
 import Container from '../../components/layouts/Container/Container';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
-import { EstadosMembresia, Miembro } from '../../types/miembros/miembros.type';
+import { TMiembro } from '../../types/miembros/miembros.type';
 import { format } from '@formkit/tempo';
-
-const data: Miembro[] = [
-  {
-    "perfil": 1,
-    "gimnasio": 1,
-    "sucursal": 1,
-    "fecha_inscripcion": "2023-06-15T10:45:30Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Cardio",
-      "frecuencia": "3 veces por semana"
-    },
-    "objetivos_personales": {
-      "peso": "Perder 5 kg",
-      "musculatura": "Ganar masa muscular en brazos"
-    }
-  },
-  {
-    "perfil": 2,
-    "gimnasio": 1,
-    "sucursal": 2,
-    "fecha_inscripcion": "2023-05-20T08:30:45Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Fuerza",
-      "frecuencia": "4 veces por semana"
-    },
-    "objetivos_personales": {
-      "peso": "Mantener peso actual",
-      "musculatura": "Incrementar fuerza en piernas"
-    }
-  },
-  {
-    "perfil": 3,
-    "gimnasio": 2,
-    "sucursal": 3,
-    "fecha_inscripcion": "2023-07-01T12:00:00Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Yoga",
-      "frecuencia": "2 veces por semana"
-    },
-    "objetivos_personales": {
-      "flexibilidad": "Mejorar flexibilidad general",
-      "estrés": "Reducir niveles de estrés"
-    }
-  },
-  {
-    "perfil": 4,
-    "gimnasio": 2,
-    "sucursal": 4,
-    "fecha_inscripcion": "2023-03-10T15:15:15Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "HIIT",
-      "frecuencia": "5 veces por semana"
-    },
-    "objetivos_personales": {
-      "resistencia": "Aumentar resistencia cardiovascular",
-      "peso": "Perder 3 kg"
-    }
-  },
-  {
-    "perfil": 5,
-    "gimnasio": 3,
-    "sucursal": 5,
-    "fecha_inscripcion": "2023-04-22T09:45:00Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Pilates",
-      "frecuencia": "2 veces por semana"
-    },
-    "objetivos_personales": {
-      "postura": "Mejorar postura",
-      "flexibilidad": "Incrementar flexibilidad"
-    }
-  },
-  {
-    "perfil": 6,
-    "gimnasio": 3,
-    "sucursal": 6,
-    "fecha_inscripcion": "2023-01-30T11:00:30Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Crossfit",
-      "frecuencia": "4 veces por semana"
-    },
-    "objetivos_personales": {
-      "resistencia": "Aumentar resistencia muscular",
-      "fuerza": "Incrementar fuerza general"
-    }
-  },
-  {
-    "perfil": 7,
-    "gimnasio": 4,
-    "sucursal": 7,
-    "fecha_inscripcion": "2023-02-14T16:45:45Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Natación",
-      "frecuencia": "3 veces por semana"
-    },
-    "objetivos_personales": {
-      "resistencia": "Aumentar capacidad pulmonar",
-      "técnica": "Mejorar técnica de natación"
-    }
-  },
-  {
-    "perfil": 8,
-    "gimnasio": 4,
-    "sucursal": 8,
-    "fecha_inscripcion": "2023-06-05T14:20:20Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Spinning",
-      "frecuencia": "4 veces por semana"
-    },
-    "objetivos_personales": {
-      "resistencia": "Mejorar resistencia cardiovascular",
-      "peso": "Perder 2 kg"
-    }
-  },
-  {
-    "perfil": 9,
-    "gimnasio": 5,
-    "sucursal": 9,
-    "fecha_inscripcion": "2023-04-18T13:10:10Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Aeróbicos",
-      "frecuencia": "3 veces por semana"
-    },
-    "objetivos_personales": {
-      "resistencia": "Aumentar capacidad cardiovascular",
-      "estrés": "Reducir niveles de estrés"
-    }
-  },
-  {
-    "perfil": 10,
-    "gimnasio": 5,
-    "sucursal": 10,
-    "fecha_inscripcion": "2023-07-20T10:10:10Z",
-    "estado_membresia": EstadosMembresia.Activo,
-    "preferencias_entrenamiento": {
-      "tipo": "Zumba",
-      "frecuencia": "3 veces por semana"
-    },
-    "objetivos_personales": {
-      "diversión": "Disfrutar de la actividad física",
-      "peso": "Mantener peso actual"
-    }
-  }
-]
-
+import { useAppDispatch, useAppSelector } from '../../store';
+import Modal, { ModalBody, ModalHeader } from '../../components/ui/Modal';
+import { obtener_lista_miembros } from '../../store/slices/miembros/miembrosPeticiones';
+import { MdOutgoingMail } from 'react-icons/md';
+import { HeroEye, HeroXMark } from '../../components/icon/heroicons';
+import FormularioMiembro from './FormularioMiembro.form';
+import { RootState } from '../../store/rootReducer';
+import { obtener_gimnasio } from '../../store/slices/gimnasio/gimnasioPeticiones';
+import { obtener_sucursal } from '../../store/slices/surcursal/sucursalPeticiones';
+import { useNavigate } from 'react-router-dom';
 
 const TablaMiembros = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
-	const [globalFilter, setGlobalFilter] = useState<string>('');
+	const [globalFilter, setGlobalFilter] = useState<string>('')
+  const { miembros } = useAppSelector((state: RootState) => state.miembro.miembro)
+  const token = useAppSelector((state: RootState) => state.auth.session)
+  const [openModalRegistro, setOpenModalRegistro] = useState(false)
+
+	const { perfil } = useAppSelector((state: RootState) => state.auth.user)
+  const { gimnasio } = useAppSelector((state: RootState) => state.gimnasio.gimnasio)
+  const { sucursal } = useAppSelector((state: RootState) => state.sucursal.sucursal)
+
+	const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(obtener_lista_miembros({ token }))
+  }, [])
+
+	useEffect(() => {
+    if (gimnasio === null) {
+      dispatch(obtener_gimnasio({ id: perfil?.usuario.id, token }))
+    }
+  }, [])
+
+  useEffect(() => {
+    if(gimnasio){
+			dispatch(obtener_sucursal({ id: gimnasio?.id, token }))
+		}
+  }, [gimnasio])
 
 
-  const columnHelper = createColumnHelper<Miembro>();
-
-
+  const columnHelper = createColumnHelper<TMiembro>();
 
   const columns = [
 
-    columnHelper.accessor('perfil', {
+    columnHelper.accessor('perfil.usuario.first_name', {
       cell: (info) => (
         <div>
-          <span>{info.row.original.perfil}</span>
+          <span>{info.row.original.perfil.usuario.first_name}</span>
         </div>
       ),
-      header: 'Miembro',
+      header: 'Nombre',
     }),
+		columnHelper.accessor('perfil.usuario.email', {
+      cell: (info) => (
+        <div>
+          <span>{info.row.original.perfil.usuario.email}</span>
+        </div>
+      ),
+      header: 'Email',
+    }),
+		
     columnHelper.accessor('estado_membresia', {
       cell: (info) => (
         <div>
@@ -237,23 +121,37 @@ const TablaMiembros = () => {
       header: 'Fecha Inscripción',
     }),
     columnHelper.display({
-      cell: (_info) => (
-        <div className='flex items-center gap-2'>
-          {/* {info.row.original.socialAuth?.google && (
-            <Tooltip text='Google'>
-              <Icon size='text-xl' icon='CustomGoogle' />
-            </Tooltip>
-          )}
-          {info.row.original.socialAuth?.facebook && (
-            <Tooltip text='Facebook'>
-              <Icon size='text-xl' icon='CustomFacebook' />
-            </Tooltip>
-          )}
-          {info.row.original.socialAuth?.apple && (
-            <Tooltip text='Apple'>
-              <Icon size='text-xl' icon='CustomApple' />
-            </Tooltip>
-          )} */}
+      cell: (info) => (
+        <div className='w-auto flex justify-around gap-2 flex-wrap'>
+          {
+            !info.row.original.activo
+              ? (
+                <Button
+                  title='Mandar Correo de Confirmación'
+                  variant='solid'
+                  onClick={() => {}}
+                  >
+                    <MdOutgoingMail className='text-2xl'/>
+                </Button>
+              )
+              : null
+          }
+
+					<Button
+						variant='solid'
+						color='blue'
+						onClick={() => navigate(`/miembro/${info.row.original.uid}`)}
+						>
+						<HeroEye style={{ fontSize: 20 }}/>
+					</Button>
+
+					<Button
+						variant='solid'
+						color='red'
+						onClick={() => {}}
+						>
+						<HeroXMark style={{ fontSize: 20 }}/>
+					</Button>
         </div>
       ),
       header: 'Acciones',
@@ -261,7 +159,7 @@ const TablaMiembros = () => {
   ]
 
   const table = useReactTable({
-		data,
+		data: miembros,
 		columns,
 		state: {
 			sorting,
@@ -277,7 +175,6 @@ const TablaMiembros = () => {
 		initialState: {
 			pagination: { pageSize: 5 },
 		},
-		// debugTable: true,
 	});
 
 
@@ -309,11 +206,21 @@ const TablaMiembros = () => {
 					</FieldWrap>
 				</SubheaderLeft>
 				<SubheaderRight>
-					<Link to={`new`}>
-						<Button variant='solid' icon='HeroPlus'>
-							New Customer
-						</Button>
-					</Link>
+          <Button variant='solid' icon='HeroPlus' onClick={() => setOpenModalRegistro(true)}>
+            Nuevo Cliente
+          </Button>
+          <Modal
+            isOpen={openModalRegistro}
+            setIsOpen={setOpenModalRegistro}
+            size='lg'
+            >
+            <ModalHeader>
+              <span>Registro de Cliente</span>
+            </ModalHeader>
+            <ModalBody>
+              <FormularioMiembro setOpen={setOpenModalRegistro}/>
+            </ModalBody>
+          </Modal>
 				</SubheaderRight>
 			</Subheader>
 			<Container breakpoint={null} className='w-full'>

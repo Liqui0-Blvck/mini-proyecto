@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+import * as Yup from 'Yup';
 
 export const SignUpValidation = Yup.object({
   password: Yup.string()
@@ -28,4 +28,38 @@ export const PerfilSchema = Yup.object().shape({
 		.oneOf(['Masculino', 'Femenino', 'Otro'], 'El género debe ser Masculino, Femenino u Otro'),
 	numero_telefono: Yup.string()
 		.required('El número de teléfono es requerido')
+});
+
+
+
+export const gimnasioValidationSchema = Yup.object().shape({
+  nombre: Yup
+    .string()
+    .min(3, 'El nombre debe tener al menos 3 caracteres')
+    .max(50, 'El nombre no puede exceder los 50 caracteres')
+    .required('El nombre es obligatorio'),
+  
+  direccion: Yup
+    .string()
+    .min(5, 'La dirección debe tener al menos 5 caracteres')
+    .max(100, 'La dirección no puede exceder los 100 caracteres'),
+  
+  ciudad: Yup
+    .string()
+    .min(3, 'La ciudad debe tener al menos 3 caracteres')
+    .max(50, 'La ciudad no puede exceder los 50 caracteres'),
+  
+  telefono: Yup
+    .string()
+    .matches(/^[0-9]{10}$/, 'El teléfono debe tener 10 dígitos')
+		.required('El Teléfono es obligatorio'),
+
+  email: Yup
+    .string()
+    .email('Debe ser un correo electrónico válido')
+    .required('El correo electrónico es obligatorio'),
+  
+  sitio_web: Yup
+    .string()
+    .url('Debe ser una URL válida')
 });

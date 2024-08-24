@@ -13,6 +13,7 @@ import useSaveBtn from '../../hooks/useSaveBtn';
 import Validation from '../../components/form/Validation';
 import { format } from '@formkit/tempo'
 import { actualizar_gimnasio, obtener_gimnasio } from '../../store/slices/gimnasio/gimnasioPeticiones';
+import { gimnasioValidationSchema } from '../../utils/validationForm.utils';
 
 export interface IGimnasioFormikValues {
   nombre: string;
@@ -50,6 +51,7 @@ const GimnasioComponent = () => {
       email: gimnasio?.email!,
       sitio_web: gimnasio?.sitio_web!
     },
+    validationSchema: gimnasioValidationSchema,
     onSubmit: (values: IGimnasioFormikValues) => {
       setIsSaving(true)
 
@@ -161,14 +163,20 @@ const GimnasioComponent = () => {
 
           <div className='col-span-12 lg:col-span-6'>
             <Label htmlFor='direccion'>Dirección</Label>
-            <Input
-              id='direccion'
-              name='direccion'
-              onChange={formik.handleChange}
-              value={formik.values.direccion}
-              autoComplete='given-name'
-              autoCapitalize='words'
-            />
+            <Validation
+              isValid={formik.isValid}
+              isTouched={formik.touched.direccion}
+              invalidFeedback={formik.errors.direccion}
+              >
+                <Input
+                  id='direccion'
+                  name='direccion'
+                  onChange={formik.handleChange}
+                  value={formik.values.direccion}
+                  autoComplete='given-name'
+                  autoCapitalize='words'
+                />
+            </Validation>
           </div>
 
           <div className='col-span-12 lg:col-span-6'>
@@ -193,24 +201,40 @@ const GimnasioComponent = () => {
 
           <div className='col-span-12 lg:col-span-6'>
             <Label htmlFor='telefono'>Telefono</Label>
-            <Input
-              type='text'
-              id='telefono'
-              name='telefono'
-              onChange={formik.handleChange}
-              value={formik.values.telefono}
-            />
+            
+            <Validation
+              isValid={formik.isValid}
+              isTouched={formik.touched.telefono}
+              invalidFeedback={formik.errors.telefono}
+              >
+              <Input
+                type='text'
+                id='telefono'
+                name='telefono'
+                onChange={formik.handleChange}
+                value={formik.values.telefono}
+              />
+            </Validation>
+            
           </div>
 
           <div className='col-span-12 lg:col-span-6'>
             <Label htmlFor='sitio_web'>Sitio Web </Label>
-            <Input
-              type='date'
-              id='sitio_web'
-              name='sitio_web'
-              onChange={formik.handleChange}
-              value={formik.values.sitio_web}
-            />
+
+            <Validation
+              isValid={formik.isValid}
+              isTouched={formik.touched.sitio_web}
+              invalidFeedback={formik.errors.sitio_web}
+              >
+                <Input
+                  type='text'
+                  id='sitio_web'
+                  name='sitio_web'
+                  onChange={formik.handleChange}
+                  value={formik.values.sitio_web}
+                />
+            </Validation>
+            
           </div>
         </div>
       </CardBody>

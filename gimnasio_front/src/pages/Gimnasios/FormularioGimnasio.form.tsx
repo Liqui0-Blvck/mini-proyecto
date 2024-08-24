@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../store'
 import { registrar_gimnasio } from '../../store/slices/gimnasio/gimnasioPeticiones'
 import { RootState } from '../../store/rootReducer'
 import Avatar from '../../components/Avatar'
+import { gimnasioValidationSchema } from '../../utils/validationForm.utils'
 
 interface IFormikInitialValues {
   nombre: string;
@@ -43,6 +44,7 @@ const FormularioGimnasio = ({ setClose } : { setClose : Dispatch<SetStateAction<
       email: '',
       sitio_web: ''
     },
+    validationSchema: gimnasioValidationSchema,
     onSubmit: (values: IFormikInitialValues) => {
       setIsSaving(true)
       dispatch(

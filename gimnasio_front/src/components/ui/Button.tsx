@@ -50,8 +50,6 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 
 	const { textColor, shadeColorIntensity } = useColorIntensity(colorIntensity);
 
-
-
 	/**
 	 * Variant & Color & Status
 	 */
@@ -192,7 +190,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 	const btnDisabledClasses = 'opacity-50 pointer-events-none';
 
 	const classes = classNames(
-		'flex items-center',
+		'flex justify-center items-center space-x-1 mx-auto',
 		btnVariantClasses,
 		btnSizeClasses,
 		rounded,

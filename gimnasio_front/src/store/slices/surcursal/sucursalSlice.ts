@@ -4,12 +4,14 @@ import { TGimnasio, TSucursal } from '../../../types/gimnasio/TGimnasio.type'
 
 export type SucursalesState = {
   sucursal: TSucursal | null
-  sucursales: TSucursal[] | null
+  sucursales: TSucursal[] | null,
+
 }
 
 const initialState: SucursalesState = {
   sucursal: null as TSucursal | null,
-  sucursales: [] as TSucursal[] | []
+  sucursales: [] as TSucursal[] | [],
+
 }
 
 const sucursalSlice = createSlice({
@@ -22,6 +24,7 @@ const sucursalSlice = createSlice({
       setSucursales(state, action: PayloadAction<TSucursal[]>) {
         state.sucursales = action.payload
       }
+      
     },
 })
 

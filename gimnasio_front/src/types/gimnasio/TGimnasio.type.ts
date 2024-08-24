@@ -21,4 +21,6 @@ export type TSucursal = {
   telefono: string
   horario_apertura: string
   horario_cierre: string
+  fecha_modificacion: string
+  fecha_creacion: string
 }

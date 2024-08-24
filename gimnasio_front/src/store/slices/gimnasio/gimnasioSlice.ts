@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SLICE_BASE_NAME } from './constants'
 import { TGimnasio } from '../../../types/gimnasio/TGimnasio.type'
-import { stat } from 'fs'
+
 
 export type GimnasiosState = {
   gimnasio: TGimnasio | null

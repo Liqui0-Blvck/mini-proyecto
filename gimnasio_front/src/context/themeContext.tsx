@@ -17,6 +17,7 @@ import DARK_MODE from '../constants/darkMode.constant';
 import themeConfig from '../config/theme.config';
 import useDeviceScreen from '../hooks/useDeviceScreen';
 import { TLang } from '../types/lang.type';
+import { useLocation } from 'react-router-dom';
 
 export interface IThemeContextProps {
 	isDarkTheme: boolean;
@@ -115,6 +116,7 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 			? localStorage.getItem('theme_color_app') as string
 			: themeConfig.themeColor,
 	)
+
 
 
 	useLayoutEffect(() => {
