@@ -121,8 +121,29 @@ class MiembrosViewSet(viewsets.ModelViewSet):
         email.send()
 
         return Response({"detail": "Correo de confirmación y restablecimiento enviado."}, status=status.HTTP_200_OK)
-
-
+    
+    @action(detail=False, methods=['GET'], url_path='asistencia_miembro')
+    def asistencia_miembro(self, request):
+        uid = request.query_params.get('uid', None)  # Obtener el uid desde los parámetros de consulta
+        
+        if uid is not None:
+            try:
+                miembro = Miembro.objects.get(uid=uid)
+            except Miembro.DoesNotExist:
+                return Response({"detail": "Miembro no encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            
+            asistencia = AsistenciaMiembro.objects.filter(miembro=miembro)
+            serializer = AsistenciaMiembroSerializer(asistencia, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "uid es requerido."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+class AsistenciaMiembroViewSet(viewsets.ModelViewSet):
+    queryset = AsistenciaMiembro.objects.all()
+    serializer_class = AsistenciaMiembroSerializer
+    
+    
 class SeguimientoPesoViewSet(viewsets.ModelViewSet):
     queryset = SeguimientoPeso.objects.all()
     serializer_class = SeguimientoPesoSerializer
