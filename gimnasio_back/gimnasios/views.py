@@ -30,6 +30,27 @@ class GimnasioViewSet(viewsets.ModelViewSet):
         gimnasio.save()
         serializer = GimnasioSerializer(gimnasio)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail= True, methods=['get'], url_path='sucursal')
+    def obtener_sucursal_por_defecto(self, request, pk = None):
+        gimnasio = Gimnasio.objects.get(pk = pk, activo = True)
+        sucursal = Sucursal.objects.get(gimnasio = gimnasio, activo = True)
+        serializer = SucursalSerializer(sucursal)
+        return Response(serializer.data)
+    
+    
+    @action(detail=False, methods=['POST'], url_path='sucursal/activo')
+    def cambiar_actividad_sucursal(self, request):
+        sucursal_id = request.data.get('sucursal_id')
+        try:
+            sucursal = Sucursal.objects.get(id=sucursal_id)
+        except Sucursal.DoesNotExist:
+            return Response({"detail": "Sucursal no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+        Sucursal.objects.update(activo=False)
+        sucursal.activo = True
+        sucursal.save()
+        serializer = SucursalSerializer(sucursal)
+        return Response(serializer.data, status=status.HTTP_200_OK)
         
 
 class SucursalViewSet(viewsets.ModelViewSet):

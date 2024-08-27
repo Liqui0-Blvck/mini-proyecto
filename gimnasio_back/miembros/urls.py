@@ -5,6 +5,9 @@ from .views import *
 router = DefaultRouter()
 router.register(r'miembros', MiembrosViewSet)
 
+asistencia_miembro = NestedDefaultRouter(router, r'miembros', lookup='miembro')
+asistencia_miembro.register(r'asistencias', AsistenciaMiembroViewSet, basename='miembro-asistencias')
+
 # Router anidado para seguimientos
 seguimiento_router = NestedDefaultRouter(router, r'miembros', lookup='miembro')
 seguimiento_router.register(r'seguimientos', SeguimientoPesoViewSet, basename='miembro-seguimientos')
@@ -19,6 +22,7 @@ metas_router.register(r'metas', MetasPersonalesViewSet, basename='miembro-metas'
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(asistencia_miembro.urls)),
     path('', include(seguimiento_router.urls)),
     path('', include(evaluaciones_router.urls)),
     path('', include(metas_router.urls)),

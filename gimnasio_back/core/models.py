@@ -48,6 +48,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     second_name = models.CharField(max_length=30, blank=True)
     father_last_name = models.CharField(max_length=30, blank=True)
     mother_last_name = models.CharField(max_length=30, blank=True)
+    dueno = models.BooleanField(default=False)
     
     email_verified = models.BooleanField(default=False)
     verification_token = models.UUIDField(default=uuid.uuid4, editable=False)
