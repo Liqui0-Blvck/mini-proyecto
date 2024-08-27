@@ -3,7 +3,7 @@ import { FetchAction, PostActions } from "../../../types/peticiones/peticiones.t
 import { verificarToken } from "../auth/authSlices"
 import { fetchWithToken, fetchWithTokenPatch, fetchWithTokenPost } from "../../../api/peticionesBase"
 import { toast } from "react-toastify"
-import { setMiembro, setMiembros } from "./miembrosSlice"
+import { setAsistenciaMiembro, setMiembro, setMiembros } from "./miembrosSlice"
 import { SLICE_BASE_NAME } from "./constants"
 
 export const obtener_lista_miembros = createAsyncThunk(
@@ -57,7 +57,58 @@ export const obtener_miembro = createAsyncThunk(
 )
 
 
+export const obtener_asistencia_miembro = createAsyncThunk(
+  `${SLICE_BASE_NAME}/obtener_asistencia_miembro`,
+  async (payload: FetchAction, ThunkApi) => {
+    const { id, token } = payload
 
+    try {
+      const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
+      if (!token_verificado) throw new Error('No esta verificado el token')
+      const res = await fetchWithToken(`api/miembros/asistencia_miembro/?uid=${id}`, token_verificado)
+      if (res.status){
+        return ThunkApi.dispatch(setAsistenciaMiembro(res.data))
+      }
+    } catch (error: any) {
+      console.log(Object.entries(error.response.data))
+      for (const [key, value] of Object.entries(error.response.data)) {
+        toast.error(`${key}: ${value}`, {
+          autoClose: 2000
+        })
+      }
+
+      return ThunkApi.rejectWithValue('No se pudo actualizar')
+    }
+  }
+)
+
+// export const asistencia_miembro = createAsyncThunk(
+//   `${SLICE_BASE_NAME}/asistencia_miembro`,
+//   async (payload: FetchAction, ThunkApi) => {
+//     const { id, token } = payload
+
+//     try {
+//       const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
+//       if (!token_verificado) throw new Error('No esta verificado el token')
+//       const res = await fetchWithToken(`api/miembros/${id}/asistencia/`, token_verificado)
+//       if (res.status){
+//         toast.success('Asistencia registrada', {
+//           autoClose: 2000
+//         })
+//         return res.data
+//       }
+//     } catch (error: any) {
+//       console.log(Object.entries(error.response.data))
+//       for (const [key, value] of Object.entries(error.response.data)) {
+//         toast.error(`${key}: ${value}`, {
+//           autoClose: 2000
+//         })
+//       }
+
+//       return ThunkApi.rejectWithValue('No se pudo registrar la asistencia')
+//     }
+//   }
+// )
 
 
 

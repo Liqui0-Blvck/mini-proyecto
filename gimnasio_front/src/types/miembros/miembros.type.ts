@@ -14,6 +14,13 @@ interface TPreferenciasEntrenamiento {
   horario_entrenamiento: string
 }
 
+export interface IAsistencia {
+  duracion: string
+  hora_entrada: string
+  hora_salida: string
+  fecha_creacion: string
+}
+
 
 
 interface TObjetivosPersonales {

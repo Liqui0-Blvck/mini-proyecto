@@ -12,6 +12,7 @@ import Modal, { ModalBody, ModalHeader } from '../../../components/ui/Modal'
 import Button from '../../../components/ui/Button'
 import Chart, { IChartProps } from '../../../components/Chart'
 import colors from 'tailwindcss/colors';
+import TablaAsistencia from './TablaAsistencia.component'
 
 const InfoPersonal = () => {
   const { miembro } = useAppSelector((state: RootState) => state.miembro.miembro)
@@ -181,41 +182,8 @@ const InfoPersonal = () => {
         <div className='flex flex-col lg:grid lg:grid-cols-2 gap-5 mt-10'>
          <Card>
           <CardHeader><CardTitle>Tabla de Asistencia</CardTitle></CardHeader>
-          <CardBody className='grid grid-cols-12 gap-5 p-2 rounded-md' style={{ border: `1px solid ${bordeColor}`}}>
-            <div className='col-span-12 lg:col-span-6'>
-              <Label htmlFor='email'>Email</Label>
-              <div className='p-2 rounded-md dark:bg-zinc-700 bg-zinc-100'>
-                <span id='email'>{miembro?.perfil.usuario.email}</span>
-              </div>
-            </div>
-
-            <div className='col-span-12 lg:col-span-6'>
-              <Label htmlFor='nombre'>Nombre</Label>
-              <div className={`p-2 rounded-md dark:bg-zinc-700 bg-zinc-100`}>
-                <span id='nombre'>{miembro?.perfil.usuario.first_name}</span>
-              </div>
-            </div>
-
-            <div className='col-span-12 lg:col-span-6'>
-              <Label htmlFor='segundo_nombre'>Segundo Nombre</Label>
-              <div className={`p-2 rounded-md dark:bg-zinc-700 bg-zinc-100`}>
-                <span id='segundo_nombre'>{miembro?.perfil.usuario.second_name}</span>
-              </div>
-            </div>
-
-            <div className='col-span-12 lg:col-span-6'>
-              <Label htmlFor='apellido_paterno'>Apellido Paterno</Label>
-              <div className={`p-2 rounded-md dark:bg-zinc-700 bg-zinc-100`}>
-                <span id='apellido_paterno'>{miembro?.perfil.usuario.father_last_name}</span>
-              </div>
-            </div>
-
-            <div className='col-span-12 lg:col-span-6'>
-              <Label htmlFor='apellido_materno'>Apellido Materno</Label>
-              <div className={`p-2 rounded-md dark:bg-zinc-700 bg-zinc-100`}>
-                <span id='apellido_materno'>{miembro?.perfil.usuario.mother_last_name}</span>
-              </div>
-            </div>
+          <CardBody  style={{ border: `1px solid ${bordeColor}`}}>
+            <TablaAsistencia />  
           </CardBody>
          </Card>
 

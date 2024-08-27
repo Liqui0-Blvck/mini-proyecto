@@ -104,14 +104,14 @@ const TablaMiembros = () => {
       ),
       header: 'Estado Membresia',
     }),
-    columnHelper.accessor('preferencias_entrenamiento.tipo', {
-      cell: (info) => (
-        <div>
-          <span>{info.row.original.preferencias_entrenamiento.tipo}</span>
-        </div>
-      ),
-      header: 'Preferencias',
-    }),
+    // columnHelper.accessor('preferencias_entrenamiento.tipo', {
+    //   cell: (info) => (
+    //     <div>
+    //       <span>{info.row.original.preferencias_entrenamiento.tipo}</span>
+    //     </div>
+    //   ),
+    //   header: 'Preferencias',
+    // }),
     columnHelper.accessor('fecha_inscripcion', {
       cell: (info) => (
         <div>
