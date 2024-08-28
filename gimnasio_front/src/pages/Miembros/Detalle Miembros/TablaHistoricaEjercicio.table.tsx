@@ -36,23 +36,26 @@ import Modal, { ModalBody, ModalHeader } from '../../../components/ui/Modal';
 import { RootState } from '../../../store/rootReducer'
 import { useAppDispatch, useAppSelector } from '../../../store'
 import { useParams } from 'react-router-dom'
-import { obtener_asistencia_miembro } from '../../../store/slices/miembros/miembrosPeticiones'
 
-const TablaAsistencia = () => {
+interface IHistoriaEjercicios {
+  fecha_creacion: string
+  hora_entrada: string
+  hora_salida: string
+  duracion: string
+}
+
+const historial: IHistoriaEjercicios[] = []
+
+
+const TablaHistoricaEjercicio = () => {
   const { id } = useParams()
   const dispatch = useAppDispatch()
   const [sorting, setSorting] = useState<SortingState>([]);
 	const [globalFilter, setGlobalFilter] = useState<string>('')
   const token = useAppSelector((state: RootState) => state.auth.session)
-  const { asistencia_miembro } = useAppSelector((state: RootState) => state.miembro.miembro)
 
-  useEffect(() => {
-    if (id){
-      dispatch(obtener_asistencia_miembro({ id, token }))
-    }
-  }, [id])
 
-  const columnHelper = createColumnHelper<IAsistencia>();
+  const columnHelper = createColumnHelper<IHistoriaEjercicios>();
 
   const columns = [
 
@@ -91,7 +94,7 @@ const TablaAsistencia = () => {
   ]
 
   const table = useReactTable({
-		data: asistencia_miembro,
+		data: historial,
 		columns,
 		state: {
 			sorting,
@@ -124,4 +127,4 @@ const TablaAsistencia = () => {
   )
 }
 
-export default TablaAsistencia
+export default TablaHistoricaEjercicio

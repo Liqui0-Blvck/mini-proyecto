@@ -40,7 +40,7 @@ type TThemeConfigs = {
 
 
 const themeConfig: TThemeConfigs = {
-	projectTitle: 'GYM',
+	projectTitle: 'Fit Portal',
 	projectName: 'Gimnasio App',
 	language: 'es',
 	theme: DARK_MODE.LIGHT,

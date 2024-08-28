@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../store'
 import { obtener_miembro } from '../../../store/slices/miembros/miembrosPeticiones'
 import { RootState } from '../../../store/rootReducer'
 import InfoPersonal from './InfoPersonal.component'
+import HistorialEjercicios from './HistorialEjercicios.component'
 
 
 const DetalleCliente = () => {
@@ -39,7 +40,9 @@ const DetalleCliente = () => {
         {
           activeTabs.text === 'Información Personal'
             ? <InfoPersonal />
-            : null
+            : activeTabs.text === 'Historial Ejercicios'
+              ? <HistorialEjercicios />
+              : null
         }
       </div>
     </Container>
