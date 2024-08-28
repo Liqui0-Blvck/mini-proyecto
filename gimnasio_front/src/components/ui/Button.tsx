@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef, HTMLAttributes, ReactNode, useEffect } from 'react';
 import classNames from 'classnames';
 import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
@@ -8,6 +8,7 @@ import useColorIntensity from '../../hooks/useColorIntensity';
 import { TIcons } from '../../types/icons.type';
 import Icon from '../icon/Icon';
 import { TBorderWidth } from '../../types/borderWidth.type';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TButtonVariants = 'solid' | 'outline' | 'default';
 export type TButtonSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
@@ -16,7 +17,7 @@ export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	borderWidth?: TBorderWidth;
 	children?: ReactNode;
 	className?: string;
-	color?: TColors;
+	color?: TColors | string;
 	colorIntensity?: TColorIntensity;
 	icon?: TIcons | ReactNode;
 	isActive?: boolean;
@@ -28,11 +29,12 @@ export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	variant?: TButtonVariants;
 }
 const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
+	const { colorApp } = useColorApp()
 	const {
 		borderWidth,
 		children,
 		className,
-		color,
+		color = colorApp,
 		colorIntensity,
 		icon,
 		isActive,
@@ -188,7 +190,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 	const btnDisabledClasses = 'opacity-50 pointer-events-none';
 
 	const classes = classNames(
-		'inline-flex items-center justify-center',
+		'flex justify-center items-center space-x-1 mx-auto',
 		btnVariantClasses,
 		btnSizeClasses,
 		rounded,
@@ -221,11 +223,12 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 		</button>
 	);
 });
+
 Button.defaultProps = {
 	borderWidth: themeConfig.borderWidth,
 	children: undefined,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	icon: undefined,
 	isActive: false,

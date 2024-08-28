@@ -13,6 +13,7 @@ import { TRounded } from '../../types/rounded.type';
 import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
 import { IValidationBaseProps } from './Validation';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TRadioDimension = 'sm' | 'default' | 'lg' | 'xl';
 
@@ -33,10 +34,11 @@ interface IRadioProps extends InputHTMLAttributes<HTMLInputElement>, Partial<IVa
 	disabled?: boolean;
 }
 const Radio: FC<IRadioProps> = (props) => {
+	const { colorApp } = useColorApp();
 	const {
 		className,
 		children,
-		color,
+		color = colorApp,
 		colorIntensity,
 		id,
 		inputClassName,
@@ -155,7 +157,7 @@ const Radio: FC<IRadioProps> = (props) => {
 Radio.defaultProps = {
 	className: undefined,
 	children: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	id: undefined,
 	inputClassName: undefined,

@@ -4,6 +4,7 @@ import useAsideStatus from '../../../hooks/useAsideStatus';
 import themeConfig from '../../../config/theme.config';
 import { useAppSelector } from '../../../store';
 import { RootState } from '../../../store/rootReducer';
+import useColorApp from '../../../hooks/useColorApp';
 
 interface IAsideHeadProps extends HTMLAttributes<HTMLElement> {
 	children: ReactNode;
@@ -77,7 +78,9 @@ const Aside: FC<IAsideProps> = (props) => {
 
 	const { asideStatus } = useAsideStatus()
 	const { configuracion } = useAppSelector((state: RootState) => state.auth.user)
-	const { colorApp } = useAppSelector((state: RootState) => state.auth.user)
+	// const { colorApp } = useAppSelector((state: RootState) => state.auth.user)
+	const { colorApp } = useColorApp()
+
 	
 
 	const colorMap: Record<string, string> = {
@@ -88,7 +91,7 @@ const Aside: FC<IAsideProps> = (props) => {
 		emerald: 'dark:bg-emerald-900',
 		default: 'dark:bg-zinc-900'
 	};
-	const bgClass =  colorMap[configuracion?.color_aplicacion!] || colorMap[colorApp!]
+	const bgClass = colorMap[colorApp!] || colorMap[configuracion?.color_aplicacion!]
 
 
 	return (
@@ -101,7 +104,8 @@ const Aside: FC<IAsideProps> = (props) => {
 				'border-zinc-300/25 bg-white',
 				'py-6',
 				'ltr:border-r rtl:border-l',
-				`dark:border-zinc-800/50 ${bgClass ? bgClass : 'dark:bg-zinc-900'} dark:text-white`,
+				`dark:border-zinc-800/50 dark:text-white`,
+				bgClass ? bgClass : 'dark:bg-zinc-900',
 				themeConfig.transition,
 				className,
 				// Mobile Design

@@ -7,6 +7,7 @@ import { RootState } from '../../../store/rootReducer';
 import { extractRoutes } from '../../../utils/getRoutesPath.util';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
 import { appPages, authPages, userPages } from '../../../config/pages.config';
+import useColorApp from '../../../hooks/useColorApp';
 
 // Función para verificar si la ruta coincide con algún patrón de rutas dinámicas
 const isRouteAuthorized = (pathname: any, routes: any) => {
@@ -63,9 +64,16 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
   const authPagesRoutes = extractRoutes(authPages);
   const userPagesRoutes = extractRoutes(userPages);
 
+  console.log(appPagesRoutes)
+
+
+  console.log(pathname)
+
   const isAuthorizedPage = isRouteAuthorized(pathname, appPagesRoutes);
   const isAuthorizedAuthPage = isRouteAuthorized(pathname, authPagesRoutes);
   const isAuthorizedUserPage = isRouteAuthorized(pathname, userPagesRoutes);
+
+  console.log(isAuthorizedPage)
 
   useEffect(() => {
     const checkAuthorization = () => {
@@ -93,6 +101,15 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
     setLoading(false); // Finalizar estado de carga
   
   }, [session.signedIn, isProtectedRoute, isAuthorizedPage, isAuthorizedAuthPage, isAuthorizedUserPage, pathname, navigate]);
+
+
+  const { setColorAppTheme } = useColorApp()
+
+  useEffect(() => {
+    if (pathname == 'login'){
+      setColorAppTheme('blue')
+    }
+  }, [pathname])
   
   return (
     <main

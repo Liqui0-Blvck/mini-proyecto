@@ -6,6 +6,7 @@ import themeConfig from '../../config/theme.config';
 import useColorIntensity from '../../hooks/useColorIntensity';
 import { TBorderWidth } from '../../types/borderWidth.type';
 import { TRounded } from '../../types/rounded.type';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TBadgeVariants = 'solid' | 'outline' | 'default';
 
@@ -13,13 +14,14 @@ interface IBadgeProps {
 	borderWidth?: TBorderWidth;
 	children: ReactNode;
 	className?: string;
-	color?: TColors;
+	color?: TColors | string;
 	colorIntensity?: TColorIntensity;
 	rounded?: TRounded;
 	variant?: TBadgeVariants;
 }
 const Badge: FC<IBadgeProps> = (props) => {
-	const { borderWidth, children, className, color, colorIntensity, rounded, variant, ...rest } =
+	const { colorApp } = useColorApp()
+	const { borderWidth, children, className, color = colorApp, colorIntensity, rounded, variant, ...rest } =
 		props;
 
 	const { textColor } = useColorIntensity(colorIntensity);
@@ -60,7 +62,7 @@ const Badge: FC<IBadgeProps> = (props) => {
 Badge.defaultProps = {
 	borderWidth: themeConfig.borderWidth,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	rounded: themeConfig.rounded,
 	variant: 'default',

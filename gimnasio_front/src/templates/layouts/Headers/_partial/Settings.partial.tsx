@@ -20,7 +20,7 @@ const SettingsPartial = () => {
 			</DropdownToggle>
 			<DropdownMenu placement='bottom-end'>
 				<DropdownItem className='flex flex-col !items-start'>
-					<div>Font Size:</div>
+					<div>Tamaño Letra:</div>
 					<ButtonGroup>
 						<Button
 							icon='HeroMinus'
@@ -36,7 +36,7 @@ const SettingsPartial = () => {
 					</ButtonGroup>
 				</DropdownItem>
 				<DropdownItem className='flex flex-col !items-start'>
-					<div>Dark Mode:</div>
+					<div>Modo Oscuro:</div>
 					<ButtonGroup>
 						<Button
 							icon='HeroMoon'
@@ -47,11 +47,6 @@ const SettingsPartial = () => {
 							icon='HeroSun'
 							onClick={() => setDarkModeStatus(DARK_MODE.LIGHT)}
 							isActive={darkModeStatus === DARK_MODE.LIGHT}
-						/>
-						<Button
-							icon='HeroComputerDesktop'
-							onClick={() => setDarkModeStatus(DARK_MODE.SYSTEM)}
-							isActive={darkModeStatus === DARK_MODE.SYSTEM}
 						/>
 					</ButtonGroup>
 				</DropdownItem>

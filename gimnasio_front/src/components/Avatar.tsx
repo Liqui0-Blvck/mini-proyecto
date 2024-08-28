@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import getFirstLetter from '../utils/getFirstLetter';
 import { TRounded } from '../types/rounded.type';
 import themeConfig from '../config/theme.config';
+import useColorApp from '../hooks/useColorApp';
 
 interface IAvatarProps {
 	src?: string;
@@ -12,6 +13,7 @@ interface IAvatarProps {
 }
 const Avatar: FC<IAvatarProps> = (props) => {
 	const { src, name, className, rounded, ...rest } = props;
+	const { colorApp } = useColorApp();
 
 	const sharedClass = classNames('aspect-square w-12', className, rounded);
 
@@ -29,8 +31,8 @@ const Avatar: FC<IAvatarProps> = (props) => {
 		<div
 			className={classNames(
 				'flex items-center justify-center font-bold',
-				`bg-${themeConfig.themeColor}-${themeConfig.themeColorShade}/10`,
-				`text-${themeConfig.themeColor}-${themeConfig.themeColorShade}`,
+				`bg-${colorApp ? colorApp : themeConfig.themeColor}-${themeConfig.themeColorShade}/10`,
+				`text-${colorApp ? colorApp : themeConfig.themeColor}-${themeConfig.themeColorShade}`,
 				sharedClass,
 			)}>
 			{getFirstLetter(name || 'Anonymous')}

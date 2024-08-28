@@ -7,6 +7,7 @@ import { TBorderWidth } from '../../types/borderWidth.type';
 import { TColors } from '../../types/colors.type';
 import { TColorIntensity } from '../../types/colorIntensities.type';
 import { IValidationBaseProps } from './Validation';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TInputVariants = 'solid';
 export type TInputDimension = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
@@ -24,10 +25,12 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement>, Partial<IVa
 	variant?: TInputVariants;
 }
 const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
+	const {colorApp} = useColorApp()
+	
 	const {
 		borderWidth,
 		className,
-		color,
+		color = colorApp,
 		colorIntensity,
 		name,
 		rounded,
@@ -104,7 +107,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
 Input.defaultProps = {
 	borderWidth: themeConfig.borderWidth,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	rounded: themeConfig.rounded,
 	dimension: 'default',

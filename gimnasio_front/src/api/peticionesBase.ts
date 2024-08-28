@@ -61,6 +61,21 @@ const fetchWithTokenPatchFormData = async (url: string, data: any, token: Sessio
   }
 };
 
+const fetchWithTokenPostFormData = async (url: string, data: any, token: SessionState) => {
+  try {
+    const response = await axios.post(url, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data', // Asegúrate de especificar el tipo de contenido
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('Error en fetchWithTokenPatch:', error);
+    throw error;
+  }
+};
+
 const fetchWithTokenDelete = async (url: string, token: SessionState) => {
   try {
     const response = await axios.delete(url, {
@@ -81,4 +96,5 @@ export {
   fetchWithTokenPatch,
   fetchWithTokenPatchFormData,
   fetchWithTokenDelete,
+  fetchWithTokenPostFormData,
 };

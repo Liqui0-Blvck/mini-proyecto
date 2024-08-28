@@ -50,14 +50,14 @@ const ConfirmPage = () => {
         breakpoint={null}
         className='h-full flex items-center justify-center p-10'
       >
-        <div className='flex flex-col items-center justify-center p-8 bg-zinc-800 shadow-md rounded-lg border-4 border-blue-400/75'>
+        <div className='flex flex-col items-center justify-center p-8 dark:bg-zinc-800 bg-zinc-200 shadow-md rounded-lg border-4 border-blue-400/75'>
           {loading ? (
             <FourSquare color="#2290c0" size="large" text="" textColor="" />
           ) : (
             <>
-              <h1 className='text-2xl font-semibold mb-4'>{error ? 'Confirmado' : '¡Felicitaciones!'}</h1>
-              <p className='text-lg mb-4'>{error ? error : 'Tu email ha sido confirmado con éxito.'}</p>
-              {!error && <p className='text-base text-zinc-400'>Ahora serás redirigido al inicio de sesión.</p>}
+              <h1 className='text-2xl font-semibold mb-4 dark:text-zinc-400 text-black'>{error ? 'Confirmado' : '¡Felicitaciones!'}</h1>
+              <p className='text-lg mb-4 dark:text-zinc-400 text-black'>{error ? error : 'Tu email ha sido confirmado con éxito.'}</p>
+              {!error && <p className='text-base dark:text-zinc-400 text-black'>Ahora serás redirigido al inicio de sesión.</p>}
             </>
           )}
         </div>

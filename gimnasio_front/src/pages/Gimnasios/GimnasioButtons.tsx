@@ -1,5 +1,6 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
 import Button, { IButtonProps } from '../../components/ui/Button';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TTabGym = {
 	text: 'Gimnasio Activo' | 'Lista de Gimnasios';
@@ -25,6 +26,7 @@ interface IGimnasioButtonProps {
 
 const GimnasioTabsButtons: FC<IGimnasioButtonProps> = (props) => {
 	const { activeTab, setActiveTab } = props;
+	const { colorApp } = useColorApp();
 
 	const defaultProps: IButtonProps = {
 		size: 'sm',
@@ -34,7 +36,7 @@ const GimnasioTabsButtons: FC<IGimnasioButtonProps> = (props) => {
 	const activeProps: IButtonProps = {
 		...defaultProps,
 		isActive: true,
-		color: 'blue',
+		color: colorApp,
 		colorIntensity: '500',
 		variant: 'solid',
 	};

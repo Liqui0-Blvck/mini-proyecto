@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useLayoutEffect, useState } from 'react'
 import Label from '../../components/form/Label';
 import FieldWrap from '../../components/form/FieldWrap';
 import Icon from '../../components/icon/Icon';
@@ -22,6 +22,7 @@ import { TColors } from '../../types/colors.type';
 import { TDarkMode } from '../../types/darkMode.type';
 import { setColorApp } from '../../store/slices/auth/userSlice';
 import { actualizar_configuracion } from '../../store/slices/auth/authSlices';
+import useCookiesStorage from '../../hooks/useCookieStorage';
 
 interface ConfiguracionFormikProps {
   configuraciones_notificaciones: boolean
@@ -40,9 +41,15 @@ const Configuracion = () => {
   const { colorApp } = useAppSelector((state: RootState) => state.auth.user)
 	const { setDarkModeStatus } = useDarkMode();
   const dispatch = useAppDispatch()
+
+
   
 	const [isSaving, setIsSaving] = useState<boolean>(false);
   const isNewItem = false;
+
+
+  
+  
 
 
   

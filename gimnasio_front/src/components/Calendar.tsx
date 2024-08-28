@@ -25,7 +25,7 @@ interface ICalendarProps extends Partial<CalendarOptions> {
 	viewMode?: TViewMode;
 	plugins?: PluginDef[];
 	headerToolbar?: ToolbarInput;
-	eventColor?: string;
+	eventColor?: string | any;
 	locale?: LocaleSingularArg;
 	locales?: LocaleInput[];
 }

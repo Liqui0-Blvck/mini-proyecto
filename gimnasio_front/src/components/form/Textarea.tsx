@@ -7,6 +7,7 @@ import { TColorIntensity } from '../../types/colorIntensities.type';
 import { TRounded } from '../../types/rounded.type';
 import themeConfig from '../../config/theme.config';
 import { TInputVariants } from './Input';
+import useColorApp from '../../hooks/useColorApp';
 
 export type TTextareaVariants = 'solid';
 export type TTextareaDimension = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
@@ -24,10 +25,11 @@ interface ITextareaProps
 	variant?: TTextareaVariants;
 }
 const Textarea: FC<ITextareaProps> = (props) => {
+	const { colorApp } = useColorApp();
 	const {
 		borderWidth,
 		className,
-		color,
+		color = colorApp,
 		colorIntensity,
 		rounded,
 		dimension,
@@ -101,7 +103,7 @@ const Textarea: FC<ITextareaProps> = (props) => {
 Textarea.defaultProps = {
 	borderWidth: themeConfig.borderWidth,
 	className: undefined,
-	color: themeConfig.themeColor,
+	color: undefined,
 	colorIntensity: themeConfig.themeColorShade,
 	rounded: themeConfig.rounded,
 	dimension: 'default',

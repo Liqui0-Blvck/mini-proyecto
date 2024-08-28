@@ -11,7 +11,7 @@ type TThemeConfigs = {
 	projectName: string;
 	language: TLang;
 	theme: TDarkMode;
-	themeColor: TColors;
+	themeColor: string;
 	themeColorShade: TColorIntensity;
 	rounded: TRounded;
 	/**
@@ -35,13 +35,15 @@ type TThemeConfigs = {
 	 */
 	transition: string;
 	fontSize: 12 | 13 | 14 | 15 | 16 | 17 | 18;
-};
+}
+
+
 
 const themeConfig: TThemeConfigs = {
 	projectTitle: 'GYM',
 	projectName: 'Gimnasio App',
-	language: 'en',
-	theme: DARK_MODE.SYSTEM,
+	language: 'es',
+	theme: DARK_MODE.LIGHT,
 	themeColor: 'blue',
 	themeColorShade: '500',
 	rounded: 'rounded-lg',

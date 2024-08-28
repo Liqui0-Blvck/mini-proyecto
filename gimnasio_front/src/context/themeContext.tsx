@@ -17,6 +17,7 @@ import DARK_MODE from '../constants/darkMode.constant';
 import themeConfig from '../config/theme.config';
 import useDeviceScreen from '../hooks/useDeviceScreen';
 import { TLang } from '../types/lang.type';
+import { useLocation } from 'react-router-dom';
 
 export interface IThemeContextProps {
 	isDarkTheme: boolean;
@@ -25,6 +26,8 @@ export interface IThemeContextProps {
 	asideStatus: boolean;
 	setAsideStatus: Dispatch<SetStateAction<boolean>>;
 	fontSize: number;
+	colorApp: string;
+	setColorAppTheme: Dispatch<SetStateAction<string>>;
 	setFontSize: Dispatch<SetStateAction<number>>;
 	language: TLang;
 	setLanguage: Dispatch<SetStateAction<TLang>>;
@@ -72,7 +75,7 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 
 		if (
 			localStorage.getItem('theme') === DARK_MODE.DARK ||
-			(localStorage.getItem('theme') === DARK_MODE.SYSTEM &&
+			(
 				window.matchMedia(`(prefers-color-scheme: ${DARK_MODE.DARK})`).matches)
 		) {
 			document.documentElement.classList.add(DARK_MODE.DARK);
@@ -108,6 +111,19 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 		};
 	}, [width]);
 
+	const [colorApp, setColorAppTheme] = useState<string>(
+		localStorage.getItem('theme_color_app')
+			? localStorage.getItem('theme_color_app') as string
+			: themeConfig.themeColor,
+	)
+
+
+
+	useLayoutEffect(() => {
+		localStorage.setItem('theme_color_app', colorApp);
+	}, [colorApp]);
+
+
 	/**
 	 * Font Size
 	 */
@@ -121,6 +137,13 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fontSize]);
 
+	/**
+	 * Color App
+	 */
+
+	
+
+
 	const values: IThemeContextProps = useMemo(
 		() => ({
 			isDarkTheme,
@@ -129,11 +152,13 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 			asideStatus,
 			setAsideStatus,
 			fontSize,
+			colorApp,
 			setFontSize,
+			setColorAppTheme,
 			language,
 			setLanguage,
 		}),
-		[isDarkTheme, darkModeStatus, asideStatus, fontSize, language],
+		[isDarkTheme, darkModeStatus, asideStatus, fontSize, language, colorApp],
 	);
 
 	return <ThemeContext.Provider value={values}>{children}</ThemeContext.Provider>;
