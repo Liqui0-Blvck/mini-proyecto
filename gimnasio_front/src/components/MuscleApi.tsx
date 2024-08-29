@@ -53,9 +53,9 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
                 const transformedPath = transformPath(muscle.path, scale, translateX, translateY);
 
                 const path = new Path2D(transformedPath);
-                ctx.strokeStyle = highlightedMuscle === muscle.name ? 'black' : 'black';
-                ctx.lineWidth = 2;
-                ctx.fillStyle = highlightedMuscle === muscle.name ? 'rgba(255, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)';
+                ctx.strokeStyle = 'blue';
+                ctx.lineWidth = 1.5 ;
+                ctx.fillStyle = highlightedMuscle === muscle.name ? 'rgba(255, 1, 1, 0.3)' : 'rgba(0, 0, 0, 0)';
 
                 ctx.stroke(path);
                 ctx.fill(path);
@@ -65,7 +65,7 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
                     muscle.controlPoints.forEach(point => {
                         ctx.fillStyle = muscle.controlColor || 'green';
                         ctx.beginPath();
-                        ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
+                        ctx.arc(point.x, point.y, 4, 1, 2 * Math.PI);
                         ctx.fill();
                     });
                 }
@@ -145,7 +145,7 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
     }, [imageUrl, muscles, highlightedMuscle, onMuscleClick, onMuscleHover]);
 
     return (
-        <canvas ref={canvasRef} style={{ border: '1px solid black' }} />
+        <canvas ref={canvasRef}/>
     );
 };
 

@@ -61,6 +61,33 @@ const HistorialEjercicios = () => {
   // Q 248 220 182 176 Z`,
 
   const musclesData = [
+
+    {
+      name: 'traps',
+      path: `M 254 116
+      L 254 102
+      Q 240 113, 215 115
+      Q 213 123, 204 122
+      Q 210 120, 225 126
+      Q 248 128, 240 122 Z
+      `,
+      controlPoints: [
+      ],
+    },
+
+    {
+      name: 'traps',
+      path: `M 309 102
+      L 309 120
+      Q 314 129, 308 125
+      Q 345 123, 327 122
+      Q 338 116, 306 112
+      S 300 112, 292 105 Z
+      `,
+      controlPoints: [
+      ],
+    },
+
     {
       name: 'chest',
       path: `M 179 174 
@@ -70,7 +97,22 @@ const HistorialEjercicios = () => {
       Q 185 170, 171 174 Z
       `,
       controlPoints: [
-          { x: 100, y: 200 },
+      ],
+      controlColor: 'green'
+    },
+
+    {
+      name: 'chest',
+      path: `M 282.3 174 
+      L 282.3 140
+      Q 280 126, 286 125.7
+      Q 343.2 130.5, 329.9 152.7
+      S 350.6 176.8, 355.3 173
+      Q 362.2 176.2, 328 190.5
+      Q 321 210, 278 192.3
+      S 272 192, 264.3 176  Z
+      `,
+      controlPoints: [
       ],
       controlColor: 'green'
     },
@@ -86,10 +128,6 @@ const HistorialEjercicios = () => {
       L244 220 Z
       `, // Ajusta el path según sea necesario
       controlPoints: [
-        {
-          x: 215,
-          y: 155
-        }
       ],
       controlColor: 'green'
     },
@@ -101,10 +139,6 @@ const HistorialEjercicios = () => {
       C 189 156, 208 160, 167 175 Z
       `,
       controlPoints: [
-        {
-          x: 215,
-          y: 155
-        }
       ],
     },
 
@@ -118,16 +152,67 @@ const HistorialEjercicios = () => {
       controlPoints: [
       ],
 
+    },
+
+    {
+      name: 'forearms',
+      path: `M 163 241
+      Q 133 259, 132 222
+      L 128 227
+      T 120 233
+      C 120 233, 110 243, 96 273
+      Q 79 308, 83 308
+      Q 78 320, 98 318  
+      S 117 297, 126 290
+      Q 156 256, 155 246 Z
+      `,
+      controlPoints: [
+      ],
+    },
+
+    
+
+    {
+      name: 'quads',
+      path: `M 210 330
+      L 214 306
+      Q 250 308, 252 372
+      Q 270 381, 263 380 
+      Q 275 432, 245 455
+      L 255 485
+      Q 234 531, 210 490
+      S 192 500, 189 460
+      C 190 440, 193 358, 197 339 Z
+      `,
+      controlPoints: [
+      ],
+    },
+
+    {
+      name: 'calves',
+      path: `M 200 520
+      Q 183 555, 185 600
+      Q 196 617, 189 644
+      Q 212 660, 212 642
+      Q 225 622, 222 590
+      L 242 578
+      Q 245 570, 227 540
+      L 240 528
+      S 210 550, 196 523 Z
+      `,
+      controlPoints: [
+      ],
     }
     // Puedes añadir más músculos aquí
 ];
 
   const handleMuscleClick = (muscleName: string) => {
-      console.log(`Músculo clicado: ${muscleName}`);
+      alert(`Músculo clicado: ${muscleName}`);
   };
 
   const handleMuscleHover = (muscleName: string | null) => {
       console.log(`Músculo en hover: ${muscleName}`);
+      
   };
 
 
@@ -144,12 +229,18 @@ const HistorialEjercicios = () => {
 
           <Card>
             <CardHeader><CardTitle>Preferencias de Entrenamiento</CardTitle></CardHeader>
-            <CardBody className='rounded-md p-2' style={{ border: `1px solid ${bordeColor}`}}>
+            <CardBody className='bg-[#E7ECEF] overflow-auto rounded-md p-2 flex justify-center items-center' style={{ border: `1px solid ${bordeColor}`}}>
               <MuscleCanvas 
                 imageUrl={imageUrl} 
                 muscles={musclesData} 
                 onMuscleClick={handleMuscleClick}
                 onMuscleHover={handleMuscleHover}/>
+
+                {/* <MuscleCanvas 
+                imageUrl={imageUrl} 
+                muscles={musclesData} 
+                onMuscleClick={handleMuscleClick}
+                onMuscleHover={handleMuscleHover}/> */}
                 {/* {
                   miembro?.preferencias_entrenamiento && Object.keys(miembro.preferencias_entrenamiento).length > 0
                     ? (
