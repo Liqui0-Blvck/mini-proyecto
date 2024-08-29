@@ -30,11 +30,11 @@ const DetalleCliente = () => {
 
   return (
     <Container breakpoint={null} className='w-full h-full !p-1'>
-      <Subheader>
+      {/* <Subheader>
         <SubheaderLeft>
           <MiembrosGimnasioButtons activeTab={activeTabs} setActiveTab={setActiveTabs} />
         </SubheaderLeft>
-      </Subheader>
+      </Subheader> */}
 
       <div>
         {

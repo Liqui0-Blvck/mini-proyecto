@@ -55,26 +55,69 @@ const HistorialEjercicios = () => {
 
   const chartSeries: IChartProps['series'] = data.attendanceCount;
 
-
+  // path: `M 179 174 
+  // C 235 145, 205 116, 260 130 
+  // Q 284 133 262 180 
+  // Q 248 220 182 176 Z`,
 
   const musclesData = [
     {
-        name: 'biceps',
-        path: 'M 180 175 C 235 145, 205 115, 260 130 Q 285 134 263 180 Q 250 220 182 175 Z',
-        controlPoints: [
-            { x: 100, y: 200 },
-        ],
-        controlColor: 'green'
+      name: 'chest',
+      path: `M 179 174 
+      C 235 146, 205 116, 257 129
+      Q 282 129 263 175
+      Q 250 223 188 179
+      Q 185 170, 171 174 Z
+      `,
+      controlPoints: [
+          { x: 100, y: 200 },
+      ],
+      controlColor: 'green'
     },
+    
     {
-      name: 'triceps',
-      path: 'M 380 175 L 370 175 C 286 245 250 140 276 127',
+      name: 'obliques',
+      path: `M 198 180 
+      Q 203 198, 188 207 
+      Q 200 225, 208 255 
+      L214 307 
+      Q 250 305, 229 262
+      S 226 240, 232 230
+      L244 220 Z
+      `, // Ajusta el path según sea necesario
       controlPoints: [
         {
           x: 215,
           y: 155
         }
       ],
+      controlColor: 'green'
+    },
+
+    {
+      name: 'front-shoulders',
+      path: `M 159 178
+      Q 173 109, 229 126
+      C 189 156, 208 160, 167 175 Z
+      `,
+      controlPoints: [
+        {
+          x: 215,
+          y: 155
+        }
+      ],
+    },
+
+    {
+      name: 'biceps',
+      path: `M 160 178
+      Q 115 235, 143 245
+      Q 160 253, 182 212
+      C 218 175, 168 172, 169 175 Z
+      `,
+      controlPoints: [
+      ],
+
     }
     // Puedes añadir más músculos aquí
 ];

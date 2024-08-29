@@ -53,7 +53,7 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
                 const transformedPath = transformPath(muscle.path, scale, translateX, translateY);
 
                 const path = new Path2D(transformedPath);
-                ctx.strokeStyle = highlightedMuscle === muscle.name ? 'red' : 'blue';
+                ctx.strokeStyle = highlightedMuscle === muscle.name ? 'black' : 'black';
                 ctx.lineWidth = 2;
                 ctx.fillStyle = highlightedMuscle === muscle.name ? 'rgba(255, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)';
 
