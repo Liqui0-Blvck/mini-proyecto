@@ -5,7 +5,7 @@ interface ControlPoint {
     y: number;
 }
 
-interface Muscle {
+export interface Muscle {
     name: string;
     path: string; // Define el camino SVG para la forma del músculo
     controlPoints?: ControlPoint[]; // Puntos de control opcionales

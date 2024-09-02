@@ -1,16 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Card, { CardBody, CardHeader, CardTitle } from '../../../components/ui/Card'
 import Label from '../../../components/form/Label'
-import Validation from '../../../components/form/Validation'
-import FieldWrap from '../../../components/form/FieldWrap'
-import Input from '../../../components/form/Input'
+
 import { RootState } from '../../../store/rootReducer'
 import { useAppSelector } from '../../../store'
 import useColorApp from '../../../hooks/useColorApp'
-import Modal, { ModalBody, ModalHeader } from '../../../components/ui/Modal'
-import Button from '../../../components/ui/Button'
 import Chart, { IChartProps } from '../../../components/Chart'
-import colors from 'tailwindcss/colors';
 import TablaAsistencia from './TablaAsistencia.component'
 
 const InfoPersonal = () => {
