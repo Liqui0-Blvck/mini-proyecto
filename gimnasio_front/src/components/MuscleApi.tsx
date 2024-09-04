@@ -76,8 +76,8 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
             // Aquí aplicamos la transformación de escala y translación
             const transformedPath = path
                 .replace(/(\d+(\.\d+)?)/g, (match) => (parseFloat(match) * scale).toFixed(2))
-                .replace(/([MLC])\s*(-?\d+(\.\d+)?)/g, (match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateX).toFixed(2)}`)
-                .replace(/([Q])\s*(-?\d+(\.\d+)?)/g, (match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateY).toFixed(2)}`);
+                .replace(/([MLC])\s*(-?\d+(\.\d+)?)/g, (_match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateX).toFixed(2)}`)
+                .replace(/([Q])\s*(-?\d+(\.\d+)?)/g, (_match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateY).toFixed(2)}`);
             
             return transformedPath;
         };

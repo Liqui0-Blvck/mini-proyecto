@@ -36,8 +36,6 @@ import FieldWrap from '../../components/form/FieldWrap';
 import { Link } from 'react-router-dom';
 import Container from '../../components/layouts/Container/Container';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
-import { Miembro } from '../../types/miembros/miembros.type';
-import { format } from '@formkit/tempo';
 import { TEjercicio } from '../../types/ejercicios/ejercicios.type';
 
 

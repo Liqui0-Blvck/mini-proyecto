@@ -98,6 +98,7 @@ Calendar.defaultProps = {
 	viewMode: 'dayGridMonth',
 	plugins: undefined,
 	headerToolbar: undefined,
+	// @ts-ignore
 	eventColor: colors[themeConfig.themeColor][themeConfig.themeColorShade],
 	locale: undefined,
 	locales: undefined,
