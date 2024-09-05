@@ -1,24 +1,19 @@
 import React, { useState } from 'react'
-import Card, { CardBody, CardHeader, CardTitle } from '../../../components/ui/Card'
-import Label from '../../../components/form/Label'
-import Validation from '../../../components/form/Validation'
-import FieldWrap from '../../../components/form/FieldWrap'
-import Input from '../../../components/form/Input'
-import { RootState } from '../../../store/rootReducer'
-import { useAppSelector } from '../../../store'
-import useColorApp from '../../../hooks/useColorApp'
-import Modal, { ModalBody, ModalHeader } from '../../../components/ui/Modal'
-import Button from '../../../components/ui/Button'
-import Chart, { IChartProps } from '../../../components/Chart'
-import colors from 'tailwindcss/colors';
+import Card, { CardBody, CardHeader, CardTitle } from '../../../../components/ui/Card'
+import { RootState } from '../../../../store/rootReducer'
+import { useAppSelector } from '../../../../store'
+import useColorApp from '../../../../hooks/useColorApp'
+import { IChartProps } from '../../../../components/Chart'
 import TablaHistoricaEjercicio from './TablaHistoricaEjercicio.table'
-import MuscleCanvas from '../../../components/MuscleApi'
+import MuscleCanvas from '../../../../components/MuscleApi'
+import { muscles } from '../../../../utils/musclesJson'
 
-import imageUrl from '/src/assets/MuscleApi.png'; // Asegúrate de colocar la ruta correcta a tu imagen
+import GenderButtons, { TABS_GENDER, TTabsGenders } from './ButtonsGender'
+import BodyButtons, { TABS_BODYS, TTabsBodys } from './ButtonsBody'
+
 
 const HistorialEjercicios = () => {
   const { miembro } = useAppSelector((state: RootState) => state.miembro.miembro)
-  const [openModalPreferences, setOpenModalPreferences] = useState(false)
   const { colorApp } = useColorApp()
   const bordeColor = colorApp && colorApp === 'amber' ? '#F59E0B' : colorApp === 'emerald' ? '#059669' : colorApp
 
@@ -55,37 +50,17 @@ const HistorialEjercicios = () => {
 
   const chartSeries: IChartProps['series'] = data.attendanceCount;
 
-
-
-  const musclesData = [
-    {
-        name: 'biceps',
-        path: 'M 180 175 C 235 145, 205 115, 260 130 Q 285 134 263 180 Q 250 220 182 175 Z',
-        controlPoints: [
-            { x: 100, y: 200 },
-        ],
-        controlColor: 'green'
-    },
-    {
-      name: 'triceps',
-      path: 'M 380 175 L 370 175 C 286 245 250 140 276 127',
-      controlPoints: [
-        {
-          x: 215,
-          y: 155
-        }
-      ],
-    }
-    // Puedes añadir más músculos aquí
-];
-
   const handleMuscleClick = (muscleName: string) => {
-      console.log(`Músculo clicado: ${muscleName}`);
+      alert(`Músculo clicado: ${muscleName}`);
   };
 
   const handleMuscleHover = (muscleName: string | null) => {
       console.log(`Músculo en hover: ${muscleName}`);
+      
   };
+
+  const [activeTabs, setActiveTabs] = useState<TTabsGenders>(TABS_GENDER.MALE)
+  const [activeBodyTabs, setActiveBodyTabs] = useState<TTabsBodys>(TABS_BODYS.FRONT)
 
 
   return (
@@ -101,12 +76,34 @@ const HistorialEjercicios = () => {
 
           <Card>
             <CardHeader><CardTitle>Preferencias de Entrenamiento</CardTitle></CardHeader>
-            <CardBody className='rounded-md p-2' style={{ border: `1px solid ${bordeColor}`}}>
+            <CardBody className='bg-[#E7ECEF] overflow-auto rounded-md p-2 flex flex-col justify-center items-center' style={{ border: `1px solid ${bordeColor}`}}>
+              <div className='w-full flex justify-between '>
+                <GenderButtons activeTab={activeTabs} setActiveTab={setActiveTabs}/>
+                <BodyButtons activeTab={activeBodyTabs} setActiveTab={setActiveBodyTabs}/>
+              </div>  
               <MuscleCanvas 
+                imageUrl={
+                  activeTabs.text === 'Masculino' 
+                  ? (activeBodyTabs.text === 'Frontal' ? muscles.men.front.imageUrl : muscles.men.back.imageUrl)
+                  : activeTabs.text === 'Femenino'
+                    ? (activeBodyTabs.text === 'Frontal' ? muscles.women.front.imageUrl : muscles.women.back.imageUrl)
+                    : ''
+                } 
+                muscles={
+                  activeTabs.text === 'Masculino' 
+                  ? (activeBodyTabs.text === 'Frontal' ? muscles.men.front.muscles : muscles.men.back.muscles)
+                  : activeTabs.text === 'Femenino'
+                    ? (activeBodyTabs.text === 'Frontal' ? muscles.women.front.muscles : muscles.women.back.muscles)
+                    : []
+                } 
+                onMuscleClick={handleMuscleClick}
+                onMuscleHover={handleMuscleHover}/>
+
+                {/* <MuscleCanvas 
                 imageUrl={imageUrl} 
                 muscles={musclesData} 
                 onMuscleClick={handleMuscleClick}
-                onMuscleHover={handleMuscleHover}/>
+                onMuscleHover={handleMuscleHover}/> */}
                 {/* {
                   miembro?.preferencias_entrenamiento && Object.keys(miembro.preferencias_entrenamiento).length > 0
                     ? (

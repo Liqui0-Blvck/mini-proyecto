@@ -9,6 +9,7 @@ const LogoTemplate: FC<ILogoTemplateProps> = (props) => {
 		<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 198.43 176.06' {...rest}>
 			<g>
 				<rect
+					//@ts-ignore
 					fill={`${colors[themeConfig.themeColor][themeConfig.themeColorShade]}75`}
 					x='0'
 					y='88.03'
@@ -18,6 +19,7 @@ const LogoTemplate: FC<ILogoTemplateProps> = (props) => {
 					ry='44.02'
 				/>
 				<rect
+				//@ts-ignore
 					fill={`${colors[themeConfig.themeColor][themeConfig.themeColorShade]}d0`}
 					x='0'
 					y='44.02'
@@ -27,6 +29,7 @@ const LogoTemplate: FC<ILogoTemplateProps> = (props) => {
 					ry='44.02'
 				/>
 				<rect
+				//@ts-ignore
 					fill={`${colors[themeConfig.themeColor][themeConfig.themeColorShade]}f0`}
 					x='0'
 					y='0'

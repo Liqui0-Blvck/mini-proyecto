@@ -5,7 +5,7 @@ interface ControlPoint {
     y: number;
 }
 
-interface Muscle {
+export interface Muscle {
     name: string;
     path: string; // Define el camino SVG para la forma del músculo
     controlPoints?: ControlPoint[]; // Puntos de control opcionales
@@ -53,9 +53,9 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
                 const transformedPath = transformPath(muscle.path, scale, translateX, translateY);
 
                 const path = new Path2D(transformedPath);
-                ctx.strokeStyle = highlightedMuscle === muscle.name ? 'red' : 'blue';
-                ctx.lineWidth = 2;
-                ctx.fillStyle = highlightedMuscle === muscle.name ? 'rgba(255, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)';
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 0.5 ;
+                ctx.fillStyle = highlightedMuscle === muscle.name ? 'rgba(255, 1, 1, 0.3)' : 'rgba(0, 0, 0, 0)';
 
                 ctx.stroke(path);
                 ctx.fill(path);
@@ -65,7 +65,7 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
                     muscle.controlPoints.forEach(point => {
                         ctx.fillStyle = muscle.controlColor || 'green';
                         ctx.beginPath();
-                        ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
+                        ctx.arc(point.x, point.y, 4, 1, 2 * Math.PI);
                         ctx.fill();
                     });
                 }
@@ -76,8 +76,8 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
             // Aquí aplicamos la transformación de escala y translación
             const transformedPath = path
                 .replace(/(\d+(\.\d+)?)/g, (match) => (parseFloat(match) * scale).toFixed(2))
-                .replace(/([MLC])\s*(-?\d+(\.\d+)?)/g, (match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateX).toFixed(2)}`)
-                .replace(/([Q])\s*(-?\d+(\.\d+)?)/g, (match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateY).toFixed(2)}`);
+                .replace(/([MLC])\s*(-?\d+(\.\d+)?)/g, (_match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateX).toFixed(2)}`)
+                .replace(/([Q])\s*(-?\d+(\.\d+)?)/g, (_match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateY).toFixed(2)}`);
             
             return transformedPath;
         };
@@ -145,7 +145,7 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
     }, [imageUrl, muscles, highlightedMuscle, onMuscleClick, onMuscleHover]);
 
     return (
-        <canvas ref={canvasRef} style={{ border: '1px solid black' }} />
+        <canvas ref={canvasRef}/>
     );
 };
 

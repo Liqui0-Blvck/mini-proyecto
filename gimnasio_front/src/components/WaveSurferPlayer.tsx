@@ -102,6 +102,7 @@ WaveSurferPlayer.defaultProps = {
 	cursorWidth: 0,
 	height: 80,
 	waveColor: `${colors.zinc['500']}d1`,
+	// @ts-ignore
 	progressColor: colors[themeConfig.themeColor]['500'],
 };
 

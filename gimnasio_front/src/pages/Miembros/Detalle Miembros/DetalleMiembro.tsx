@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../store'
 import { obtener_miembro } from '../../../store/slices/miembros/miembrosPeticiones'
 import { RootState } from '../../../store/rootReducer'
 import InfoPersonal from './InfoPersonal.component'
-import HistorialEjercicios from './HistorialEjercicios.component'
+import HistorialEjercicios from './Historial Ejercicios/HistorialEjercicios.component'
 
 
 const DetalleCliente = () => {

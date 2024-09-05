@@ -1,4 +1,5 @@
-import * as Yup from 'Yup';
+import * as Yup from 'yup';
+
 
 export const SignUpValidation = Yup.object({
   password: Yup.string()
