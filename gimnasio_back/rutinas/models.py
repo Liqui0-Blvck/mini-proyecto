@@ -9,6 +9,7 @@ class Maquina(models.Model):
     nombre = models.CharField(max_length=100)  # Nombre de la máquina
     descripcion = models.TextField(blank=True)  # Descripción de la máquina
     imagen = models.ImageField(upload_to='imagenes_maquinas/', blank=True)  # Imagen de la máquina
+    grupo_muscular = models.CharField(max_length=100, choices=GRUPOS_MUSCULARES, blank=True)
 
     def __str__(self):
         return self.nombre
@@ -23,6 +24,7 @@ class Ejercicio(models.Model):
     duracion_estimado = models.DurationField(blank=True, null=True)  # Duración estimada del ejercicio
     dificultad = models.CharField(max_length=20, choices=DIFICULTADES, default='principiante')
     video_instructivo = models.FileField(upload_to=ruta_video, blank=True, null=True)
+    grupo_muscular = models.CharField(max_length=100, choices=GRUPOS_MUSCULARES, blank=True)
 
     def __str__(self):
         return self.nombre

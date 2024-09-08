@@ -71,3 +71,23 @@ ESTADOS_EJERCICIO = [
     ('terminado', 'Terminado'),
 ]
 
+
+GRUPOS_MUSCULARES = [
+    ('traps', 'Traps'),
+    ('chest', 'Chest'),
+    ('front-shoulders', 'Front Shoulders'),
+    ('biceps', 'Biceps'),
+    ('abdominals', 'Abdominals (Abs)'),
+    ('obliques', 'Obliques'),
+    ('forearms', 'Forearms'),
+    ('quads', 'Quads'),
+    ('calves', 'Calves'),
+    ('rear-shoulders', 'Rear Shoulders'),
+    ('triceps', 'Triceps'),
+    ('lats', 'Lats'),
+    ('traps-middle', 'Traps Middle'),
+    ('lower-back', 'Lower Back'),
+    ('glutes', 'Glutes'),
+    ('hamstrings', 'Hamstrings'),
+    ('back-calves', 'Back Calves'),
+]

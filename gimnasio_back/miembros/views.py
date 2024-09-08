@@ -54,7 +54,11 @@ class MiembrosViewSet(viewsets.ModelViewSet):
             # Obtener o crear el perfil
             perfil, created = Perfil.objects.get_or_create(
                 usuario=usuario,
-                gimnasio=gimnasio_instancia
+                gimnasio=gimnasio_instancia,
+                fecha_nacimiento=datos_miembro_base.get('fecha_nacimiento', None),
+                genero=datos_miembro_base.get('genero', ''),
+                direccion = datos_miembro_base.get('direccion', ''),
+                numero_telefono = datos_miembro_base.get('numero_telefono', '')
             )
 
             # Crear el miembro asociado al usuario y al gimnasio
