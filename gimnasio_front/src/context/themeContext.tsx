@@ -38,6 +38,7 @@ interface IThemeContextProviderProps {
 	children: ReactNode;
 }
 export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children }) => {
+	
 	/**
 	 * Language
 	 */
@@ -45,6 +46,8 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 	const [language, setLanguage] = useState<TLang>(
 		(localStorage.getItem('fyr_language') as TLang) || themeConfig.language,
 	);
+
+	console.log(language)
 	useLayoutEffect(() => {
 		localStorage.setItem('fyr_language', language);
 
@@ -62,6 +65,8 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [language]);
+
+	
 
 	/**
 	 * Dark Mode

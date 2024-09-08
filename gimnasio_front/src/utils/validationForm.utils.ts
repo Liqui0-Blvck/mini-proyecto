@@ -64,3 +64,52 @@ export const gimnasioValidationSchema = Yup.object().shape({
     .string()
     .url('Debe ser una URL válida')
 });
+
+
+export const miembroValidatorSchema = Yup.object().shape({
+  email: Yup
+    .string()
+    .email('Debe ser un correo electrónico válido')
+    .required('El correo electrónico es obligatorio'),
+  
+  first_name: Yup
+    .string()
+    .min(2, 'El nombre debe tener al menos 2 caracteres')
+    .required('El nombre es obligatorio'),
+  
+  second_name: Yup
+    .string()
+    .min(2, 'El segundo nombre debe tener al menos 2 caracteres')
+    .notRequired(),
+  
+  father_last_name: Yup
+    .string()
+    .min(2, 'El apellido paterno debe tener al menos 2 caracteres')
+    .required('El apellido paterno es obligatorio'),
+  
+  mother_last_name: Yup
+    .string()
+    .min(2, 'El apellido materno debe tener al menos 2 caracteres')
+    .required('El apellido materno es obligatorio'),
+  
+  fecha_nacimiento: Yup
+    .date()
+    .required('La fecha de nacimiento es obligatoria')
+    .nullable()
+    .transform((value, originalValue) => originalValue === '' ? null : value),
+
+  genero: Yup
+    .string()
+    .oneOf(['Masculino', 'Femenino', 'Otro'], 'El género no es válido')
+    .required('El género es obligatorio'),
+
+  direccion: Yup
+    .string()
+    .min(5, 'La dirección debe tener al menos 5 caracteres')
+    .required('La dirección es obligatoria'),
+
+  numero_telefono: Yup
+    .string()
+    .matches(/^\+569\d{8}$/, 'El número de teléfono debe comenzar con +569 y tener 8 dígitos adicionales')
+    .required('El número de teléfono es obligatorio'),
+});

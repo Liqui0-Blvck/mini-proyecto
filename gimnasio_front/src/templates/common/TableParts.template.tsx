@@ -166,7 +166,7 @@ const TableTemplate: FC<ITableTemplateProps> = (props) => {
 };
 TableTemplate.defaultProps = {
 	hasHeader: true,
-	hasFooter: true,
+	hasFooter: false,
 };
 
 interface ITableCardFooterTemplateProps extends Partial<ITableProps> {

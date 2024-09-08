@@ -1,16 +1,33 @@
 {
-	"DemoPages": "Demo pages",
+	"DemoPages": "Páginas de demostración",
 	"item": {
-		"itemA": "Item A",
-		"itemB": "Item B"
+		"itemA": "Elemento A",
+		"itemB": "Elemento B"
 	},
 	"theme": {
 		"dark": "Oscuro",
 		"light": "Claro",
 		"system": "Sistema"
 	},
-	"Day": "Day",
-	"Week": "Week",
-	"Month": "Month",
-	"List": "List"
+	"Day": "Día",
+	"Week": "Semana",
+	"Month": "Mes",
+	"List": "Lista",
+	"traps": "Trapecio",
+	"chest": "Pectorales",
+	"front-shoulders": "Hombros frontales",
+	"biceps": "Bíceps",
+	"abdominals": "Abdominales",
+	"obliques": "Oblicuos",
+	"forearms": "Antebrazos",
+	"quads": "Cuádriceps",
+	"calves": "Gemelos",
+	"rear-shoulders": "Hombros posteriores",
+	"triceps": "Tríceps",
+	"lats": "Dorsales",
+	"traps-middle": "Trapecio medio",
+	"lower-back": "Lumbar",
+	"glutes": "Glúteos",
+	"hamstrings": "Isquiotibiales",
+	"back-calves": "Gemelos posteriores"
 }

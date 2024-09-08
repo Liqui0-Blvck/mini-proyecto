@@ -16,6 +16,8 @@ import { registrar_miembros } from '../../store/slices/miembros/miembrosPeticion
 import { IoMdSave } from 'react-icons/io';
 import { obtener_gimnasio } from '../../store/slices/gimnasio/gimnasioPeticiones';
 import { obtener_sucursal } from '../../store/slices/surcursal/sucursalPeticiones';
+import Radio, { RadioGroup } from '../../components/form/Radio';
+import { miembroValidatorSchema } from '../../utils/validationForm.utils';
 
 interface IFormikMiembro {
   email: string;
@@ -23,6 +25,10 @@ interface IFormikMiembro {
   second_name: string;
   father_last_name: string;
   mother_last_name: string;
+  fecha_nacimiento: string;
+  genero: string;
+  direccion: string;
+  numero_telefono: string
   // preferencia_entrenamiento: Record<string, string>;
   // objetivo_personales: Record<string, string>;
 }
@@ -52,7 +58,12 @@ const FormularioMiembro = ({ setOpen } : { setOpen: Dispatch<SetStateAction<bool
       second_name: '',
       father_last_name: '',
       mother_last_name: '',
+      fecha_nacimiento: '',
+      genero: '',
+      direccion: '',
+      numero_telefono: '',
     },
+    validationSchema: miembroValidatorSchema,
     onSubmit: (values: IFormikMiembro) => {
       setIsSaving(true)
       dispatch(
@@ -66,6 +77,12 @@ const FormularioMiembro = ({ setOpen } : { setOpen: Dispatch<SetStateAction<bool
               mother_last_name: values.mother_last_name,
               gimnasio: gimnasio?.id,
               sucursal: sucursal?.id
+            },
+            miembro_data: {
+              fecha_nacimiento: values.fecha_nacimiento,
+              genero: values.genero,
+              direccion: values.direccion,
+              numero_telefono: values.numero_telefono
             }
           },
           token
@@ -181,6 +198,81 @@ const FormularioMiembro = ({ setOpen } : { setOpen: Dispatch<SetStateAction<bool
                     value={formik.values.mother_last_name}
                     autoComplete='given-name'
                     autoCapitalize='words'
+                  />
+                </FieldWrap>
+              </Validation>
+            </div>
+
+            <div className='col-span-12 lg:col-span-6'>
+              <Label htmlFor='fecha_nacimiento'>Fecha Nacimiento</Label>
+              <Validation
+                isValid={formik.isValid}
+                isTouched={formik.touched.fecha_nacimiento}
+                invalidFeedback={formik.errors.fecha_nacimiento}
+                >
+                <FieldWrap>
+                  <Input
+                    type='date'
+                    id='fecha_nacimiento'
+                    name='fecha_nacimiento'
+                    onChange={formik.handleChange}
+                    value={formik.values.fecha_nacimiento}
+                  />
+                </FieldWrap>
+              </Validation>
+            </div>
+
+            <div className='col-span-12 lg:col-span-6'>
+              <Label htmlFor='genero'>Género</Label>
+              <RadioGroup isInline>
+                {['Masculino', 'Femenino', 'Otro'].map((i) => (
+                  <Radio
+                    key={i}
+                    label={i}
+                    name='genero'
+                    value={i}
+                    selectedValue={formik.values.genero}
+                    onChange={(e: any) => {
+                      formik.setFieldValue('genero', e.target.value)
+                    }}
+                  />
+                ))}
+              </RadioGroup>
+            </div>
+
+            <div className='col-span-12 lg:col-span-6'>
+              <Label htmlFor='direccion'>Dirección</Label>
+              <Validation
+                isValid={formik.isValid}
+                isTouched={formik.touched.direccion}
+                invalidFeedback={formik.errors.direccion}
+                >
+                <FieldWrap>
+                  <Input
+                    id='direccion'
+                    name='direccion'
+                    onChange={formik.handleChange}
+                    value={formik.values.direccion}
+                    autoComplete='given-name'
+                    autoCapitalize='words'
+                  />
+                </FieldWrap>
+              </Validation>
+            </div>
+
+            <div className='col-span-12 lg:col-span-6'>
+              <Label htmlFor='numero_telefono'>Número Telefono</Label>
+              <Validation
+                isValid={formik.isValid}
+                isTouched={formik.touched.numero_telefono}
+                invalidFeedback={formik.errors.numero_telefono}
+                >
+                <FieldWrap>
+                  <Input
+                    id='numero_telefono'
+                    name='numero_telefono'
+                    onChange={formik.handleChange}
+                    value={formik.values.numero_telefono}
                   />
                 </FieldWrap>
               </Validation>

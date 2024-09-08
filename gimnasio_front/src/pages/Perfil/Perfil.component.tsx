@@ -91,8 +91,6 @@ const Perfil = () => {
     }
   })
 
-  console.log(formik.values.imagen_perfil)
-
 
   const { saveBtnText, saveBtnColor, saveBtnDisable } = useSaveBtn({
 		isNewItem: false,

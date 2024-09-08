@@ -1,6 +1,6 @@
 export type TEjercicio = {
   gimnasio: number;
-  maquina: string | null;
+  maquina?: string | null;
   nombre: string;
   descripcion: string;
   categoria: string;
@@ -8,4 +8,5 @@ export type TEjercicio = {
   duracion_estimado: string | null;
   dificultad: string;
   video_instructivo: string | null;
+  grupo_muscular: string;
 }

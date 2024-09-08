@@ -131,6 +131,7 @@ export const registrar_miembros = createAsyncThunk(
         toast.success('Miembro registrado', {
           autoClose: 2000
         })
+        ThunkApi.dispatch(obtener_lista_miembros({ token }))
         return res.data
       }
     } catch (error: any) {

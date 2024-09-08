@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
 	createColumnHelper,
 	getCoreRowModel,
@@ -36,8 +36,13 @@ import Modal, { ModalBody, ModalHeader } from '../../../../components/ui/Modal';
 import { RootState } from '../../../../store/rootReducer'
 import { useAppDispatch, useAppSelector } from '../../../../store'
 import { useParams } from 'react-router-dom'
+import { TEjercicio } from '../../../../types/ejercicios/ejercicios.type';
+import { historiaEjercicios } from '../../../../demos/Ejercicios.demo'
+import { useTranslation } from 'react-i18next';
+import { IoIosEye, IoIosEyeOff  } from "react-icons/io";
 
-interface IHistoriaEjercicios {
+export interface IHistoriaEjercicios {
+  ejercicios: TEjercicio
   fecha_creacion: string
   hora_entrada: string
   hora_salida: string
@@ -46,14 +51,21 @@ interface IHistoriaEjercicios {
 
 const historial: IHistoriaEjercicios[] = []
 
+interface TablaHistoricaEjercicioProps {
+  onRowClick: (muscleGroup: string) => void;
+  highlightedMuscle?: string;
+}
 
-const TablaHistoricaEjercicio = () => {
-  const { id } = useParams()
-  const dispatch = useAppDispatch()
+
+const TablaHistoricaEjercicio: FC<TablaHistoricaEjercicioProps> = ({ onRowClick, highlightedMuscle }) => {
+  const { t } = useTranslation('translation')
   const [sorting, setSorting] = useState<SortingState>([]);
 	const [globalFilter, setGlobalFilter] = useState<string>('')
-  const token = useAppSelector((state: RootState) => state.auth.session)
+  const [exerciseSelected, setExerciseSelected] = useState<string | null>(null)
 
+  const handleRowClick = (muscleGroup: string) => {
+    onRowClick(muscleGroup);
+  }
 
   const columnHelper = createColumnHelper<IHistoriaEjercicios>();
 
@@ -67,13 +79,29 @@ const TablaHistoricaEjercicio = () => {
       ),
       header: 'Día Asistido',
     }),
+    columnHelper.accessor('ejercicios.nombre', {
+      cell: (info) => (
+        <div>
+          <span>{info.row.original.ejercicios.nombre}</span>
+        </div>
+      ),
+      header: 'Ejercicio Realizado',
+    }),
+    columnHelper.accessor('ejercicios.grupo_muscular', {
+      cell: (info) => (
+        <div>
+          <span>{t(info.row.original.ejercicios.grupo_muscular)}</span>
+        </div>
+      ),
+      header: 'Grupo Muscular',
+    }),
 		columnHelper.accessor('hora_entrada', {
       cell: (info) => (
         <div>
           <span>{info.row.original.hora_entrada}</span>
         </div>
       ),
-      header: 'Hora de Entrada',
+      header: 'Hora inicio',
     }),
     columnHelper.accessor('hora_salida', {
       cell: (info) => (
@@ -81,7 +109,7 @@ const TablaHistoricaEjercicio = () => {
           <span>{info.row.original.hora_salida}</span>
         </div>
       ),
-      header: 'Hora de Salida',
+      header: 'Hora termino',
     }),
     columnHelper.accessor('duracion', {
       cell: (info) => (
@@ -91,10 +119,31 @@ const TablaHistoricaEjercicio = () => {
       ),
       header: 'Duración',
     }),
+    columnHelper.display({
+      id: 'Actions',
+      cell: (info) => (
+        <div className='flex justify-center gap-2'>
+          <Button
+            onClick={() => {
+              handleRowClick(info.row.original.ejercicios.grupo_muscular)
+              setExerciseSelected(info.row.original.ejercicios.nombre)
+            }}
+            variant='solid'
+          >
+            {
+              info.row.original.ejercicios.nombre === exerciseSelected && highlightedMuscle === info.row.original.ejercicios.grupo_muscular
+                ? <IoIosEyeOff className='text-3xl'/>
+                : <IoIosEye className='text-3xl'/>
+            }
+          </Button>
+        </div>
+      ),
+      header: 'Acciones',
+    })
   ]
 
   const table = useReactTable({
-		data: historial,
+		data: historiaEjercicios,
 		columns,
 		state: {
 			sorting,
@@ -108,18 +157,15 @@ const TablaHistoricaEjercicio = () => {
 		getSortedRowModel: getSortedRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		initialState: {
-			pagination: { pageSize: 3 },
+			pagination: { pageSize: 7 },
 		},
 	});
-
-
-
 
   return (
     <Container breakpoint={null} className='w-full h-full !p-0'>
       <Card className='h-full'>
         <CardBody className='overflow-auto'>
-          <TableTemplate className='table-fixed max-md:min-w-[70rem]' table={table} />
+          <TableTemplate className='table-fixed max-md:min-w-[70rem]' table={table} hasFooter={false}/>
         </CardBody>
         <TableCardFooterTemplate table={table} />
       </Card>
