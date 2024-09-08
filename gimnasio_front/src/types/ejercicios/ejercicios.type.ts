@@ -8,5 +8,5 @@ export type TEjercicio = {
   duracion_estimado: string | null;
   dificultad: string;
   video_instructivo: string | null;
-  grupo_muscular: string;
+  grupo_muscular?: string;
 }

@@ -9,11 +9,6 @@ export type ILang = {
 };
 
 const LANG: ILang = {
-	en: {
-		text: 'English',
-		lng: 'en',
-		icon: 'CustomUsa',
-	},
 	es: {
 		text: 'Spanish',
 		lng: 'es',
