@@ -15,16 +15,19 @@ export interface Muscle {
 interface CanvasProps {
     imageUrl: string;
     muscles: Muscle[];
+    highlightedMuscle?: string; // Grupo muscular destacado
     onMuscleClick?: (muscleName: string) => void; // Función para manejar clic en el músculo
     onMuscleHover?: (muscleName: string | null) => void; // Función para manejar hover sobre el músculo
 }
 
-const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMuscleHover }) => {
+const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, highlightedMuscle, onMuscleClick, onMuscleHover }) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const [highlightedMuscle, setHighlightedMuscle] = useState<string | null>(null);
-    const scale = 0.9; // Ajusta la escala según sea necesario
-    const translateX = 10; // Ajusta la traslación en X según sea necesario
-    const translateY = 10; // Ajusta la traslación en Y según sea necesario
+    const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null); // Nuevo estado para el músculo seleccionado
+    const [hoveredMuscle, setHoveredMuscle] = useState<string | null>(null); // Nuevo estado para el músculo en hover
+
+    const scale = 0.9; // Mantener la escala
+    const translateX = 10; // Mantener la traslación en X
+    const translateY = 10; // Mantener la traslación en Y
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -49,13 +52,21 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
             ctx.drawImage(img, 0, 0);
 
             muscles.forEach(muscle => {
-                // Aplicar la transformación al path
                 const transformedPath = transformPath(muscle.path, scale, translateX, translateY);
 
                 const path = new Path2D(transformedPath);
+
+                // Determina el color de relleno basado en el estado de selección, resaltado y hover
+                if (muscle.name === selectedMuscle) {
+                    ctx.fillStyle = 'rgba(255, 5, 0, 0.5)'; // Color para el músculo seleccionado
+                } else if (muscle.name === highlightedMuscle || muscle.name === hoveredMuscle) {
+                    ctx.fillStyle = 'rgba(255, 1, 1, 0.3)'; // Color para el músculo destacado o en hover
+                } else {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Color por defecto
+                }
+
                 ctx.strokeStyle = 'black';
-                ctx.lineWidth = 0.5 ;
-                ctx.fillStyle = highlightedMuscle === muscle.name ? 'rgba(255, 1, 1, 0.3)' : 'rgba(0, 0, 0, 0)';
+                ctx.lineWidth = 0.3;
 
                 ctx.stroke(path);
                 ctx.fill(path);
@@ -65,7 +76,7 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
                     muscle.controlPoints.forEach(point => {
                         ctx.fillStyle = muscle.controlColor || 'green';
                         ctx.beginPath();
-                        ctx.arc(point.x, point.y, 4, 1, 2 * Math.PI);
+                        ctx.arc(point.x, point.y, 4, 0, 2 * Math.PI);
                         ctx.fill();
                     });
                 }
@@ -73,13 +84,11 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
         };
 
         const transformPath = (path: string, scale: number, translateX: number, translateY: number): string => {
-            // Aquí aplicamos la transformación de escala y translación
-            const transformedPath = path
+            // Aplicar la transformación de escala y translación a las coordenadas del path
+            return path
                 .replace(/(\d+(\.\d+)?)/g, (match) => (parseFloat(match) * scale).toFixed(2))
                 .replace(/([MLC])\s*(-?\d+(\.\d+)?)/g, (_match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateX).toFixed(2)}`)
                 .replace(/([Q])\s*(-?\d+(\.\d+)?)/g, (_match, p1, p2) => `${p1} ${(parseFloat(p2) * scale + translateY).toFixed(2)}`);
-            
-            return transformedPath;
         };
 
         const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -87,8 +96,10 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
             if (!canvas) return;
 
             const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            const scaleX = canvas.width / rect.width; // Factor de escala en X
+            const scaleY = canvas.height / rect.height; // Factor de escala en Y
+            const x = (event.clientX - rect.left) * scaleX;
+            const y = (event.clientY - rect.top) * scaleY;
 
             let hoverMuscle: string | null = null;
 
@@ -100,35 +111,49 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
                 }
             });
 
-            setHighlightedMuscle(hoverMuscle);
+            setHoveredMuscle(hoverMuscle);
             if (onMuscleHover) {
                 onMuscleHover(hoverMuscle);
             }
         };
 
-        const handleClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+        const handleClick = (event: MouseEvent) => {
             const canvas = canvasRef.current;
             if (!canvas) return;
 
             const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (event.clientX - rect.left) * scaleX;
+            const y = (event.clientY - rect.top) * scaleY;
+
+            let clickedMuscle: string | null = null;
 
             muscles.forEach(muscle => {
                 const transformedPath = transformPath(muscle.path, scale, translateX, translateY);
                 const path = new Path2D(transformedPath);
                 if (ctx.isPointInPath(path, x, y)) {
-                    setHighlightedMuscle(muscle.name);
-                    if (onMuscleClick) {
-                        onMuscleClick(muscle.name);
-                    }
+                    clickedMuscle = muscle.name;
                 }
             });
+
+            if (clickedMuscle) {
+                if (clickedMuscle === selectedMuscle || highlightedMuscle !== clickedMuscle) {
+                    // Si el músculo clickeado es el mismo que el seleccionado, deselecciona
+                    setSelectedMuscle(null);
+                } else {
+                    // Selecciona el nuevo músculo
+                    setSelectedMuscle(clickedMuscle);
+                }
+                if (onMuscleClick) {
+                    onMuscleClick(clickedMuscle);
+                }
+            }
         };
 
         const canvasElement = canvasRef.current;
         if (canvasElement) {
-          //@ts-ignore
+            //@ts-ignore
             canvasElement.addEventListener('mousemove', handleMouseMove);
             //@ts-ignore
             canvasElement.addEventListener('click', handleClick);
@@ -136,16 +161,16 @@ const Canvas: React.FC<CanvasProps> = ({ imageUrl, muscles, onMuscleClick, onMus
 
         return () => {
             if (canvasElement) {
-              //@ts-ignore
+                //@ts-ignore
                 canvasElement.removeEventListener('mousemove', handleMouseMove);
                 //@ts-ignore
                 canvasElement.removeEventListener('click', handleClick);
             }
         };
-    }, [imageUrl, muscles, highlightedMuscle, onMuscleClick, onMuscleHover]);
+    }, [imageUrl, muscles, highlightedMuscle, selectedMuscle, hoveredMuscle, onMuscleClick, onMuscleHover]);
 
     return (
-        <canvas ref={canvasRef}/>
+        <canvas ref={canvasRef} />
     );
 };
 

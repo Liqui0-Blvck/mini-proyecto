@@ -46,6 +46,7 @@ const BodyButtons: FC<IBodysButtonProps> = (props) => {
 			{Object.values(TABS_BODYS).map((i) => (
 				<Button
 					key={i.text}
+					className='w-full'
 					// eslint-disable-next-line react/jsx-props-no-spreading
 					{...(activeTab.text === i.text ? { ...activeProps } : { ...defaultProps })}
 					onClick={() => {
