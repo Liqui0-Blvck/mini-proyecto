@@ -42,6 +42,7 @@ import { useTranslation } from 'react-i18next';
 import { IoIosEye, IoIosEyeOff  } from "react-icons/io";
 
 export interface IHistoriaEjercicios {
+  id: number
   ejercicios: TEjercicio
   fecha_creacion: string
   hora_entrada: string
@@ -90,7 +91,7 @@ const TablaHistoricaEjercicio: FC<TablaHistoricaEjercicioProps> = ({ onRowClick,
     columnHelper.accessor('ejercicios.grupo_muscular', {
       cell: (info) => (
         <div>
-          <span>{t(info.row.original.ejercicios.grupo_muscular!)}</span>
+          <span>{t(`gimnasio.${info.row.original.ejercicios.grupo_muscular!}`)}</span>
         </div>
       ),
       header: 'Grupo Muscular',
@@ -124,6 +125,7 @@ const TablaHistoricaEjercicio: FC<TablaHistoricaEjercicioProps> = ({ onRowClick,
       cell: (info) => (
         <div className='flex justify-center gap-2'>
           <Button
+            title='Ver'
             onClick={() => {
               handleRowClick(info.row.original.ejercicios.grupo_muscular!)
               setExerciseSelected(info.row.original.ejercicios.nombre)

@@ -275,7 +275,7 @@ export const confirmar_correo = createAsyncThunk(
   async (payload: { params: Record<string, any> }, ThunkApi) => {
     const { params } = payload;
     //@ts-ignore
-    const { navigate, id, token } = params;
+    const { id, token } = params;
 
     try {
       //@ts-ignore
@@ -299,3 +299,30 @@ export const confirmar_correo = createAsyncThunk(
     }
   }
 );
+
+export const verificar_token_activacion = createAsyncThunk(
+  'auth/verificar_token_activacion',
+  async (payload: { params: Record<string, any> }, ThunkApi) => {
+    const { params } = payload;
+    //@ts-ignore
+    const { id, token } = params;
+
+    try {
+      //@ts-ignore
+      const res = await fetch(`${import.meta.env.VITE_URL_PRO}auth/verificar-token-activacion/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: id,
+          token: token,
+        }),
+      });
+
+      return res
+    } catch (error: any) {
+      return ThunkApi.rejectWithValue('Error en la solicitud');
+    }
+  }
+)

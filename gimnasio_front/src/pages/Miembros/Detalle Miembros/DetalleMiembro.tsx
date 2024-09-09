@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import MiembrosGimnasioButtons, { TAB_MIEMBROS_GYM, TTabMiembros } from './MiembrosGimnasioButtons'
 import Container from '../../../components/layouts/Container/Container'
-import Card, { CardBody } from '../../../components/ui/Card'
 import Subheader, { SubheaderLeft } from '../../../components/layouts/Subheader/Subheader'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../store'
-import { obtener_miembro } from '../../../store/slices/miembros/miembrosPeticiones'
+import {obtener_miembro_dueno } from '../../../store/slices/miembros/miembrosPeticiones'
 import { RootState } from '../../../store/rootReducer'
-import InfoPersonal from './InfoPersonal.component'
+import InfoPersonal from './Informacion Personal/InfoPersonal.component'
 import HistorialEjercicios from './Historial Ejercicios/HistorialEjercicios.component'
+import HistorialPagos from './Historial Pagos/HistorialPagos'
 
 
 const DetalleCliente = () => {
@@ -16,16 +16,10 @@ const DetalleCliente = () => {
   const { id } = useParams()
   const dispatch = useAppDispatch()
   const token = useAppSelector((state: RootState) => state.auth.session)
-  const { miembro } = useAppSelector((state: RootState) => state.miembro.miembro)
-
-  console.log(id)
-
 
   useEffect(() => {
-    dispatch(obtener_miembro({ id, token }))
+    dispatch(obtener_miembro_dueno({ id, token }))
   }, [])
-
-  console.log(miembro)
 
 
   return (
@@ -42,7 +36,9 @@ const DetalleCliente = () => {
             ? <InfoPersonal />
             : activeTabs.text === 'Historial Ejercicios'
               ? <HistorialEjercicios />
-              : null
+              : activeTabs.text === 'Historial Pagos'
+                ? <HistorialPagos />
+                : null
         }
       </div>
     </Container>

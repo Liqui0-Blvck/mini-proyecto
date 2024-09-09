@@ -64,27 +64,27 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
   const authPagesRoutes = extractRoutes(authPages);
   const userPagesRoutes = extractRoutes(userPages);
 
-  console.log(appPagesRoutes)
-
-
-  console.log(pathname)
 
   const isAuthorizedPage = isRouteAuthorized(pathname, appPagesRoutes);
   const isAuthorizedAuthPage = isRouteAuthorized(pathname, authPagesRoutes);
   const isAuthorizedUserPage = isRouteAuthorized(pathname, userPagesRoutes);
 
-  console.log(isAuthorizedPage)
 
   useEffect(() => {
     const checkAuthorization = () => {
-      // Verifica si la ruta actual es la ruta de confirmación
-      const isConfirmPage = pathname.startsWith('/activate/');
+      // Dividir el pathname en partes
+      const pathnameArray = pathname.split('/');
+  
+      const isProtectedRouteArray = pathnameArray.filter(route => route === 'activate' || route === 'reset-password');
+      const containsBothTerms = isProtectedRouteArray.includes('activate') && isProtectedRouteArray.includes('reset-password');
+      const isConfirmPage = pathname.startsWith('/activate/') && !pathname.includes('/reset-password/')
+
   
       if (!session.signedIn) {
         // Si el usuario no está autenticado
         if ((!isAuthorizedAuthPage && !isAuthorizedPage && !isAuthorizedUserPage) || isProtectedRoute) {
-          if (!isConfirmPage) {
-            // Si no es la página de confirmación
+          if (!isConfirmPage && !containsBothTerms) {
+            // Si no es la página de confirmación ni contiene ambos términos
             navigate(authPages.loginPage.to);
           }
         }
@@ -101,7 +101,7 @@ const PageWrapper: FC<IPageWrapperProps> = (props) => {
     setLoading(false); // Finalizar estado de carga
   
   }, [session.signedIn, isProtectedRoute, isAuthorizedPage, isAuthorizedAuthPage, isAuthorizedUserPage, pathname, navigate]);
-
+  
 
   const { setColorAppTheme } = useColorApp()
 

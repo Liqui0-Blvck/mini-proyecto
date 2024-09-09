@@ -5,6 +5,7 @@ import { fetchWithToken, fetchWithTokenPatch, fetchWithTokenPost } from "../../.
 import { toast } from "react-toastify"
 import { setAsistenciaMiembro, setMiembro, setMiembros } from "./miembrosSlice"
 import { SLICE_BASE_NAME } from "./constants"
+import { SessionState } from "../auth/sessionSlice"
 
 export const obtener_lista_miembros = createAsyncThunk(
   `${SLICE_BASE_NAME}/obtener_lista_miembros`,
@@ -31,7 +32,7 @@ export const obtener_lista_miembros = createAsyncThunk(
   }
 )
 
-export const obtener_miembro = createAsyncThunk(
+export const obtener_miembro_dueno = createAsyncThunk(
   `${SLICE_BASE_NAME}/obtener_miembro`,
   async (payload: FetchAction, ThunkApi) => {
     const { id, token } = payload
@@ -50,6 +51,30 @@ export const obtener_miembro = createAsyncThunk(
           autoClose: 2000
         })
       }
+
+      return ThunkApi.rejectWithValue('No se pudo actualizar')
+    }
+  }
+)
+
+export const obtener_miembro = createAsyncThunk(
+  `${SLICE_BASE_NAME}/obtener_miembro`,
+  async (payload: FetchAction, ThunkApi) => {
+    const { id, token } = payload
+
+    try {
+      const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
+      if (!token_verificado) throw new Error('No esta verificado el token')
+      const res = await fetchWithToken(`api/miembros/miembro/?perfil=${id}`, token_verificado)
+      if (res.status){
+        return ThunkApi.dispatch(setMiembro(res.data))
+      }
+    } catch (error: any) {
+      // for (const [key, value] of Object.entries(error.response.data)) {
+      //   toast.error(`${key}: ${value}`, {
+      //     autoClose: 2000
+      //   })
+      // }
 
       return ThunkApi.rejectWithValue('No se pudo actualizar')
     }
@@ -149,13 +174,13 @@ export const registrar_miembros = createAsyncThunk(
 
 export const mandar_correo_confirmacion = createAsyncThunk(
   `${SLICE_BASE_NAME}/mandar_correo_confirmacion`,
-  async (payload: FetchAction, ThunkApi) => {
+  async (payload: { id: string, token: SessionState}, ThunkApi) => {
     const { id, token } = payload
 
     try {
       const token_verificado = await ThunkApi.dispatch(verificarToken({ token })).unwrap()
       if (!token_verificado) throw new Error('No esta verificado el token')
-      const res = await fetchWithToken(`api/miembros/${id}/envio_de_mensaje_de_confirmacion/`, token_verificado)
+      const res = await fetchWithTokenPost(`api/miembros/enviar_mensaje_registro/`, { uid: id }, token_verificado)
       if (res.status){  
         toast.success('Correo de confirmación enviado', {
           autoClose: 2000
@@ -175,6 +200,42 @@ export const mandar_correo_confirmacion = createAsyncThunk(
   }
 )
 
+
+export const actualizar_contraseña_miembro = createAsyncThunk(
+  `${SLICE_BASE_NAME}/actualizar_contraseña_miembro`,
+  async (payload: { params: Record<string, string>}, ThunkApi) => {
+    const { params } = payload
+    //@ts-ignore
+    const { uid, token, new_password, re_new_password } = params
+
+    try { 
+      //@ts-ignore
+      const res = await fetch(`${import.meta.env.VITE_URL_PRO}auth/cambiar-contrasena/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: uid,
+          token: token,
+          new_password: new_password,
+          re_new_password: re_new_password
+        }),
+      });
+
+      return res
+    } catch (error: any) {
+      console.log(Object.entries(error.response.data))
+      for (const [key, value] of Object.entries(error.response.data)) {
+        toast.error(`${key}: ${value}`, {
+          autoClose: 2000
+        })
+      }
+
+      return ThunkApi.rejectWithValue('No se pudo actualizar')
+    }
+  }
+)
 
 
 

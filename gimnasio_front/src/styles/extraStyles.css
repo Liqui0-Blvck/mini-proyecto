@@ -1,0 +1,79 @@
+/* CardStyles.css */
+
+/* Estilo para membresía Premium */
+/* Estilo para tarjeta Premium con efecto metálico */
+.card-premium {
+  background: linear-gradient(to right, rgb(0,0,0), rgb(50,50,50)); /* Negro a gris oscuro */
+  color: rgb(179, 120, 16); /* Texto dorado */
+  position: relative;
+  padding: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Resaltar el efecto metálico en la esquina */
+.card-premium::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle at top left, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.3));
+  border-radius: 100% 0 0 0;
+  z-index: 0;
+  transform: rotate(-10deg);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.05);
+}
+
+
+/* Estilo para membresía Estándar */
+.card-estandar {
+  background: linear-gradient(135deg, rgb(212, 175, 55), rgb(255, 215, 0));
+  color: rgb(0, 0, 0, 2); /* Texto negro */
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.5); /* Efecto metálico en el fondo */
+}
+
+.card-estandar::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle at top left, rgba(212, 175, 55, 0.2), rgba(255, 215, 0, 0.2));
+  border-radius: 100% 0 0 0;
+  z-index: 0;
+  transform: rotate(-10deg);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para tarjeta Básica con efecto metálico */
+.card-basica {
+  background: linear-gradient(to right, rgb(192,192,192), rgb(220,220,220)); /* Gris claro a blanco */
+  color: rgb(0,0,0); /* Texto negro */
+  position: relative;
+  padding: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Resaltar el efecto metálico en la esquina */
+.card-basica::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle at top left, rgba(192, 192, 192, 0.8), rgba(220, 220, 220, 0.3));
+  border-radius: 100% 0 0 0;
+  z-index: 0;
+  transform: rotate(-10deg);
+  box-shadow: 0 0 15px rgba(192, 192, 192, 0.5);
+}
+

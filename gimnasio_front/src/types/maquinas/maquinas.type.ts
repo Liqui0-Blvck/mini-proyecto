@@ -4,4 +4,5 @@ export type TMaquina = {
   nombre: string;
   descripcion: string;
   imagen: string | null;
+  grupo_muscular: string
 };

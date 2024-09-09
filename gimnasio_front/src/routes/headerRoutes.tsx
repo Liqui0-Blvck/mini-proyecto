@@ -8,6 +8,7 @@ const headerRoutes: RouteProps[] = [
 	{ path: authPages.loginPage.to, element: null },
 	{ path: authPages.signUp.to, element: null },
 	{ path: authPages.confirmPage.to, element: null },
+	{ path: authPages.resetPasswordPage.to, element: null },
 
 	{
 		path: `${componentsPages.uiPages.to}/*`,

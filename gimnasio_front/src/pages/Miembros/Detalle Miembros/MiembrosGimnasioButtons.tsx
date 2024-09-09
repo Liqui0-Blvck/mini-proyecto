@@ -45,7 +45,7 @@ const MiembrosGimnasioButtons: FC<IGimnasioMiembrosButtonProps> = (props) => {
 	};
 
 	return (
-		<div className='w-auto flex rounded-full border-2 border-zinc-500/20 p-1 drop-shadow-xl dark:border-zinc-800'>
+		<div className={`w-auto flex rounded-full border-2 border-zinc-500/20 p-1 drop-shadow-xl dark:border-zinc-800`}>
 			{Object.values(TAB_MIEMBROS_GYM).map((i) => (
 				<Button
 					key={i.text}

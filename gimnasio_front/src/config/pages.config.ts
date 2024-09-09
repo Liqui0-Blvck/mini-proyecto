@@ -1,8 +1,4 @@
-import categoriesDb from '../mocks/db/categories.db';
-import productsDb from '../mocks/db/products.db';
-import usersDb from '../mocks/db/users.db';
-import rolesDb from '../mocks/db/roles.db';
-import projectsDb from '../mocks/db/projects.db';
+
 import { CgGym } from "react-icons/cg";
 
 export const examplePages = {
@@ -21,6 +17,12 @@ export const examplePages = {
 };
 
 export const appPages = {
+	dashboard: {
+		id: 'dashboardApp',
+		to: '/dashboard',
+		text: 'Dashboard',
+		icon: 'HeroHome',
+	},
 	miembros: {
 		id: 'miembrosApp',
 		to: '/miembros',
@@ -595,6 +597,12 @@ export const authPages = {
     text: 'Confirm',
     icon: 'HeroArrowRightOnRectangle',
   },
+	resetPasswordPage: {
+		id: 'resetPasswordPage',
+		to: '/activate/:activationId/:activationToken/reset-password/:resetToken/', // Rutas con dos tokens
+		text: 'Reset Password',
+		icon: 'HeroArrowRightOnRectangle',
+	}	
 
 };
 

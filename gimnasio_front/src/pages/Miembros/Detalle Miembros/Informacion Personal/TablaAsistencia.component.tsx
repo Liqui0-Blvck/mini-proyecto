@@ -14,29 +14,29 @@ import Card, {
 	CardHeader,
 	CardHeaderChild,
 	CardTitle,
-} from '../../../components/ui/Card';
-import Button from '../../../components/ui/Button';
-import Icon from '../../../components/icon/Icon';
-import Input from '../../../components/form/Input';
+} from '../../../../components/ui/Card';
+import Button from '../../../../components/ui/Button';
+import Icon from '../../../../components/icon/Icon';
+import Input from '../../../../components/form/Input';
 import TableTemplate, {
 	TableCardFooterTemplate,
-} from '../../../templates/common/TableParts.template';
-import Badge from '../../../components/ui/Badge';
+} from '../../../../templates/common/TableParts.template';
+import Badge from '../../../../components/ui/Badge';
 
 import Subheader, {
 	SubheaderLeft,
 	SubheaderRight,
-} from '../../../components/layouts/Subheader/Subheader';
-import FieldWrap from '../../../components/form/FieldWrap';
-import Container from '../../../components/layouts/Container/Container';
-import PageWrapper from '../../../components/layouts/PageWrapper/PageWrapper';
-import { IAsistencia, TMiembro } from '../../../types/miembros/miembros.type';
+} from '../../../../components/layouts/Subheader/Subheader';
+import FieldWrap from '../../../../components/form/FieldWrap';
+import Container from '../../../../components/layouts/Container/Container';
+import PageWrapper from '../../../../components/layouts/PageWrapper/PageWrapper';
+import { IAsistencia, TMiembro } from '../../../../types/miembros/miembros.type';
 import { format } from '@formkit/tempo';
-import Modal, { ModalBody, ModalHeader } from '../../../components/ui/Modal';
-import { RootState } from '../../../store/rootReducer'
-import { useAppDispatch, useAppSelector } from '../../../store'
+import Modal, { ModalBody, ModalHeader } from '../../../../components/ui/Modal';
+import { RootState } from '../../../../store/rootReducer'
+import { useAppDispatch, useAppSelector } from '../../../../store'
 import { useParams } from 'react-router-dom'
-import { obtener_asistencia_miembro } from '../../../store/slices/miembros/miembrosPeticiones'
+import { obtener_asistencia_miembro } from '../../../../store/slices/miembros/miembrosPeticiones'
 
 const TablaAsistencia = () => {
   const { id } = useParams()

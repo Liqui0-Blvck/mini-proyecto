@@ -22,8 +22,6 @@ const HistorialEjercicios = () => {
   const [highlightedMuscle, setHighlightedMuscle] = useState<string | null>(null);
 
 
-  console.log(miembro)
-
   useEffect(() => {
     if (miembro?.perfil?.genero === 'Femenino') {
       setActiveTabs(TABS_GENDER.FEMALE)

@@ -34,7 +34,7 @@ import { TMiembro } from '../../types/miembros/miembros.type';
 import { format } from '@formkit/tempo';
 import { useAppDispatch, useAppSelector } from '../../store';
 import Modal, { ModalBody, ModalHeader } from '../../components/ui/Modal';
-import { obtener_lista_miembros } from '../../store/slices/miembros/miembrosPeticiones';
+import { mandar_correo_confirmacion, obtener_lista_miembros } from '../../store/slices/miembros/miembrosPeticiones';
 import { MdOutgoingMail } from 'react-icons/md';
 import { HeroEye, HeroXMark } from '../../components/icon/heroicons';
 import FormularioMiembro from './FormularioMiembro.form';
@@ -129,7 +129,9 @@ const TablaMiembros = () => {
                 <Button
                   title='Mandar Correo de Confirmación'
                   variant='solid'
-                  onClick={() => {}}
+                  onClick={() => {
+										dispatch(mandar_correo_confirmacion({ id: info.row.original.uid, token }))
+									}}
                   >
                     <MdOutgoingMail className='text-2xl'/>
                 </Button>

@@ -4,10 +4,11 @@ import { appPages, authPages, componentsPages, examplePages, userPages } from '.
 import NotFoundPage from '../pages/NotFound.page';
 import LoginPage from '../pages/Auth/Login.page';
 import SignUpPage from '../pages/Auth/SignUp.page';
+import PasswordReset from '../pages/PasswordReset.page';
 
 
 //Autenticacion principal
-
+const DashboardPage = lazy(() => import('../pages/Dashboard'));
 
 const ListaMiembros = lazy(() => import('../pages/Miembros/TablaMiembros'));
 const DetalleMiembro = lazy(() => import('../pages/Miembros/Detalle Miembros/DetalleMiembro'));
@@ -67,15 +68,17 @@ const contentRoutes: RouteProps[] = [
 	},
 
 
-	
+	{ path: appPages.dashboard.to, element: <DashboardPage /> },
 	{ path: authPages.loginPage.to, element: <LoginPage /> },
 	{ path: authPages.signUp.to, element: <SignUpPage /> },
-
 	{ path: authPages.confirmPage.to, element: <ConfirmPages /> },
+	{ path: authPages.resetPasswordPage.to, element: <PasswordReset /> },
+
 	
 
 	{ path: userPages.profilePage.to, element: <ProfilePage /> },
 	{ path: userPages.gimnasiosPage.to, element: <GimnasiosPage /> },
+
 
 	{ path: '*', element: <NotFoundPage /> },
 ];
