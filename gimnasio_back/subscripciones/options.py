@@ -10,3 +10,9 @@ TIPOS_MEMBRESIA = [
     ('estandar', 'Estándar'),
     ('premium', 'Premium'),
 ]
+
+METODOS_PAGO = [
+    ('tarjeta', 'Tarjeta de Crédito'),
+    ('debito', 'Debito'),
+    ('efectivo', 'Efectivo')
+]

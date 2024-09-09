@@ -23,4 +23,5 @@ def crear_perfil_usuario(sender, instance, created, **kwargs):
         )
         Sucursal.objects.create(gimnasio = gimnasio, activo = True)
         instance.dueno = True
+        instance.is_staff = True
         instance.save()

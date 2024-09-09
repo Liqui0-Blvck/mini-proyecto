@@ -4,3 +4,9 @@ find . -path "*/migrations/*.pyc"  -delete
 
 # Eliminar todas las pycache
 find . -type d -name "__pycache__" -exec rm -r {} +
+
+
+
+
+// Eliminar todas las migraciones validas
+find . -path "*/migrations/*.py" -not -name "__init__.py" -not -path "*/ENV/*" -not -path "*/.env/*" -delete

@@ -10,6 +10,7 @@ class TransaccionPago(BaseHistoricalModel):
     cantidad = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_transaccion = models.DateTimeField(auto_now_add=True)
     estado = models.CharField(max_length=20, choices=ESTADOS_PAGO)
+    metodo_pago = models.CharField(max_length=20, choices=METODOS_PAGO)
 
     def __str__(self):
         return f'Transacción de {self.miembro.perfil.usuario.username} - {self.cantidad}'
@@ -27,4 +28,4 @@ class SuscripcionUsuario(BaseHistoricalModel):
     transacciones = models.ManyToManyField(TransaccionPago, related_name='suscripciones', blank=True)
 
     def __str__(self):
-        return self.usuario.username
+        return self.miembro.perfil.usuario.username
