@@ -1,6 +1,9 @@
+import { TMaquina } from "../maquinas/maquinas.type";
+
 export type TEjercicio = {
+  id?: number
   gimnasio: number;
-  maquina?: string | null;
+  maquina?: TMaquina | null;
   nombre: string;
   descripcion: string;
   categoria: string;

@@ -30,49 +30,48 @@ import FieldWrap from '../../components/form/FieldWrap';
 import { Link } from 'react-router-dom';
 import Container from '../../components/layouts/Container/Container';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
-import { TRutina } from '../../types/rutinas/rutina.type';
-import { TSuscripcionUsuario } from '../../types/suscripciones/Suscripcion.type';
+import { SuscripcionUsuario } from '../../types/suscripciones/Suscripcion.type';
 
-const suscripciones: TSuscripcionUsuario[] = [
+const suscripciones: SuscripcionUsuario[] = [
   {
+		id: 1,
     miembro: 1,
     tipo_membresia: 'Mensual',
     fecha_inicio: '2023-01-01T00:00:00Z',
     fecha_expiracion: '2023-01-31T23:59:59Z',
-    activa: true,
-    transacciones: [1]
+    activa: true
   },
   {
+		id: 1,
     miembro: 1,
     tipo_membresia: 'Trimestral',
     fecha_inicio: '2023-01-01T00:00:00Z',
     fecha_expiracion: '2023-03-31T23:59:59Z',
-    activa: true,
-    transacciones: [2]
+    activa: true
   },
   {
+		id: 1,
     miembro: 1,
     tipo_membresia: 'Anual',
     fecha_inicio: '2023-01-01T00:00:00Z',
     fecha_expiracion: '2023-12-31T23:59:59Z',
-    activa: true,
-    transacciones: [3]
+    activa: true
   },
   {
+		id: 1,
     miembro: 1,
     tipo_membresia: 'Mensual',
     fecha_inicio: '2023-02-01T00:00:00Z',
     fecha_expiracion: '2023-02-28T23:59:59Z',
-    activa: false,
-    transacciones: [4]
+    activa: false
   },
   {
+		id: 1,
     miembro: 1,
     tipo_membresia: 'Trimestral',
     fecha_inicio: '2023-03-01T00:00:00Z',
     fecha_expiracion: '2023-05-31T23:59:59Z',
-    activa: true,
-    transacciones: [5]
+    activa: true
   }
 ];
 
@@ -80,7 +79,7 @@ const TablaSuscripciones = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
 	const [globalFilter, setGlobalFilter] = useState<string>('');
 
-  const columnHelper = createColumnHelper<TSuscripcionUsuario>();
+  const columnHelper = createColumnHelper<SuscripcionUsuario>();
 
   const columns = [
 

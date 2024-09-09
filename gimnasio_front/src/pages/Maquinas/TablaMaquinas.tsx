@@ -19,6 +19,7 @@ import Button from '../../components/ui/Button';
 import Icon from '../../components/icon/Icon';
 import Input from '../../components/form/Input';
 import TableTemplate, {
+	IHeaderConfig,
 	TableCardFooterTemplate,
 } from '../../templates/common/TableParts.template';
 import Badge from '../../components/ui/Badge';
@@ -33,31 +34,43 @@ import Subheader, {
 	SubheaderRight,
 } from '../../components/layouts/Subheader/Subheader';
 import FieldWrap from '../../components/form/FieldWrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../components/layouts/Container/Container';
 import PageWrapper from '../../components/layouts/PageWrapper/PageWrapper';
-import { format } from '@formkit/tempo';
 import { TMaquina } from '../../types/maquinas/maquinas.type';
+import { maquinas } from '../../demos/Maquinas.demo';
+import Avatar from '../../components/Avatar';
 
-const maquinas: TMaquina[] = [
-  { id: 1, nombre: 'Press de Banca', descripcion: 'Máquina para realizar press de banca', imagen: 'ruta/a/imagen_press_de_banca.jpg' },
-  { id: 2, nombre: 'Curl de Bíceps', descripcion: 'Máquina para realizar curl de bíceps', imagen: 'ruta/a/imagen_curl_de_biceps.jpg' },
-  { id: 3, nombre: 'Press de Pierna', descripcion: 'Máquina para realizar press de pierna', imagen: 'ruta/a/imagen_press_de_pierna.jpg' },
-  { id: 4, nombre: 'Remo', descripcion: 'Máquina para realizar remo', imagen: 'ruta/a/imagen_remo.jpg' },
-  { id: 5, nombre: 'Extensión de Tríceps', descripcion: 'Máquina para realizar extensión de tríceps', imagen: 'ruta/a/imagen_extension_de_triceps.jpg' }
-];
+import background_imagen from '../../assets/white-background.png';
+import { useTranslation } from 'react-i18next';
+import { HeroEye } from '../../components/icon/heroicons';
+
+
 
 const TablaMaquinas = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
 	const [globalFilter, setGlobalFilter] = useState<string>('');
-
+	const { t } = useTranslation();
+	const navigate = useNavigate()
 
   const columnHelper = createColumnHelper<TMaquina>();
 
 
-
   const columns = [
-
+		columnHelper.accessor('imagen', {
+			cell: (info) => (
+				<div>
+					<Avatar 
+						src={info.row.original.imagen 
+							? info.row.original.imagen 
+							: background_imagen}
+						rounded='rounded-md' 
+						
+					/>
+				</div>
+			),
+			header: 'Imagen',
+		}),
     columnHelper.accessor('nombre', {
       cell: (info) => (
         <div>
@@ -66,6 +79,7 @@ const TablaMaquinas = () => {
       ),
       header: 'Nombre',
     }),
+
     columnHelper.accessor('descripcion', {
       cell: (info) => (
         <div>
@@ -74,29 +88,39 @@ const TablaMaquinas = () => {
       ),
       header: 'Descripción',
     }),
+		columnHelper.accessor('grupo_muscular', {
+			cell: (info) => (
+				<div>
+					<span>{t(`gimnasio.${info.row.original.grupo_muscular}`)}</span>
+				</div>
+			),
+			header: 'Grupo Muscular',
+		}),
     columnHelper.display({
-      cell: (_info) => (
+			id: 'acciones',
+      cell: (info) => (
         <div className='flex items-center gap-2'>
-          {/* {info.row.original.socialAuth?.google && (
-            <Tooltip text='Google'>
-              <Icon size='text-xl' icon='CustomGoogle' />
-            </Tooltip>
-          )}
-          {info.row.original.socialAuth?.facebook && (
-            <Tooltip text='Facebook'>
-              <Icon size='text-xl' icon='CustomFacebook' />
-            </Tooltip>
-          )}
-          {info.row.original.socialAuth?.apple && (
-            <Tooltip text='Apple'>
-              <Icon size='text-xl' icon='CustomApple' />
-            </Tooltip>
-          )} */}
+					
+          <Button
+						variant='solid'
+						color='blue'
+						title='Ver'
+						onClick={() => {
+							navigate(`maquinas/${info.row.original.id}`);
+						}}
+						>
+							<HeroEye style={{ fontSize: 20 }}/> 
+					</Button>
         </div>
       ),
       header: 'Acciones',
     }),
   ]
+
+	const headerConfig: IHeaderConfig[] = [
+    { id: 'acciones', className: 'text-center' },
+    // No es necesario proporcionar configuración para todos los encabezados
+  ];
 
   const table = useReactTable({
 		data: maquinas,
@@ -120,7 +144,7 @@ const TablaMaquinas = () => {
 
 
   return (
-  <PageWrapper name='Lista Ejercicios'>
+  <PageWrapper name='Lista Maquinas'>
 			<Subheader>
 				<SubheaderLeft>
 					<FieldWrap
@@ -140,7 +164,7 @@ const TablaMaquinas = () => {
 						<Input
 							id='example'
 							name='example'
-							placeholder='Ejercicios...'
+							placeholder='Maquinas...'
 							value={globalFilter ?? ''}
 							onChange={(e) => setGlobalFilter(e.target.value)}
 						/>
@@ -149,7 +173,7 @@ const TablaMaquinas = () => {
 				<SubheaderRight>
 					<Link to={`new`}>
 						<Button variant='solid' icon='HeroPlus'>
-							New Customer
+							Nueva Maquina
 						</Button>
 					</Link>
 				</SubheaderRight>
@@ -158,7 +182,7 @@ const TablaMaquinas = () => {
 				<Card className='h-full'>
 					<CardHeader>
 						<CardHeaderChild>
-							<CardTitle>Ejercicios</CardTitle>
+							<CardTitle>Maquinas</CardTitle>
 							<Badge
 								variant='outline'
 								className='border-transparent px-4'
@@ -204,7 +228,7 @@ const TablaMaquinas = () => {
 						</CardHeaderChild>
 					</CardHeader>
 					<CardBody className='overflow-auto'>
-						<TableTemplate className='table-fixed max-md:min-w-[70rem]' table={table} />
+						<TableTemplate className='table-fixed max-md:min-w-[70rem]' table={table} headerConfig={headerConfig} />
 					</CardBody>
 					<TableCardFooterTemplate table={table} />
 				</Card>

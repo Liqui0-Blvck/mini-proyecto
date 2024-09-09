@@ -8,60 +8,74 @@ import Button from '../../components/ui/Button';
 import Input from '../../components/form/Input';
 import Select from '../../components/form/Select';
 
-interface ITableHeaderTemplateProps {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	table: TTableProps<any>;
+export interface IHeaderConfig {
+  id: string;
+  className?: string;
 }
-export const TableHeaderTemplate: FC<ITableHeaderTemplateProps> = ({ table }) => {
-	return (
-		<THead>
-			{table.getHeaderGroups().map((headerGroup) => (
-				<Tr key={headerGroup.id}>
-					{headerGroup.headers.map((header) => (
-						<Th
-							key={header.id}
-							isColumnBorder={false}
-							className={classNames({
-								'text-left': header.id !== 'Actions',
-								'text-right': header.id === 'Actions',
-							})}>
-							{header.isPlaceholder ? null : (
-								<div
-									key={header.id}
-									aria-hidden='true'
-									{...{
-										className: header.column.getCanSort()
-											? 'cursor-pointer select-none flex items-center'
-											: '',
-										onClick: header.column.getToggleSortingHandler(),
-									}}>
-									{flexRender(
-										header.column.columnDef.header,
-										header.getContext(),
-									)}
-									{{
-										asc: (
-											<Icon
-												icon='HeroChevronUp'
-												className='ltr:ml-1.5 rtl:mr-1.5'
-											/>
-										),
-										desc: (
-											<Icon
-												icon='HeroChevronDown'
-												className='ltr:ml-1.5 rtl:mr-1.5'
-											/>
-										),
-									}[header.column.getIsSorted() as string] ?? null}
-								</div>
-							)}
-						</Th>
-					))}
-				</Tr>
-			))}
-		</THead>
-	);
+interface ITableHeaderTemplateProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  table: TTableProps<any>;
+  headerConfig?: IHeaderConfig[]; // Haz que sea opcional
+}
+
+export const TableHeaderTemplate: FC<ITableHeaderTemplateProps> = ({ table, headerConfig = [] }) => {
+const getHeaderConfig = (headerId: string) => {
+  return headerConfig.find(config => config.id === headerId) || { className: '' };
 };
+
+  return (
+    <THead>
+      {table.getHeaderGroups().map((headerGroup) => (
+        <Tr key={headerGroup.id}>
+          {headerGroup.headers.map((header) => {
+            const { className } = getHeaderConfig(header.id);
+
+            return (
+              <Th
+                key={header.id}
+                isColumnBorder={false}
+                className={classNames({
+                  'text-left': header.id !== 'Actions',
+                  'text-right': header.id === 'Actions',
+                  [className || '']: true,
+                })}
+              >
+                {header.isPlaceholder ? null : (
+                  <div
+                    key={header.id}
+                    aria-hidden='true'
+                    className={header.column.getCanSort() ? 'cursor-pointer select-none flex items-center' : ''}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                    {{
+                      asc: (
+                        <Icon
+                          icon='HeroChevronUp'
+                          className='ltr:ml-1.5 rtl:mr-1.5'
+                        />
+                      ),
+                      desc: (
+                        <Icon
+                          icon='HeroChevronDown'
+                          className='ltr:ml-1.5 rtl:mr-1.5'
+                        />
+                      ),
+                    }[header.column.getIsSorted() as string] ?? null}
+                  </div>
+                )}
+              </Th>
+            );
+          })}
+        </Tr>
+      ))}
+    </THead>
+  );
+};
+
 
 interface ITableBodyTemplateProps {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -148,15 +162,16 @@ interface ITableTemplateProps extends Partial<ITableProps> {
 	table: TTableProps<any>;
 	hasHeader?: boolean;
 	hasFooter?: boolean;
+	headerConfig?: IHeaderConfig[];
 }
 const TableTemplate: FC<ITableTemplateProps> = (props) => {
-	const { children, hasHeader, hasFooter, table, ...rest } = props;
+	const { children, headerConfig, hasHeader, hasFooter, table, ...rest } = props;
 
 	return (
 		<Table {...rest}>
 			{children || (
 				<>
-					{hasHeader && <TableHeaderTemplate table={table} />}
+					{hasHeader && <TableHeaderTemplate table={table} headerConfig={headerConfig} />}
 					<TableBodyTemplate table={table} />
 					{hasFooter && <TableFooterTemplate table={table} />}
 				</>

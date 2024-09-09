@@ -1,25 +1,28 @@
 import { IHistoriaEjercicios } from "../pages/Miembros/Detalle Miembros/Historial Ejercicios/TablaHistoricaEjercicio.table";
+import { TEjercicio } from "../types/ejercicios/ejercicios.type";
 
 // Ejemplo de datos para IHistoriaEjercicios
 export const historiaEjercicios: IHistoriaEjercicios[] = [
   {
-      ejercicios: {
-          gimnasio: 1,
-          nombre: 'Press de Banca',
-          descripcion: 'Máquina para ejercicios de pecho y tríceps.',
-          categoria: 'Pecho',
-          subcategoria: 'Press',
-          duracion_estimado: '00:30:00',
-          dificultad: 'Intermedio',
-          video_instructivo: 'press_banca.mp4',
-          grupo_muscular: 'chest'
-      },
-      fecha_creacion: '2024-09-01',
-      hora_entrada: '09:00',
-      hora_salida: '09:30',
-      duracion: '00:30:00'
+    id: 1,
+    ejercicios: {
+        gimnasio: 1,
+        nombre: 'Press de Banca',
+        descripcion: 'Máquina para ejercicios de pecho y tríceps.',
+        categoria: 'Pecho',
+        subcategoria: 'Press',
+        duracion_estimado: '00:30:00',
+        dificultad: 'Intermedio',
+        video_instructivo: 'press_banca.mp4',
+        grupo_muscular: 'chest'
+    },
+    fecha_creacion: '2024-09-01',
+    hora_entrada: '09:00',
+    hora_salida: '09:30',
+    duracion: '00:30:00'
   },
   {
+    id: 2,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Sentadillas',
@@ -37,6 +40,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:20:00'
   },
   {
+    id: 3,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Remo con Barra',
@@ -54,6 +58,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:25:00'
   },
   {
+    id: 4,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Curl de Bíceps',
@@ -71,6 +76,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:15:00'
   },
   {
+    id: 5,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Abdominales',
@@ -88,6 +94,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:10:00'
   },
   {
+    id: 6,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Elevación de Talones',
@@ -105,6 +112,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:15:00'
   },
   {
+    id: 7,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Press Militar',
@@ -122,6 +130,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:20:00'
   },
   {
+    id: 8,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Flexora de Piernas',
@@ -139,6 +148,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:15:00'
   },
   {
+    id: 9,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Pull-over',
@@ -156,6 +166,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:20:00'
   },
   {
+    id: 10,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Abductores',
@@ -173,6 +184,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:15:00'
   },
   {
+    id: 11,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Extensiones de Tríceps',
@@ -190,6 +202,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:10:00'
   },
   {
+    id: 12,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Encogimientos de Hombros',
@@ -207,6 +220,7 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:15:00'
   },
   {
+    id: 13,
       ejercicios: {
           gimnasio: 1,
           nombre: 'Plancha',
@@ -224,3 +238,181 @@ export const historiaEjercicios: IHistoriaEjercicios[] = [
       duracion: '00:05:00'
   }
 ];
+
+
+export const ejercicios: TEjercicio[] = [
+    {
+      id: 1,
+      gimnasio: 1,
+      maquina: {
+        id: 1,
+        gimnasio: 1,
+        nombre: "Cinta de Correr",
+        descripcion: "Máquina para correr o caminar a velocidad variable.",
+        imagen: null,
+        grupo_muscular: 'quads'
+      },
+      nombre: "Running",
+      descripcion: "Ejercicio cardiovascular para mejorar resistencia.",
+      categoria: "cardio",
+      subcategoria: "aeróbico",
+      duracion_estimado: "00:30:00",
+      dificultad: "intermedio",
+      video_instructivo: "/videos/running.mp4",
+      grupo_muscular: "quads"
+    },
+    {
+      id: 2,
+      gimnasio: 2,
+      maquina: null,
+      nombre: "Push-Ups",
+      descripcion: "Ejercicio de peso corporal para fortalecer el pecho y los brazos.",
+      categoria: "fuerza",
+      subcategoria: "pecho",
+      duracion_estimado: "00:01:00",
+      dificultad: "principiante",
+      video_instructivo: "/videos/push_ups.mp4",
+      grupo_muscular: "pectoral"
+    },
+    {
+      id: 3,
+      gimnasio: 1,
+      maquina: {
+        id: 2,
+        gimnasio: 1,
+        nombre: "Bicicleta Estática",
+        descripcion: "Máquina para realizar ejercicio cardiovascular de bajo impacto.",
+        imagen: null,
+        grupo_muscular: 'full body'
+
+      },
+      nombre: "Cycling",
+      descripcion: "Ejercicio cardiovascular que mejora resistencia y quema grasa.",
+      categoria: "cardio",
+      subcategoria: "aeróbico",
+      duracion_estimado: "00:45:00",
+      dificultad: "avanzado",
+      video_instructivo: "/videos/cycling.mp4",
+      grupo_muscular: "full body"
+    },
+    {
+      id: 4,
+      gimnasio: 3,
+      maquina: null,
+      nombre: "Squats",
+      descripcion: "Ejercicio compuesto para fortalecer las piernas y glúteos.",
+      categoria: "fuerza",
+      subcategoria: "piernas",
+      duracion_estimado: "00:02:00",
+      dificultad: "intermedio",
+      video_instructivo: "/videos/squats.mp4",
+      grupo_muscular: "glutes"
+    },
+    {
+      id: 5,
+      gimnasio: 4,
+      maquina: {
+        id: 3,
+        gimnasio: 4,
+        nombre: "Smith Machine",
+        descripcion: "Máquina guiada para realizar ejercicios con barra de forma segura.",
+        imagen: null,
+        grupo_muscular: 'full body'
+      },
+      nombre: "Smith Machine Bench Press",
+      descripcion: "Ejercicio de fuerza para el pecho utilizando la Smith Machine.",
+      categoria: "fuerza",
+      subcategoria: "pecho",
+      duracion_estimado: "00:01:30",
+      dificultad: "avanzado",
+      video_instructivo: "/videos/smith_machine_bench_press.mp4",
+      grupo_muscular: "pectorales"
+    },
+    {
+      id: 6,
+      gimnasio: 2,
+      maquina: null,
+      nombre: "Plank",
+      descripcion: "Ejercicio de estabilización para fortalecer el core.",
+      categoria: "resistencia",
+      subcategoria: "core",
+      duracion_estimado: "00:03:00",
+      dificultad: "intermedio",
+      video_instructivo: "/videos/plank.mp4",
+      grupo_muscular: "core"
+    },
+    {
+      id: 7,
+      gimnasio: 3,
+      maquina: {
+        id: 4,
+        gimnasio: 3,
+        nombre: "Leg Press",
+        descripcion: "Máquina para ejercitar los cuádriceps y glúteos.",
+        imagen: null,
+        grupo_muscular: 'glutes'
+      },
+      nombre: "Leg Press",
+      descripcion: "Ejercicio de fuerza para desarrollar los cuádriceps.",
+      categoria: "fuerza",
+      subcategoria: "piernas",
+      duracion_estimado: "00:01:20",
+      dificultad: "intermedio",
+      video_instructivo: "/videos/leg_press.mp4",
+      grupo_muscular: "piernas"
+    },
+    {
+      id: 8,
+      gimnasio: 1,
+      maquina: {
+        id: 5,
+        gimnasio: 1,
+        nombre: "Pull-Up Bar",
+        descripcion: "Barra fija para realizar ejercicios de tracción.",
+        imagen: null,
+        grupo_muscular: 'back'
+      },
+      nombre: "Pull-Ups",
+      descripcion: "Ejercicio para fortalecer la espalda y los brazos.",
+      categoria: "fuerza",
+      subcategoria: "espalda",
+      duracion_estimado: "00:01:00",
+      dificultad: "avanzado",
+      video_instructivo: "/videos/pull_ups.mp4",
+      grupo_muscular: "espalda"
+    },
+    {
+      id: 9,
+      gimnasio: 4,
+      maquina: {
+        id: 6,
+        gimnasio: 4,
+        nombre: "Cuerda de Batalla",
+        descripcion: "Cuerdas pesadas para ejercicios de alta intensidad.",
+        imagen: null,
+        grupo_muscular: 'full body'
+      },
+      nombre: "Battle Ropes",
+      descripcion: "Ejercicio de alta intensidad para todo el cuerpo.",
+      categoria: "cardio",
+      subcategoria: "full body",
+      duracion_estimado: "00:01:30",
+      dificultad: "avanzado",
+      video_instructivo: "/videos/battle_ropes.mp4",
+      grupo_muscular: "full body"
+    },
+    {
+      id: 10,
+      gimnasio: 5,
+      maquina: null,
+      nombre: "Jumping Jacks",
+      descripcion: "Ejercicio aeróbico para calentar y mejorar la coordinación.",
+      categoria: "cardio",
+      subcategoria: "aeróbico",
+      duracion_estimado: "00:01:00",
+      dificultad: "principiante",
+      video_instructivo: "/videos/jumping_jacks.mp4",
+      grupo_muscular: "full body"
+    }
+  ];
+   

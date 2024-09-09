@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import Card, { CardBody, CardHeader, CardTitle } from '../../../components/ui/Card'
-import Label from '../../../components/form/Label'
+import Card, { CardBody, CardHeader, CardTitle } from '../../../../components/ui/Card'
+import Label from '../../../../components/form/Label'
 
-import { RootState } from '../../../store/rootReducer'
-import { useAppSelector } from '../../../store'
-import useColorApp from '../../../hooks/useColorApp'
-import Chart, { IChartProps } from '../../../components/Chart'
+import { RootState } from '../../../../store/rootReducer'
+import { useAppSelector } from '../../../../store'
+import useColorApp from '../../../../hooks/useColorApp'
+import Chart, { IChartProps } from '../../../../components/Chart'
 import TablaAsistencia from './TablaAsistencia.component'
 
 const InfoPersonal = () => {
@@ -88,6 +88,27 @@ const InfoPersonal = () => {
                   <Label htmlFor='apellido_materno'>Apellido Materno</Label>
                   <div className={`p-2 rounded-md dark:bg-zinc-700 bg-zinc-100`}>
                     <span id='apellido_materno'>{miembro?.perfil.usuario.mother_last_name}</span>
+                  </div>
+                </div>
+
+                <div className='col-span-12 lg:col-span-6'>
+                  <Label htmlFor='genero'>Genero</Label>
+                  <div className={`p-2 rounded-md dark:bg-zinc-700 bg-zinc-100`}>
+                    <span id='genero'>{miembro?.perfil.genero}</span>
+                  </div>
+                </div>
+
+                <div className='col-span-12 lg:col-span-6'>
+                  <Label htmlFor='numero_telefono'>Número Telefono</Label>
+                  <div className={`p-2 rounded-md dark:bg-zinc-700 bg-zinc-100`}>
+                    <span id='numero_telefono'>{miembro?.perfil.numero_telefono}</span>
+                  </div>
+                </div>
+
+                <div className='col-span-12 lg:col-span-6'>
+                  <Label htmlFor='direccion'>Dirección</Label>
+                  <div className={`p-2 rounded-md dark:bg-zinc-700 bg-zinc-100`}>
+                    <span id='direccion'>{miembro?.perfil.direccion}</span>
                   </div>
                 </div>
             </CardBody>

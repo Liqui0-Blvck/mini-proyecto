@@ -113,3 +113,18 @@ export const miembroValidatorSchema = Yup.object().shape({
     .matches(/^\+569\d{8}$/, 'El número de teléfono debe comenzar con +569 y tener 8 dígitos adicionales')
     .required('El número de teléfono es obligatorio'),
 });
+
+
+
+export const restablecimientoContraseñaMiembro = Yup.object({
+  password: Yup.string()
+    .min(8, 'La contraseña debe tener al menos 8 caracteres.')
+    .matches(/[a-z]/, 'La contraseña debe contener al menos una letra minúscula.')
+    .matches(/[A-Z]/, 'La contraseña debe contener al menos una letra mayúscula.')
+    .matches(/\d/, 'La contraseña debe contener al menos un número.')
+    .matches(/[@$!%*?&#]/, 'La contraseña debe contener al menos un carácter especial.')
+    .required('Se requiere una contraseña.'),
+  re_password: Yup.string()
+    .oneOf([Yup.ref('password'), ''], 'Las contraseñas deben coincidir.')
+    .required('Se requiere confirmar la contraseña.')
+});

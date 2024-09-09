@@ -18,6 +18,8 @@ import arMenu from './locales/ar/menu.json';
 // have a look at the Quick start guide
 // for passing in lng and translations on init
 
+console.log(esTranslation)
+
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 i18n
 	// pass the i18n instance to react-i18next.
