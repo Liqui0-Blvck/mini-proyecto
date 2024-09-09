@@ -90,7 +90,7 @@ const TablaHistoricaEjercicio: FC<TablaHistoricaEjercicioProps> = ({ onRowClick,
     columnHelper.accessor('ejercicios.grupo_muscular', {
       cell: (info) => (
         <div>
-          <span>{t(info.row.original.ejercicios.grupo_muscular)}</span>
+          <span>{t(info.row.original.ejercicios.grupo_muscular!)}</span>
         </div>
       ),
       header: 'Grupo Muscular',
@@ -125,7 +125,7 @@ const TablaHistoricaEjercicio: FC<TablaHistoricaEjercicioProps> = ({ onRowClick,
         <div className='flex justify-center gap-2'>
           <Button
             onClick={() => {
-              handleRowClick(info.row.original.ejercicios.grupo_muscular)
+              handleRowClick(info.row.original.ejercicios.grupo_muscular!)
               setExerciseSelected(info.row.original.ejercicios.nombre)
             }}
             variant='solid'
