@@ -17,7 +17,8 @@ services:
       bash -c "pip install -r requirements.txt 
       && python manage.py makemigrations 
       && python manage.py migrate 
-      && python manage.py collectstatic --noinput
+      && python manage.py collectstatic --noinput 
+      && ls -l static  # Añade este comando para verificar el contenido de la carpeta static
       && python superuser.py 
       && python manage.py runserver 0.0.0.0:8000"
     volumes:
@@ -28,6 +29,7 @@ services:
       - "8000:8000"
     networks:
       - app-network
+
 
   nginx:
     image: nginx:latest
