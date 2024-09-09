@@ -28,6 +28,22 @@ class MiembrosViewSet(viewsets.ModelViewSet):
     serializer_class = MiembroSerializer
     lookup_field = 'uid'
     
+    @action(detail = False, methods=['GET'], url_path='miembro')
+    def obtener_miembro_cliente(self, request):
+        perfil = request.query_params.get('perfil', None)  # Obtener el uid desde los parámetros de consulta
+        
+        if perfil is not None:
+            try:
+                perfil = Perfil.objects.get(id=perfil)
+                miembro = Miembro.objects.get(perfil=perfil)
+            except Miembro.DoesNotExist:
+                return Response({"detail": "Miembro no encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            
+            serializer = MiembroSerializer(miembro)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "uid es requerido."}, status=status.HTTP_400_BAD_REQUEST)
+    
     @action(detail=False, methods=['POST'], url_path='registro_miembro')
     def registrar_miembro(self, request):
         datos_nuevo_usuario = request.data.get('usuario_data')
@@ -85,8 +101,9 @@ class MiembrosViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['POST'], url_path='enviar_mensaje_registro')
     def envio_de_mensaje_de_confirmacion(self, request):
         # Obtener el usuario y el gimnasio
-        usuario = CustomUser.objects.get(id=request.data.get('id'))
-        gimnasio = Gimnasio.objects.filter(dueno=usuario, activo=True).first()
+        miembro = Miembro.objects.get(uid=request.data.get('uid'))
+        usuario = CustomUser.objects.get(id=miembro.perfil.usuario.id)
+        gimnasio = Gimnasio.objects.filter(id=miembro.gimnasio.id, activo=True).first()
         
         if not gimnasio:
             return Response({"detail": "No se encontró un gimnasio activo para este usuario."}, status=status.HTTP_400_BAD_REQUEST)
@@ -98,7 +115,7 @@ class MiembrosViewSet(viewsets.ModelViewSet):
         mail_subject = 'Activar tu cuenta en nuestro gimnasio'
 
         # Construir la URL de activación y restablecimiento
-        activate_url = f"{settings.FRONTEND_URL}/activate/{uid}/{confirmation_token}/{password_reset_token}/"
+        activate_url = f"{settings.FRONTEND_URL}/activate/{uid}/{confirmation_token}/reset-password/{password_reset_token}/"
 
         # Construir el contexto para el correo
         context = {
@@ -112,7 +129,7 @@ class MiembrosViewSet(viewsets.ModelViewSet):
         # Renderizar el correo en HTML y texto plano
         html_message = render_to_string('core/email_miembros_template.html', context)
         plain_message = strip_tags(html_message)
-        from_email = gimnasio.correo
+        from_email = gimnasio.email
 
         # Enviar el correo
         email = EmailMultiAlternatives(
@@ -141,6 +158,8 @@ class MiembrosViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({"detail": "uid es requerido."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
         
         
 class AsistenciaMiembroViewSet(viewsets.ModelViewSet):

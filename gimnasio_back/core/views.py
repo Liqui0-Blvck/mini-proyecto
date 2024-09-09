@@ -15,6 +15,10 @@ from django.utils.html import strip_tags
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 
+from rest_framework import status
+
+from .models import *
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_user(request):
@@ -69,3 +73,57 @@ def activate_user(request, uidb64, token):
         return HttpResponse('Cuenta activada exitosamente.')
     else:
         return HttpResponse('El enlace de activación es inválido o ha expirado.', status=400)
+
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def cambiar_contrasena(request):
+    uidb64 = request.data.get('uid')
+    token = request.data.get('token')
+    new_password = request.data.get('new_password')
+    confirm_password = request.data.get('re_new_password')
+
+    if not uidb64 or not token or not new_password or not confirm_password:
+        return Response({"detail": "Faltan datos."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if new_password != confirm_password:
+        return Response({"detail": "Las contraseñas no coinciden."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = get_user_model().objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, get_user_model().DoesNotExist):
+        return Response({"detail": "El enlace no es válido."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if not default_token_generator.check_token(user, token):
+        return Response({"detail": "El enlace no es válido o ha expirado."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if not user.is_active:
+        return Response({"detail": "La cuenta no está activada."}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.set_password(new_password)
+    user.save()
+
+    return Response({"detail": "Contraseña cambiada con éxito."}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def verificar_token(request):
+    uidb64 = request.data.get('uid')
+    token = request.data.get('token')
+
+    if not uidb64 or not token:
+        return Response({"detail": "UID y token son requeridos."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = get_user_model().objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, get_user_model().DoesNotExist):
+        return Response({"detail": "Usuario no encontrado."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if default_token_generator.check_token(user, token):
+        return Response({"detail": "Token válido."}, status=status.HTTP_200_OK)
+    else:
+        return Response({"detail": "Token inválido o expirado."}, status=status.HTTP_400_BAD_REQUEST)
